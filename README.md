@@ -1,6 +1,8 @@
 # Hotel Reservation System
 Project for CS321 - George Mason University
 
-To install this software, just ask...
+TO DO:
 
-## Not for public use. Get out!
+All codings after designing the software.
+
+## This is a project for CS321
