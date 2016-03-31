@@ -12,5 +12,20 @@
  * - Item 3
  */
 public class Admin {
-
+	private String name;
+	private int ID;
+	
+	boolean generateReport(Report report) {
+		
+	}
+	
+	boolean createRoom(Reservation reservation) {
+		
+	}
+	
+	Room getRoom(Room room) {
+		
+	}
+	
+	
 }
