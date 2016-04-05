@@ -22,13 +22,15 @@ public class Reservation
 	private int balance;
 	private int roomCost;
 
-	public Reservation(int customerID, Room room, int occupants, Calendar dateID, int bal, int cost)
+	public Reservation(int customerID, Room room, int occupants, int m, int d, int y, int bal, int cost)
 	{
 		this.rsvpID = UNIQUE_ID++;
 		this.reservedTo = customerID;
 		this.room = room;
 		this.numberOfOccupants = occupants;
-		this.date = dateID;
+		this.month = m;
+		this.day = d;
+		this.year = y;
 		this.balance = bal;
 		this.roomCost = cost;
 	}
