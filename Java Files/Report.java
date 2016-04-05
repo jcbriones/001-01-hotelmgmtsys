@@ -10,10 +10,13 @@ import java.util.ArrayList;
  * This is the Report class which generate reports of the hotel system.
  */
 public class Report {
-	/*
-	 * Don't know the return type of these methods.
-	 * That still needs to be determined.
-	 */
+	private int revenue;
+	private int occupancy;
+	
+	
+	public Report() {
+		
+	}
 	
 	ArrayList<Reservation> listOfReservations(HotelSystem hotel) {
 		return hotel.getListOfReservations();
