@@ -16,7 +16,8 @@ public class Admin {
 	private int ID;
 	
 	boolean generateReport(Report report) {
-		
+		Report report = new Report();
+		return report;
 	}
 	
 	boolean createRoom(Reservation reservation) {
@@ -27,5 +28,23 @@ public class Admin {
 		
 	}
 	
+	boolean deleteRoom(Room room) {
+		
+	}
 	
+	boolean createCustomer() {
+		
+	}
+	
+	Customer getCustomer(Customer customer) {
+		
+	}
+	
+	boolean updateCustomer(Customer customer) {		
+
+	}
+	
+	boolean deleteCustomer(Customer customer) {
+		
+	}
 }

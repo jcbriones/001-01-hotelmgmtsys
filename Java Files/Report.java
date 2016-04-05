@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /*
  * Report.java
  * 
@@ -8,5 +10,32 @@
  * This is the Report class which generate reports of the hotel system.
  */
 public class Report {
-
+	/*
+	 * Don't know the return type of these methods.
+	 * That still needs to be determined.
+	 */
+	
+	ArrayList<Reservation> listOfReservations() {
+		
+	}
+	
+	ArrayList<Room>listOfRooms() {
+		
+	}
+	
+	ArrayList listOfPayments() {
+		
+	}
+	
+	ArrayList<Customer> listOfCustomers() {
+		
+	}
+	
+	getRevenue() {
+		
+	}
+	
+	getOccupancy() {
+		
+	}
 }
