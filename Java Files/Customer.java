@@ -12,5 +12,5 @@
  * - Item 3
  */
 public class Customer {
-
+	
 }

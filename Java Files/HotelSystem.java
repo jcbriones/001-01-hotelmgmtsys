@@ -17,6 +17,8 @@ public class HotelSystem {
 	private ArrayList<Room> listOfRooms;
 	private ArrayList<Reservation> listOfReservations;
 	private ArrayList<Users> listOfUsers;
+	private ArrayList<Customer> listOfCustomers;
+
 	
 	private static Scanner keyboard = new Scanner(System.in);
 	
@@ -39,7 +41,6 @@ public class HotelSystem {
 			PrintMenu();
 			break;
 		}
-		
 	}
 	
 	private static void PrintMenu() {
@@ -96,4 +97,13 @@ public class HotelSystem {
 	public void setListOfUsers(ArrayList<Users> listOfUsers) {
 		this.listOfUsers = listOfUsers;
 	}
+	
+	public ArrayList<Customer> getListOfCustomers() {
+		return listOfCustomers;
+	}
+
+	public void setListOfCustomers(ArrayList<Customer> listOfCustomers) {
+		this.listOfCustomers = listOfCustomers;
+	}
+
 }
