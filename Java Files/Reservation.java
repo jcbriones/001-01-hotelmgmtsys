@@ -9,87 +9,87 @@
  */
 public class Reservation
 {
-    private int ReservedToCustomerID;
-    private int RoomNumber;
-    private int NumberOfOccupants;
-    private Date ArrivalDate;
-    private Date DepartureDate;
-    private int Balance;
-    private int RoomCost;
+	private static int UNIQUE_ID = 0;
 
-    public Reservation(int ReservedToCustomerID, int RoomNumber,
-                       int NumberOfOccupants, Date ArrivalDate,
-                       Date DepartureDate, int Balance, int RoomCost)
-    {
-        this.ReservedToCustomer = ReservedToCustomer;
-        this.RoomNumber = RoomNumber;
-        this.NumberOfOccupants = NumberOfOccupants;
-        this.ArrivalDate = ArrivalDate;
-        this.DepartureDate = DepartureDate;
-        this.Balance = Balance;
-        this.RoomCost = RoomCost;
-    }
+	private int rsvpID;
+	private int reservedTo;
+	private Room room;
+	private int numberOfOccupants;
+	private Calendar date;	// Check in and check out
+	private int balance;
+	private int roomCost;
 
-    public int getReservedToCustomerID() {
-        return ReservedToCustomerID;
-    }
+	public Reservation(int customerID, Room room, int occupants, Calendar dateID, int bal, int cost)
+	{
+		this.rsvpID = UNIQUE_ID++;
+		this.reservedTo = customerID;
+		this.room = room;
+		this.numberOfOccupants = occupants;
+		this.date = dateID;
+		this.balance = bal;
+		this.roomCost = cost;
+	}
 
-    public int getRoomNumber() {
-        return RoomNumber;
-    }
+	//Should call ProcessPayment's validate Payment and send it
+	//This reservation's CreditCard
+	public boolean validatePayment()
+	{
+		return true;
+	}
 
-    public int getNumberOfOccupants() {
-        return NumberOfOccupants;
-    }
+	// Setters and Getters
+	public int getRsvpID() {
+		return rsvpID;
+	}
 
-    public Date getArrivalDate() {
-        return ArrivalDate;
-    }
+	public void setRsvpID(int rsvpID) {
+		this.rsvpID = rsvpID;
+	}
 
-    public Date getDepartureDate() {
-        return DepartureDate;
-    }
+	public int getReservedTo() {
+		return reservedTo;
+	}
 
-    public int getBalance() {
-        return Balance;
-    }
+	public void setReservedTo(int reservedTo) {
+		this.reservedTo = reservedTo;
+	}
 
-    public int getRoomCost() {
-        return RoomCost;
-    }
+	public Room getRoom() {
+		return room;
+	}
 
-    public void setReservedToCustomerID(int reservedToCustomerID) {
-        ReservedToCustomerID = reservedToCustomerID;
-    }
+	public void setRoom(Room room) {
+		this.room = room;
+	}
 
-    public void setRoomNumber(int roomNumber) {
-        RoomNumber = roomNumber;
-    }
+	public int getNumberOfOccupants() {
+		return numberOfOccupants;
+	}
 
-    public void setNumberOfOccupants(int numberOfOccupants) {
-        NumberOfOccupants = numberOfOccupants;
-    }
+	public void setNumberOfOccupants(int numberOfOccupants) {
+		this.numberOfOccupants = numberOfOccupants;
+	}
 
-    public void setArrivalDate(Date arrivalDate) {
-        ArrivalDate = arrivalDate;
-    }
+	public Calendar getDate() {
+		return date;
+	}
 
-    public void setDepartureDate(Date departureDate) {
-        DepartureDate = departureDate;
-    }
+	public void setDate(Calendar date) {
+		this.date = date;
+	}
 
-    public void setBalance(int balance) {
-        Balance = balance;
-    }
+	public int getBalance() {
+		return balance;
+	}
 
-    public void setRoomCost(int roomCost) {
-        RoomCost = roomCost;
-    }
+	public void setBalance(int balance) {
+		this.balance = balance;
+	}
 
-    //Should call ProcessPayment's validate Payment and send it
-    //This reservation's CreditCard
-    public boolean validatePayment()
-    {
-        return true;
-    }
+	public int getRoomCost() {
+		return roomCost;
+	}
+
+
+
 }

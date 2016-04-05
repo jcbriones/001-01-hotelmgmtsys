@@ -13,14 +13,16 @@ public class Users {
 	private static int UNIQUE_ID = 0;
 	
 	// Instance variables
-	private int staffID;
+	private int userID;
 	private String username;
 	private String password;
+	private String name;
 	private int accountType;	// 0 = User, 1 = Staff, 2 = Admin
 	private boolean isBanned;
 	
 	public Users(String user, String pass, int type)
 	{
+		userID = UNIQUE_ID++;
 		username = user;
 		password = pass;
 		accountType = type;
@@ -28,6 +30,10 @@ public class Users {
 	}
 	
 	// Setters and Getters
+	public int getUserID() {
+		return userID;
+	}
+	
 	public String getUsername() {
 		return username;
 	}
@@ -35,7 +41,14 @@ public class Users {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+	
+	public String getName() {
+		return name;
+	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
 	public String getPassword() {
 		return password;
 	}
