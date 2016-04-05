@@ -15,7 +15,10 @@ public class Reservation
 	private int reservedTo;
 	private Room room;
 	private int numberOfOccupants;
-	private Calendar date;	// Check in and check out
+	private int month;
+	private int day;
+	private int year;
+	private int numberOfDays;
 	private int balance;
 	private int roomCost;
 
@@ -70,14 +73,6 @@ public class Reservation
 		this.numberOfOccupants = numberOfOccupants;
 	}
 
-	public Calendar getDate() {
-		return date;
-	}
-
-	public void setDate(Calendar date) {
-		this.date = date;
-	}
-
 	public int getBalance() {
 		return balance;
 	}
@@ -89,7 +84,38 @@ public class Reservation
 	public int getRoomCost() {
 		return roomCost;
 	}
+	
+	public int getMonth() {
+		return month;
+	}
 
+	public void setMonth(int month) {
+		this.month = month;
+	}
+
+	public int getDay() {
+		return day;
+	}
+
+	public void setDay(int day) {
+		this.day = day;
+	}
+
+	public int getYear() {
+		return year;
+	}
+
+	public void setYear(int year) {
+		this.year = year;
+	}
+
+	public int getNumberOfDays() {
+		return numberOfDays;
+	}
+
+	public void setNumberOfDays(int numberOfDays) {
+		this.numberOfDays = numberOfDays;
+	}
 
 
 }

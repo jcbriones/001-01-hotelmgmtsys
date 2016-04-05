@@ -8,7 +8,7 @@
  * This is where all the logins of user, staff, and admin is stored.
  */
 
-public class Users {
+public class User {
 	// UNIQUE ID (Increments by 1)
 	private static int UNIQUE_ID = 0;
 	
@@ -20,7 +20,7 @@ public class Users {
 	private int accountType;	// 0 = User, 1 = Staff, 2 = Admin
 	private boolean isBanned;
 	
-	public Users(String user, String pass, String name, int type)
+	public User(String user, String pass, String name, int type)
 	{
 		userID = UNIQUE_ID++;
 		username = user;

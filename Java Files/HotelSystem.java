@@ -1,7 +1,3 @@
-import java.util.ArrayList;	// USE ARRAYLISTS FOR NOW
-import java.util.Iterator;
-import java.util.Scanner;
-
 /*
  * HotelSystem.java
  * 
@@ -11,13 +7,18 @@ import java.util.Scanner;
  * 
  * This is the HotelSystem class which acts as the main class of the program.
  */
+
+import java.util.ArrayList;	// USE ARRAYLISTS FOR NOW
+import java.util.Iterator;
+import java.util.Scanner;
+
 public class HotelSystem {
 	private static int UNIQUE_ID = 0;
 	private int hotelID;
 	private String hotelName;
 	private ArrayList<Room> listOfRooms;
 	private ArrayList<Reservation> listOfReservations;
-	private ArrayList<Users> listOfUsers;
+	private ArrayList<User> listOfUsers;
 	private static Calendar calendar = new Calendar();
 
 	private Scanner keyboard = new Scanner(System.in);
@@ -28,93 +29,73 @@ public class HotelSystem {
 		// the user wants to create more than 1 instance of a hotel.
 		this.hotelID = UNIQUE_ID++;
 	}
-	public Reservation makeReservation(Users userID)
+	public Reservation makeReservation(User reservedTo, Room rm, int numberOfOccupants, int month, int day, int year, int numberOfDays)
 	{
-		System.out.println("======\nMake Reservation:\n======");
-		System.out.println("Select a Room:");
-		// Reservation
-		Reservation rsvp = null;
-		// View the list of available rooms to users
-		Iterator<Room> itr = listOfRooms.iterator();
-		Room rm;
-		while(itr.hasNext())
+		Reservation rsvp;
+		if (calendar.checkDate(rm,month,day,year) == null)
 		{
-			rm = itr.next();
-			System.out.println("Room ID: " + rm.getRoomID());
-			System.out.println("Price: " + rm.getRoomCost());
-			System.out.println("- Would you like to use this room? Y or N");
-			if (keyboard.nextLine().toLowerCase() == "y")
-				break;
-		}
-		System.out.println("How many are you in a room?:");
-		int occupants = keyboard.nextInt();
-		System.out.println("When are you using this room?");
-		System.out.println("Month (1-12): ");
-		int month = keyboard.nextInt();
-		System.out.println("Day (DD): ");
-		int day = keyboard.nextInt();
-		System.out.println("Year (YYYY): ");
-		int year = keyboard.nextInt();
-		keyboard.nextLine();
-		Calendar date = calendar.checkDate(rm,month,day,year);
-		if (date == null)
-		{
-			rsvp = Reservation(userID, rm, occupants, date, rm.getRoomCost(), rm.getRoomCost());
+			rsvp = new Reservation(reservedTo, rm, numberOfOccupants, month, day, year, numberOfDays, rm.getPrice(), rm.getPrice());
 			listOfReservations.add(rsvp);
-			System.out.println("You have successfully added a reservation under " + userID.getName() + "'s account");
 		}
 		else
 			System.out.println("Unfortunately, this date and room is already taken. Please try a different room or date.");
 		return rsvp;
 	}
 
-	public Reservation lookReservation(Users user)
+	public Reservation lookReservation(User user)
 	{
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public void updateReservation(Reservation rsvp)
 	{
-
+		// TODO Auto-generated method stub
 	}
 
 	public void deleteReservation(Reservation rsvp)
 	{
-
-	}
-
-	public void createUser() {
 		// TODO Auto-generated method stub
-
 	}
 
-	public void lookUser() {
-		// TODO Auto-generated method stub
+	public User createUser(String username, String password, String name, int accountType) {
+		// Check first if a username exist
+		Iterator<User> itr = listOfUsers.iterator();
+		while (itr.hasNext())
+			if (itr.next().getUsername().equals(username))
+				return null;
 
+		// Else, create the user and add it to the user list.
+		User newUser = new User(username,password,name,accountType);
+		listOfUsers.add(newUser);
+		return newUser;
 	}
 
-	public Users loginWindow()
+	public void lookUser(String username) {
+		// Check first if a username exist
+		Iterator<User> itr = listOfUsers.iterator();
+		while (itr.hasNext())
+			if (itr.next().getUsername().equals(username))
+				return null;
+	}
+
+	public User loginUser(String username, String password)
 	{
-		Iterator<Users> users = listOfUsers.iterator();
-		System.out.println("======\nLogin Window\n======");
-		System.out.println("Enter the username:");
-		String user = keyboard.nextLine();
-		System.out.println("Enter the user's password");
-		String pass = keyboard.nextLine();
+		// Initialize Iterator for searching
+		Iterator<User> users = listOfUsers.iterator();
+
 		// Look for the User and check if password matches.
 		// If yes, return the user.
-		Users tmp;
+		User tmp;
 		while (users.hasNext())
 		{
 			tmp = users.next();
-			if (tmp.getUsername().equals(user) && tmp.getPassword().equals(pass))
+			if (tmp.getUsername().equals(username) && tmp.getPassword().equals(password))
 			{
-				System.out.println("Success. You are now logged in as: " + tmp.getUsername());
 				return tmp;
 			}
 		}
-		// Else, return null;
-		System.out.println("Your username or password is incorrect. Please try again.");
+		// Else, return null because no match found.
 		return null;
 	}
 
@@ -146,11 +127,11 @@ public class HotelSystem {
 		this.listOfReservations = listOfReservations;
 	}
 
-	public ArrayList<Users> getListOfUsers() {
+	public ArrayList<User> getListOfUsers() {
 		return listOfUsers;
 	}
 
-	public void setListOfUsers(ArrayList<Users> listOfUsers) {
+	public void setListOfUsers(ArrayList<User> listOfUsers) {
 		this.listOfUsers = listOfUsers;
 	}
 }
