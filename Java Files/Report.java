@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Date;
 
 /*
  * Report.java
@@ -10,28 +11,32 @@ import java.util.ArrayList;
  * This is the Report class which generate reports of the hotel system.
  */
 public class Report {
+	private int revenue;
+	private int occupancy;
+	
+	public Report() {
+		
+	}
+	
+	ArrayList<Reservation> listOfReservations(HotelSystem hotel) {
+		return hotel.getListOfReservations();
+	}
+	
+	ArrayList<Room>listOfRooms(HotelSystem hotel) {
+		return hotel.getListOfRooms();
+	}
+	
 	/*
-	 * Don't know the return type of these methods.
-	 * That still needs to be determined.
-	 */
-	
-	ArrayList<Reservation> listOfReservations() {
-		
-	}
-	
-	ArrayList<Room>listOfRooms() {
-		
-	}
-	
 	ArrayList listOfPayments() {
 		
 	}
+	*/
 	
-	ArrayList<Customer> listOfCustomers() {
-		
+	ArrayList<Customer> listOfCustomers(HotelSystem hotel) {
+		return hotel.getListOfCustomers();
 	}
 	
-	getRevenue() {
+	int getRevenue(Date date) {
 		
 	}
 	
