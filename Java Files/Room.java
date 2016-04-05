@@ -34,9 +34,9 @@ public class Room {
         return isDouble;
     }
 
-    public void setDouble(boolean aDouble) {
-        isDouble = aDouble;
-        if(this.aDouble){
+    public void setDouble(boolean Double) {
+        isDouble = isDouble;
+        if(this.isDouble){
             setPrice(120.00);
         }
         else{
