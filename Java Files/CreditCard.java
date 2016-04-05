@@ -20,7 +20,7 @@ public class CreditCard {
     private String billingAddress;
     private double amount=0.00;
 
-    CreditCard(String name,String cardname,int ccv,Date expDate, String billingAddress, double amount) {
+    public CreditCard(String name,String cardname,int ccv,Date expDate, String billingAddress, double amount) {
         this.name=name;
         this.cardname = cardname;
         this.ccv = ccv;
