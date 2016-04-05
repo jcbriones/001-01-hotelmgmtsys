@@ -26,10 +26,6 @@ public class Room {
         this.roomNumber = roomNumber;
     }
 
-    public boolean isOccupied() {
-        return isOccupied;
-    }
-
     public void setOccupied(boolean occupied) {
         isOccupied = occupied;
     }
@@ -50,6 +46,13 @@ public class Room {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    void setOccupancy(boolean occ){
+        if(occ)
+            setOccupied(true);
+        else
+            setOccupied(false);
     }
 }
 
