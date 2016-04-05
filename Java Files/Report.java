@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Date;
 
 /*
  * Report.java
@@ -12,7 +13,6 @@ import java.util.ArrayList;
 public class Report {
 	private int revenue;
 	private int occupancy;
-	
 	
 	public Report() {
 		
@@ -36,7 +36,7 @@ public class Report {
 		return hotel.getListOfCustomers();
 	}
 	
-	getRevenue() {
+	int getRevenue(Date date) {
 		
 	}
 	
