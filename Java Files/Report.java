@@ -15,20 +15,22 @@ public class Report {
 	 * That still needs to be determined.
 	 */
 	
-	ArrayList<Reservation> listOfReservations() {
-		
+	ArrayList<Reservation> listOfReservations(HotelSystem hotel) {
+		return hotel.getListOfReservations();
 	}
 	
-	ArrayList<Room>listOfRooms() {
-		
+	ArrayList<Room>listOfRooms(HotelSystem hotel) {
+		return hotel.getListOfRooms();
 	}
 	
+	/*
 	ArrayList listOfPayments() {
 		
 	}
+	*/
 	
-	ArrayList<Customer> listOfCustomers() {
-		
+	ArrayList<Customer> listOfCustomers(HotelSystem hotel) {
+		return hotel.getListOfCustomers();
 	}
 	
 	getRevenue() {
