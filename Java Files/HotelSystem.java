@@ -21,24 +21,20 @@ public class HotelSystem {
 	private ArrayList<User> listOfUsers;
 	private static Calendar calendar = new Calendar();
 
-	private Scanner keyboard = new Scanner(System.in);
-
 	public HotelSystem()
 	{
 		// Create an instance of hotel system. Has an ID just in case
 		// the user wants to create more than 1 instance of a hotel.
 		this.hotelID = UNIQUE_ID++;
 	}
-	public Reservation makeReservation(User reservedTo, Room rm, int numberOfOccupants, int month, int day, int year, int numberOfDays)
+	public Reservation makeReservation(int reservedTo, Room rm, int numberOfOccupants, int month, int day, int year, int numberOfDays)
 	{
 		Reservation rsvp;
 		if (calendar.checkDate(rm,month,day,year) == null)
 		{
-			rsvp = new Reservation(reservedTo, rm, numberOfOccupants, month, day, year, numberOfDays, rm.getPrice(), rm.getPrice());
+			rsvp = new Reservation(reservedTo, rm, numberOfOccupants, month, day, year, numberOfDays, rm.getPrice()*numberOfDays, rm.getPrice()*numberOfDays);
 			listOfReservations.add(rsvp);
 		}
-		else
-			System.out.println("Unfortunately, this date and room is already taken. Please try a different room or date.");
 		return rsvp;
 	}
 
@@ -71,12 +67,17 @@ public class HotelSystem {
 		return newUser;
 	}
 
-	public void lookUser(String username) {
+	public User lookUser(String username) {
 		// Check first if a username exist
 		Iterator<User> itr = listOfUsers.iterator();
+		User tmp;
 		while (itr.hasNext())
-			if (itr.next().getUsername().equals(username))
-				return null;
+		{
+			tmp = itr.next();
+			if (tmp.getUsername().equals(username))
+				return tmp;
+		}
+		return null;
 	}
 
 	public User loginUser(String username, String password)
@@ -91,9 +92,7 @@ public class HotelSystem {
 		{
 			tmp = users.next();
 			if (tmp.getUsername().equals(username) && tmp.getPassword().equals(password))
-			{
 				return tmp;
-			}
 		}
 		// Else, return null because no match found.
 		return null;

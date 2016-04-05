@@ -19,10 +19,10 @@ public class Reservation
 	private int day;
 	private int year;
 	private int numberOfDays;
-	private int balance;
-	private int roomCost;
+	private double balance;
+	private double roomCost;
 
-	public Reservation(int customerID, Room room, int occupants, int m, int d, int y, int nod, int bal, int cost)
+	public Reservation(int customerID, Room room, int occupants, int m, int d, int y, int nod, double bal, double cost)
 	{
 		this.rsvpID = UNIQUE_ID++;
 		this.reservedTo = customerID;
@@ -76,7 +76,7 @@ public class Reservation
 		this.numberOfOccupants = numberOfOccupants;
 	}
 
-	public int getBalance() {
+	public double getBalance() {
 		return balance;
 	}
 
@@ -84,7 +84,7 @@ public class Reservation
 		this.balance = balance;
 	}
 
-	public int getRoomCost() {
+	public double getRoomCost() {
 		return roomCost;
 	}
 	

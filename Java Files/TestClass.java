@@ -25,7 +25,7 @@ public class TestClass {
 	 *  under that user.
 	 */
 	private static User loggedInUser;
-	private static User user;
+	private static User current;
 
 	// Sample main class
 	public static void main(String[] args)
@@ -43,8 +43,8 @@ public class TestClass {
 
 	private static void PrintMenu() {
 		System.out.println("Select one of the following:");
-		while (user == null)
-			hotelSystem.loginWindow();
+		while (loggedInUser == null)
+			loggedInUser = loginWindow();
 
 		// Standard Users Menu
 		System.out.println("\tcr: Create Reservation");
@@ -66,37 +66,44 @@ public class TestClass {
 		switch(keyboard.nextLine())
 		{
 		case "cr":
-			hotelSystem.makeReservation(user);
+			if(loggedInUser.getAccountType() > 0)
+			{
+				System.out.println("You are an admin, please enter the username of the customer you want to add the reservation to:");
+				current = hotelSystem.lookUser(keyboard.nextLine());
+			} else {
+				current = loggedInUser;
+			}
+			makeReservation(current);
 			break;
 		case "lr":
-			hotelSystem.lookReservation(user);
+			hotelSystem.lookReservation(current);
 			System.out.println("Would you like to modify this user or delete it? (m or d)");
 			// Menu for modify or delete user here
 			break;
 		case "cc":
-			hotelSystem.createUser();
+			//hotelSystem.createUser();
 			break;
 		case "lc":
-			hotelSystem.lookUser();
+			//hotelSystem.lookUser();
 			// Menu for modify or delete user here
 			break;
 		case "lu":
-			hotelSystem.loginWindow();
+			//hotelSystem.loginWindow();
 		default:
 			System.out.println("Menu not found. Try again.");
 			break;
 		}
 	}
-	public Reservation makeReservation(User userID)
+	public static Reservation makeReservation(User user)
 	{
 		System.out.println("======\nMake Reservation:\n======");
 		System.out.println("Select a Room:");
 		// Reservation
 		Reservation rsvp = null;
 		// View the list of available rooms to users
-		Iterator<Room> itr = listOfRooms.iterator();
-		Room rm;
-		while(itr.hasNext())
+		Iterator<Room> itr = hotelSystem.getListOfRooms().iterator();
+		Room rm = null;
+		while(true)
 		{
 			rm = itr.next();
 			System.out.println("Room Number: " + rm.getRoomNumber());
@@ -104,6 +111,9 @@ public class TestClass {
 			System.out.println("- Would you like to use this room? Y or N");
 			if (keyboard.nextLine().toLowerCase() == "y")
 				break;
+			
+			if (!itr.hasNext())
+				itr = hotelSystem.getListOfRooms().iterator();
 		}
 		System.out.println("How many are you in a room?:");
 		int occupants = keyboard.nextInt();
@@ -114,19 +124,19 @@ public class TestClass {
 		int day = keyboard.nextInt();
 		System.out.println("Year (YYYY): ");
 		int year = keyboard.nextInt();
+		System.out.println("How many days?: ");
+		int numberOfDays = keyboard.nextInt();
 		keyboard.nextLine();
-		Calendar date = calendar.checkDate(rm,month,day,year);
-		if (date == null)
-		{
-			rsvp = Reservation(userID, rm, occupants, date, rm.getPrice(), rm.getPrice());
-			listOfReservations.add(rsvp);
-			System.out.println("You have successfully added a reservation under " + userID.getFullName() + "'s account");
-		}
+		// Create reservation
+		rsvp = hotelSystem.makeReservation(user.getUserID(), rm, occupants, month, day, year, numberOfDays);
+		if (rsvp != null)
+			System.out.println("You have successfully added a reservation under " + user.getFullName() + "'s account");
 		else
 			System.out.println("Unfortunately, this date and room is already taken. Please try a different room or date.");
 		return rsvp;
 	}
-	public User loginWindow()
+
+	public static User loginWindow()
 	{
 		Iterator<User> users = hotelSystem.getListOfUsers().iterator();
 		System.out.println("======\nLogin Window\n======");
