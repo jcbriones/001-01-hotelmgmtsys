@@ -12,5 +12,16 @@
  * - Item 3
  */
 public class Staff {
-
+	// Staff ID Counter
+	private static int UNIQUE_ID = 0;
+	private int staffID;
+	private String username;
+	private String password;
+	
+	
+	
+	public Staff()
+	{
+		
+	}
 }
