@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Iterator;
+
 /*
  * HotelSystem.java
  * 
@@ -8,74 +11,126 @@
  * This is the HotelSystem class which acts as the main class of the program.
  */
 
-import java.util.ArrayList;	// USE ARRAYLISTS FOR NOW
-import java.util.Iterator;
-import java.util.Scanner;
-
 public class HotelSystem {
 	private static int UNIQUE_ID = 0;
 	private int hotelID;
 	private String hotelName;
-	private ArrayList<Room> listOfRooms;
-	private ArrayList<Reservation> listOfReservations;
-	private ArrayList<User> listOfUsers;
-	private Calendar calendar;
+	private Database db;
+	private Calendar cal;
 
 	public HotelSystem()
 	{
 		// Create an instance of hotel system. Has an ID just in case
 		// the user wants to create more than 1 instance of a hotel.
 		this.hotelID = UNIQUE_ID++;
-		
+
 		hotelName = null;
-		listOfRooms = new ArrayList<Room>();
-		listOfReservations = new ArrayList<Reservation>();
-		listOfUsers = new ArrayList<User>();
-		calendar = new Calendar();
+		db = new Database();
+		cal = new Calendar();
 	}
-	public Reservation makeReservation(int reservedTo, Room rm, int numberOfOccupants, int month, int day, int year, int numberOfDays)
+	
+	/* =======================================
+	 * List of Functions of a HotelSystem
+	 * =======================================
+	 */
+	
+	// Rooms
+	public Room createRoom(int roomNumber, boolean isDouble, double price)
 	{
-		Reservation rsvp;
-		if (calendar.checkDate(rm,month,day,year))
+		if(getRoom(roomNumber) != null)
+			return null;
+		else
 		{
-			rsvp = new Reservation(reservedTo, rm, numberOfOccupants, month, day, year, numberOfDays, rm.getPrice()*numberOfDays, rm.getPrice()*numberOfDays);
-			listOfReservations.add(rsvp);
+			Room rm = new Room(roomNumber, isDouble, price);
+			db.getListOfRooms().add(rm);
+			return rm;
 		}
-		return rsvp;
 	}
 
-	public Reservation lookReservation(User user)
+	public Room getRoom(int roomNumber)
 	{
-		// TODO Auto-generated method stub
+		// Search the list
+		Iterator<Room> itr = db.getListOfRooms().iterator();
+		Room rm;
+		while(itr.hasNext())
+		{
+			rm = itr.next();
+			if (rm.getRoomNumber() == roomNumber)
+				return rm;
+		}
 		return null;
 	}
 
-	public void updateReservation(Reservation rsvp)
+	public boolean deleteRoom(Room rm)
 	{
-		// TODO Auto-generated method stub
+		return db.getListOfRooms().remove(rm);
 	}
 
-	public void deleteReservation(Reservation rsvp)
+	// Reservations
+	public Reservation addReservation(int reservedTo, Room rm, int numberOfOccupants, int month, int day, int year, int numberOfDays)
 	{
-		// TODO Auto-generated method stub
+		Reservation rsvp;
+		if (cal.checkDate(rm,month,day,year))
+		{
+			rsvp = new Reservation(reservedTo, rm, numberOfOccupants, month, day, year, numberOfDays, rm.getPrice()*numberOfDays, rm.getPrice()*numberOfDays);
+			db.getListOfReservations().add(rsvp);
+			return rsvp;
+		}
+		else
+			return null;
 	}
 
-	public User createUser(String username, String password, String name, int accountType) {
+	public Reservation getReservation(int userID)
+	{
+		// Search the list
+		Iterator<Reservation> itr = db.getListOfReservations().iterator();
+		Reservation rsvp;
+		while(itr.hasNext())
+		{
+			rsvp = itr.next();
+			if (rsvp.getReservedTo() == userID)
+				return rsvp;
+		}
+		return null;
+	}
+	
+	public ArrayList<Reservation> getReservations(int userID)
+	{
+		// Search the list
+		Iterator<Reservation> itr = db.getListOfReservations().iterator();
+		ArrayList<Reservation> rsvps = new ArrayList<Reservation>();
+		Reservation rsvp;
+		while(itr.hasNext())
+		{
+			rsvp = itr.next();
+			if (rsvp.getReservedTo() == userID)
+				rsvps.add(rsvp);
+		}
+		return rsvps;
+	}
+	
+	public boolean deleteReservation(Reservation rsvp)
+	{
+		return db.getListOfReservations().remove(rsvp);
+	}
+
+	// Users
+	public User addUser(String username, String password, String name, int accountType) {
 		// Check first if a username exist
-		Iterator<User> itr = listOfUsers.iterator();
+		Iterator<User> itr = db.getListOfUsers().iterator();
 		while (itr.hasNext())
 			if (itr.next().getUsername().equals(username))
 				return null;
 
-		// Else, create the user and add it to the user list.
-		User newUser = new User(username,password,name,accountType);
-		listOfUsers.add(newUser);
-		return newUser;
+		// Create the user if not found
+		User usr = new User(username,password,name,accountType);
+		db.getListOfUsers().add(usr);
+		return usr;
 	}
 
-	public User lookUser(String username) {
-		// Check first if a username exist
-		Iterator<User> itr = listOfUsers.iterator();
+	public User getUser(String username) {
+		// Check if a User with username does exist
+		Iterator<User> itr = db.getListOfUsers().iterator();
 		User tmp;
 		while (itr.hasNext())
 		{
@@ -86,29 +141,40 @@ public class HotelSystem {
 		return null;
 	}
 
+	public boolean deleteUser(User usr)
+	{
+		if (db.getListOfUsers().remove(usr))
+		{
+			// TODO: Delete all reservations under that user.
+			return true;
+		}
+		return false;
+	}
+
+
+	// Used for verifying logins
 	public User loginUser(String username, String password)
 	{
-		// Initialize Iterator for searching
-		Iterator<User> users = listOfUsers.iterator();
-
-		// Look for the User and check if password matches.
-		// If yes, return the user.
-		User tmp;
-		while (users.hasNext())
-		{
-			tmp = users.next();
-			if (tmp.getUsername().equals(username) && tmp.getPassword().equals(password))
-				return tmp;
-		}
-		// Else, return null because no match found.
-		return null;
+		User usr = getUser(username);
+		return usr.getPassword().equals(password) ? usr : null;
 	}
 
-	// Setters and Getters
-	public int getHotelID() {
+	// Minimum rank to check for priviledge
+	public boolean checkPriviledge(User usr, int accountType) {
+		return usr.getAccountType() >= accountType;
+	}
+
+	/* =======================================
+	 * Setters and Getters
+	 * =======================================
+	 */
+	public int getHotelID()
+	{
 		return hotelID;
 	}
-	public String getHotelName() {
+
+	public String getHotelName()
+	{
 		return hotelName;
 	}
 
@@ -116,27 +182,7 @@ public class HotelSystem {
 		this.hotelName = hotelName;
 	}
 
-	public ArrayList<Room> getListOfRooms() {
-		return listOfRooms;
-	}
-
-	public void setListOfRooms(ArrayList<Room> listOfRooms) {
-		this.listOfRooms = listOfRooms;
-	}
-
-	public ArrayList<Reservation> getListOfReservations() {
-		return listOfReservations;
-	}
-
-	public void setListOfReservations(ArrayList<Reservation> listOfReservations) {
-		this.listOfReservations = listOfReservations;
-	}
-
-	public ArrayList<User> getListOfUsers() {
-		return listOfUsers;
-	}
-
-	public void setListOfUsers(ArrayList<User> listOfUsers) {
-		this.listOfUsers = listOfUsers;
+	public Database getDB() {
+		return db;
 	}
 }
