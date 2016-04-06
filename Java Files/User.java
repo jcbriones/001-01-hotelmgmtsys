@@ -1,5 +1,5 @@
 /*
- * Users.java
+ * User.java
  * 
  * CS321-001 - George Mason University
  * Group 01
