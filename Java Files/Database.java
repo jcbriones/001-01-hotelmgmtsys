@@ -21,7 +21,6 @@ public class Database {
 		listOfRooms = new ArrayList<Room>();
 		listOfReservations = new ArrayList<Reservation>();
 		listOfUsers = new ArrayList<User>();
-		calendar = new Calendar();
 	}
 
 	/* =======================================
