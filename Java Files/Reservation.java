@@ -7,6 +7,118 @@
  * 
  * This is the Reservation class where good things happen. Just wait...
  */
-public class Reservation {
+public class Reservation
+{
+	private static int UNIQUE_ID = 0;
+
+	private int rsvpID;
+	private int reservedTo;
+	private Room room;
+	private int numberOfOccupants;
+	private int month;
+	private int day;
+	private int year;
+	private int numberOfDays;
+	private double balance;
+	private double roomCost;
+
+	public Reservation(int customerID, Room room, int occupants, int m, int d, int y, int nod, double bal, double cost)
+	{
+		this.rsvpID = UNIQUE_ID++;
+		this.reservedTo = customerID;
+		this.room = room;
+		this.numberOfOccupants = occupants;
+		this.month = m;
+		this.day = d;
+		this.year = y;
+		this.numberOfDays = nod;
+		this.balance = bal;
+		this.roomCost = cost;
+	}
+
+	//Should call ProcessPayment's validate Payment and send it
+	//This reservation's CreditCard
+	public boolean validatePayment()
+	{
+		return true;
+	}
+
+	// Setters and Getters
+	public int getRsvpID() {
+		return rsvpID;
+	}
+
+	public void setRsvpID(int rsvpID) {
+		this.rsvpID = rsvpID;
+	}
+
+	public int getReservedTo() {
+		return reservedTo;
+	}
+
+	public void setReservedTo(int reservedTo) {
+		this.reservedTo = reservedTo;
+	}
+
+	public Room getRoom() {
+		return room;
+	}
+
+	public void setRoom(Room room) {
+		this.room = room;
+	}
+
+	public int getNumberOfOccupants() {
+		return numberOfOccupants;
+	}
+
+	public void setNumberOfOccupants(int numberOfOccupants) {
+		this.numberOfOccupants = numberOfOccupants;
+	}
+
+	public double getBalance() {
+		return balance;
+	}
+
+	public void setBalance(int balance) {
+		this.balance = balance;
+	}
+
+	public double getRoomCost() {
+		return roomCost;
+	}
+	
+	public int getMonth() {
+		return month;
+	}
+
+	public void setMonth(int month) {
+		this.month = month;
+	}
+
+	public int getDay() {
+		return day;
+	}
+
+	public void setDay(int day) {
+		this.day = day;
+	}
+
+	public int getYear() {
+		return year;
+	}
+
+	public void setYear(int year) {
+		this.year = year;
+	}
+
+	public int getNumberOfDays() {
+		return numberOfDays;
+	}
+
+	public void setNumberOfDays(int numberOfDays) {
+		this.numberOfDays = numberOfDays;
+	}
+
 
 }
