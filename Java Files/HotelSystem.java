@@ -19,13 +19,19 @@ public class HotelSystem {
 	private ArrayList<Room> listOfRooms;
 	private ArrayList<Reservation> listOfReservations;
 	private ArrayList<User> listOfUsers;
-	private static Calendar calendar = new Calendar();
+	private Calendar calendar;
 
 	public HotelSystem()
 	{
 		// Create an instance of hotel system. Has an ID just in case
 		// the user wants to create more than 1 instance of a hotel.
 		this.hotelID = UNIQUE_ID++;
+		
+		hotelName = null;
+		listOfRooms = new ArrayList<Room>();
+		listOfReservations = new ArrayList<Reservation>();
+		listOfUsers = new ArrayList<User>();
+		calendar = new Calendar();
 	}
 	public Reservation makeReservation(int reservedTo, Room rm, int numberOfOccupants, int month, int day, int year, int numberOfDays)
 	{
