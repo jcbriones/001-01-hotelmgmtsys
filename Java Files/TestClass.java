@@ -69,7 +69,7 @@ public class TestClass {
 			// Show this because admin supposed to create a reservation using the user's account.
 			if(loggedInUser.getAccountType() >= 1)
 			{
-				System.out.println("You are an admin, please enter the username of the customer you want to add the reservation to:");
+				System.out.println("You are an staff/admin, please enter the username of the customer you want to add the reservation to:");
 				do {
 					currentUser = hotelSystem.lookUser(keyboard.nextLine());
 					if (currentUser == null)
@@ -80,47 +80,84 @@ public class TestClass {
 			}
 			makeReservation(currentUser);
 			break;
+
 		case "lr":
+			System.out.println("======\nLook for Reservation of the User: " + currentUser.getUsername() + "\n======");
 			hotelSystem.lookReservation(currentUser);
 			System.out.println("Would you like to modify this user or delete it? (m or d)");
 			// Menu for modify or delete user here
 			break;
+
 		case "cc":	// Create User
+			if (!checkPriviledge(1))
+				break;
+
+			System.out.println("======\nCreate User Account:\n======");
 			System.out.println("Enter username: ");
-			String user = keyboard.nextLine();
+			String createUser = keyboard.nextLine();
 			System.out.println("Enter password: ");
-			String pass = keyboard.nextLine();
+			String createPass = keyboard.nextLine();
 			System.out.println("Enter full name of user: ");
 			String fullName = keyboard.nextLine();
-			hotelSystem.createUser(user, pass, fullName, 0);
+			hotelSystem.createUser(createUser, createPass, fullName, 0);
 			break;
+
 		case "lc":	// Look for User
-			if(loggedInUser.getAccountType() >= 1)
-			{
-				currentUser = hotelSystem.lookUser(keyboard.nextLine());
-				if (currentUser == null)
-					System.out.println("Cannot find user with that username.");
-				else
-					System.out.println("Found user " + currentUser.getFullName() + " and has been set as currentUser user");
-			}
+			if (!checkPriviledge(1))
+				break;
+
+			System.out.println("======\nLook For User:\n======");
+
+			currentUser = hotelSystem.lookUser(keyboard.nextLine());
+			if (currentUser == null)
+				System.out.println("Cannot find user with that username.");
+			else
+				System.out.println("Found user " + currentUser.getFullName() + " and has been set as currentUser user");
 			// TODO: Menu for modify or delete user here
 			break;
+
 		case "lu":	// Login a Different User
-			loginWindow();
+			System.out.println("======\nLogin Window\n======");
+			System.out.println("Enter the username:");
+			String loginUser = keyboard.nextLine();
+			System.out.println("Enter the user's password");
+			String loginPass = keyboard.nextLine();
+			// Look for the User and check if password matches.
+			// If yes, return the user.
+			User tmp = hotelSystem.loginUser(loginUser, loginPass);
+			if (tmp != null)
+			{
+				System.out.println("Success. You are now logged in as: " + tmp.getUsername());
+				loggedInUser = tmp;
+			}
+			// Else, return a message saying incorrect;
+			else
+				System.out.println("Your username or password is incorrect. Please try again.");
 			break;
+
 		default:
 			System.out.println("Menu not found. Try again.");
 			break;
 		}
+
 	}
+
+	// Minimum rank to check for priviledge
+	private static boolean checkPriviledge(int i) {
+		if (loggedInUser.getAccountType() >= i)
+			System.out.println("You are not allowed to access this menu");
+		return (loggedInUser.getAccountType() >= i);
+	}
+
 	public static Reservation makeReservation(User user)
 	{
 		// Should create a room first before making a reservation
 		if (hotelSystem.getListOfRooms().size() == 0)
 		{
-			System.out.print("Room is empty. Cannot create a reservation. Admins, create a room first.");
+			System.out.println("Room is empty. Cannot create a reservation. Admins, create a room first.");
 			return null;
 		}
+
 		System.out.println("======\nMake Reservation:\n======");
 		System.out.println("Select a Room:");
 		// Reservation
@@ -159,25 +196,5 @@ public class TestClass {
 		else
 			System.out.println("Unfortunately, this date and room is already taken. Please try a different room or date.");
 		return rsvp;
-	}
-
-	public static User loginWindow()
-	{
-		System.out.println("======\nLogin Window\n======");
-		System.out.println("Enter the username:");
-		String user = keyboard.nextLine();
-		System.out.println("Enter the user's password");
-		String pass = keyboard.nextLine();
-		// Look for the User and check if password matches.
-		// If yes, return the user.
-		User tmp = hotelSystem.loginUser(user, pass);
-		if (tmp != null)
-		{
-			System.out.println("Success. You are now logged in as: " + tmp.getUsername());
-			return tmp;
-		}
-		// Else, return null;
-		System.out.println("Your username or password is incorrect. Please try again.");
-		return null;
 	}
 }
