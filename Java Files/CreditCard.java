@@ -8,72 +8,114 @@
  * This is the CreditCard class which holds the data of a credit card such as name,
  * credit card number, exp date, etc...
  */
+
 /**
  * Created by Ken on 4/5/2016.
  */
-import java.util.Date;
 public class CreditCard {
-    private String name;
-    private String cardname;
-    private int ccv;
-    private Date expDate;
-    private String billingAddress;
-    private double amount=0.00;
+	private String nameOnCard;
+	private int CCV;
+	private int expDateM;
+	private int expDateY;
+	private String billingAddress1;
+	private String billingAddress2;
+	private String billingCity;
+	private String billingState;
+	private int billingZip;
+	private double amount=0.00;
 
-    public CreditCard(String name,String cardname,int ccv,Date expDate, String billingAddress, double amount) {
-        this.name=name;
-        this.cardname = cardname;
-        this.ccv = ccv;
-        this.expDate = expDate;
-        this.billingAddress = billingAddress;
-        this.amount = amount;
-    }
+	public CreditCard(String nameOnCard, int CCV, int expDateM, int expDateY, String billingAddress1, String billingAddress2, String billingCity, String billingState, int billingZip, double amount) {
+		this.nameOnCard = nameOnCard;
+		this.CCV = CCV;
+		this.expDateM = expDateM;
+		this.expDateY = expDateY;
+		this.billingAddress1 = billingAddress1;
+		this.billingAddress2 = billingAddress2;
+		this.billingCity = billingCity;
+		this.billingState = billingState;
+		this.billingZip = billingZip;
+		this.amount = amount;
+	}
 
-    public String getName() {
-        return name;
-    }
+	// Setters and Getters
+	public String getNameOnCard() {
+		return nameOnCard;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setNameOnCard(String nameOnCard) {
+		this.nameOnCard = nameOnCard;
+	}
 
-    public String getCardname() {
-        return cardname;
-    }
+	public int getCCV() {
+		return CCV;
+	}
 
-    public void setCardname(String cardname) {
-        this.cardname = cardname;
-    }
+	public void setCCV(int cCV) {
+		CCV = cCV;
+	}
 
-    public int getCcv() {
-        return ccv;
-    }
+	public int getExpDateM() {
+		return expDateM;
+	}
 
-    public void setCcv(int ccv) {
-        this.ccv = ccv;
-    }
+	public void setExpDateM(int expDateM) {
+		this.expDateM = expDateM;
+	}
 
-    public Date getExpDate() {
-        return expDate;
-    }
+	public int getExpDateY() {
+		return expDateY;
+	}
 
-    public void setExpDate(Date expDate) {
-        this.expDate = expDate;
-    }
+	public void setExpDateY(int expDateY) {
+		this.expDateY = expDateY;
+	}
 
-    public String getBillingAddress() {
-        return billingAddress;
-    }
+	public String getBillingAddress1() {
+		return billingAddress1;
+	}
 
-    public void setBillingAddress(String billingAddress) {
-        this.billingAddress = billingAddress;
-    }
+	public void setBillingAddress1(String billingAddress1) {
+		this.billingAddress1 = billingAddress1;
+	}
 
-    public double getAmount() {
-        return amount;
-    }
+	public String getBillingAddress2() {
+		return billingAddress2;
+	}
 
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
+	public void setBillingAddress2(String billingAddress2) {
+		this.billingAddress2 = billingAddress2;
+	}
+
+	public String getBillingCity() {
+		return billingCity;
+	}
+
+	public void setBillingCity(String billingCity) {
+		this.billingCity = billingCity;
+	}
+
+	public String getBillingState() {
+		return billingState;
+	}
+
+	public void setBillingState(String billingState) {
+		this.billingState = billingState;
+	}
+
+	public int getBillingZip() {
+		return billingZip;
+	}
+
+	public void setBillingZip(int billingZip) {
+		this.billingZip = billingZip;
+	}
+
+	public double getAmount() {
+		return amount;
+	}
+
+	public void setAmount(double amount) {
+		this.amount = amount;
+	}
+	
 }
