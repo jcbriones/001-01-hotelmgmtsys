@@ -30,7 +30,10 @@ public class User {
 		isBanned = false;
 	}
 	
-	// Setters and Getters
+	/* =======================================
+	 * Setters and Getters
+	 * =======================================
+	 */
 	public int getUserID() {
 		return userID;
 	}

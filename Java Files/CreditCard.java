@@ -37,7 +37,10 @@ public class CreditCard {
 		this.amount = amount;
 	}
 
-	// Setters and Getters
+	/* =======================================
+	 * Setters and Getters
+	 * =======================================
+	 */
 	public String getNameOnCard() {
 		return nameOnCard;
 	}

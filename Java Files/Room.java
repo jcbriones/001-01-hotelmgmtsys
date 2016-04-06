@@ -15,14 +15,17 @@ public class Room {
 	private boolean isDouble;
 	private double price;
 
-	public Room(int roomNumber, boolean isOccupied, boolean isDouble){
-		this.roomNumber=roomNumber;
-		this.isOccupied=isOccupied;
-		this.isDouble=isDouble;
+	public Room(int roomNumber, boolean isDouble, double price){
+		this.roomNumber = roomNumber;
+		this.isOccupied = false;
+		this.isDouble = isDouble;
+		this.price = price;
 	}
 
-	// Setters and getters
-
+	/* =======================================
+	 * Setters and Getters
+	 * =======================================
+	 */
 	public int getRoomNumber() {
 		return roomNumber;
 	}

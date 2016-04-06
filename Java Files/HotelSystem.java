@@ -1,6 +1,3 @@
-import java.util.ArrayList;
-import java.util.Iterator;
-
 /*
  * HotelSystem.java
  * 
@@ -10,6 +7,8 @@ import java.util.Iterator;
  * 
  * This is the HotelSystem class which acts as the main class of the program.
  */
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class HotelSystem {
 	private static int UNIQUE_ID = 0;

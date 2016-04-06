@@ -3,9 +3,11 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 public class TestClass {
-	/*
+	/* ===========================================
 	 * SETTINGS:
-	 * Change the following info below for the variables that the hotel system will be using.
+	 * Change the following info below for the
+	 * variables that the hotel system will be
+	 * using.
 	 * ============ Begin of Settings ============
 	 */
 	// Initial Admin User

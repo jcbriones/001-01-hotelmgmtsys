@@ -43,7 +43,10 @@ public class Reservation
 		return true;
 	}
 
-	// Setters and Getters
+	/* =======================================
+	 * Setters and Getters
+	 * =======================================
+	 */
 	public int getRsvpID() {
 		return rsvpID;
 	}

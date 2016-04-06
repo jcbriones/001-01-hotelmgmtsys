@@ -1,3 +1,4 @@
+
 /*
  * Calendar.java
  * 
@@ -7,25 +8,10 @@
  * 
  * This is the Calendar class which preview the list of reservations in a calendar format.
  */
-import javax.swing.text.html.HTMLDocument;
-import java.util.*;
+import java.util.ArrayList;
 
 public class Calendar {
-    public Date Today;
-    //revinue by a period of time
-    private double Revinue;
-    //Number of people in the hotel
-    private int TotalOccupancy;
-
-    public ArrayList<Reservation> ListOfReservations = new ArrayList<Reservation>();
-
-    public Date Today(){return Today;}
-
-    public void addReservation(Reservation res)
-    {
-        ListOfReservations.add(res);
-    }
-
+	ArrayList<Reservation> events = new ArrayList<Reservation>();
 
     //Goes through the events  in the Hotel System
     //And return all events that are happening at the provided date

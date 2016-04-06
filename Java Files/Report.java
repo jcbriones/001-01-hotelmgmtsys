@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-import java.util.Date;
 
 /*
  * Report.java
@@ -10,6 +8,9 @@ import java.util.Date;
  * 
  * This is the Report class which generate reports of the hotel system.
  */
+import java.util.ArrayList;
+import java.util.Date;
+
 public class Report {
 	private int revenue;
 	private int occupancy;
