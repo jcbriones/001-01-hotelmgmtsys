@@ -36,7 +36,7 @@ public class HotelSystem {
 	public Reservation makeReservation(int reservedTo, Room rm, int numberOfOccupants, int month, int day, int year, int numberOfDays)
 	{
 		Reservation rsvp;
-		if (calendar.checkDate(rm,month,day,year) == null)
+		if (calendar.checkDate(rm,month,day,year))
 		{
 			rsvp = new Reservation(reservedTo, rm, numberOfOccupants, month, day, year, numberOfDays, rm.getPrice()*numberOfDays, rm.getPrice()*numberOfDays);
 			listOfReservations.add(rsvp);
