@@ -14,8 +14,8 @@ public class HotelSystem {
 	private static int UNIQUE_ID = 0;
 	private int hotelID;
 	private String hotelName;
-	private Database db;
 	private Calendar cal;
+	private static Database db;
 
 	public HotelSystem()
 	{
@@ -181,7 +181,7 @@ public class HotelSystem {
 		this.hotelName = hotelName;
 	}
 
-	public Database getDB() {
+	public static Database getDB() {
 		return db;
 	}
 }
