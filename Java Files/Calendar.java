@@ -135,4 +135,21 @@ public class Calendar {
 
 		return Revenue;
 	}
+
+	//returns a list containing occupied rooms within a range
+	//arst
+	public ArrayList<Room> OccupiedRoomsInRange(Date day1, Date day2)
+	{
+		ArrayList<Reservation> rsvp = ReservationByDateRange(day1, day2);
+		ArrayList<Room> OccupiedRooms = new ArrayList<>();
+		Iterator<Reservation> it = rsvp.iterator();
+		Reservation CurrRes;
+
+		while(it.hasNext())
+		{
+			CurrRes = it.next();
+			OccupiedRooms.add(CurrRes.getRoom());
+		}
+		return OccupiedRooms;
+	}
 }
