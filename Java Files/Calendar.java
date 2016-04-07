@@ -11,7 +11,7 @@
 import java.util.ArrayList;
 
 public class Calendar {
-	ArrayList<Reservation> events = new ArrayList<Reservation>();
+	ArrayList<Reservation> ListOfReservations = new ArrayList<Reservation>();
 
     //Goes through the events  in the Hotel System
     //And return all events that are happening at the provided date
@@ -58,21 +58,21 @@ public class Calendar {
 
         for(int y=day1.getYear();y<=day2.getYear();y++)
         {
-            for(int m=day1.getMonth();m<=day2.getMonth();m++)
-            {
-                for( int d=day1.getDay();d<=day2.getDay();d++)
-                {
-                    CurrDayList = ReservationByDate(new Date(d,day1.getMonth(),day1.getYear()));
-                    it = CurrDayList.iterator();
-                    while(it.hasNext())
+            for(int m=day1.getMonth();m<=day2.getMonth();m++) {
+                for (int d=day1.getDay(); d <= day2.maxDays(); d++) {
+                    if (d <= day2.getDay() && m < day2.getMonth())
                     {
-                        CurrRes = it.next();
-                        if(!List.contains(CurrRes))
-                        {
-                            List.add(CurrRes);
+                        CurrDayList = ReservationByDate(new Date(d, day1.getMonth(), day1.getYear()));
+                        it = CurrDayList.iterator();
+                        while (it.hasNext()) {
+                            CurrRes = it.next();
+                            if (!List.contains(CurrRes)) {
+                                List.add(CurrRes);
+                            }
                         }
                     }
                 }
+
             }
         }
 
@@ -80,7 +80,7 @@ public class Calendar {
     }
 
     //Given a period of time, will add up all the revinue from the rooms throughout the period
-    public double RevinueByPeriod(Date day1, Date day2)
+    public double RevenueRange(Date day1, Date day2)
     {
         Revinue = 0.0;
         //Same error checking as before
@@ -93,22 +93,27 @@ public class Calendar {
         //The Current Reservation that I'm comparing
         Reservation CurrRes;
 
+
         for(int y=day1.getYear();y<=day2.getYear();y++)
         {
             for(int m=day1.getMonth();m<=day2.getMonth();m++)
             {
-                for( int d=day1.getDay();d<=day2.getDay();d++)
+                for( int d=day1.getDay();d<=day2.maxDays();d++)
                 {
-                    CurrDayList = ReservationByDate(new Date(d,day1.getMonth(),day1.getYear()));
-                    it = CurrDayList.iterator();
-                    while(it.hasNext())
+                    if(d <= day2.getDay() && d < day2.getMonth())
                     {
-                        CurrRes = it.next();
-                        Revinue += CurrRes.getRoomCost();
+                        CurrDayList = ReservationByDate(new Date(d, day1.getMonth(), day1.getYear()));
+                        it = CurrDayList.iterator();
+                        while (it.hasNext())
+                        {
+                            CurrRes = it.next();
+                            Revinue += CurrRes.getRoomCost();
+                        }
                     }
                 }
             }
         }
+
 
         return Revinue;
     }
