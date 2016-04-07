@@ -31,24 +31,12 @@ public class Database {
 		return listOfRooms;
 	}
 
-	public void setListOfRooms(ArrayList<Room> listOfRooms) {
-		this.listOfRooms = listOfRooms;
-	}
-
 	public ArrayList<Reservation> getListOfReservations() {
 		return listOfReservations;
 	}
 
-	public void setListOfReservations(ArrayList<Reservation> listOfReservations) {
-		this.listOfReservations = listOfReservations;
-	}
-
 	public ArrayList<User> getListOfUsers() {
 		return listOfUsers;
-	}
-
-	public void setListOfUsers(ArrayList<User> listOfUsers) {
-		this.listOfUsers = listOfUsers;
 	}
 
 }

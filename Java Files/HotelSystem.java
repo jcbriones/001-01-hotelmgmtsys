@@ -34,7 +34,7 @@ public class HotelSystem {
 	 */
 	
 	// Rooms
-	public Room createRoom(int roomNumber, boolean isDouble, double price)
+	public Room addRoom(int roomNumber, boolean isDouble, double price)
 	{
 		if(getRoom(roomNumber) != null)
 			return null;
@@ -66,12 +66,12 @@ public class HotelSystem {
 	}
 
 	// Reservations
-	public Reservation addReservation(int reservedTo, Room rm, int numberOfOccupants, int month, int day, int year, int numberOfDays)
+	public Reservation addReservation(int reservedTo, Room rm, int numberOfOccupants, int month, int day, int year, int numberOfNights)
 	{
 		Reservation rsvp;
 		if (cal.checkDate(rm,month,day,year))
 		{
-			rsvp = new Reservation(reservedTo, rm, numberOfOccupants, month, day, year, numberOfDays, rm.getPrice()*numberOfDays, rm.getPrice()*numberOfDays);
+			rsvp = new Reservation(reservedTo, rm, numberOfOccupants, month, day, year, numberOfNights, rm.getPrice()*numberOfNights, rm.getPrice());
 			db.getListOfReservations().add(rsvp);
 			return rsvp;
 		}

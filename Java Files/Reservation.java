@@ -18,7 +18,7 @@ public class Reservation
 	private int month;
 	private int day;
 	private int year;
-	private int numberOfDays;
+	private int numberOfNights;
 	private double balance;
 	private double roomCost;
 
@@ -31,7 +31,7 @@ public class Reservation
 		this.month = m;
 		this.day = d;
 		this.year = y;
-		this.numberOfDays = nod;
+		this.numberOfNights = nod;
 		this.balance = bal;
 		this.roomCost = cost;
 	}
@@ -115,12 +115,12 @@ public class Reservation
 		this.year = year;
 	}
 
-	public int getNumberOfDays() {
-		return numberOfDays;
+	public int getNumberOfNights() {
+		return numberOfNights;
 	}
 
-	public void setNumberOfDays(int numberOfDays) {
-		this.numberOfDays = numberOfDays;
+	public void setNumberOfNights(int numberOfNights) {
+		this.numberOfNights = numberOfNights;
 	}
 
 
