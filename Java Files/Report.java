@@ -12,36 +12,13 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Report {
-	private int revenue;
-	private int occupancy;
+	private int numebrOfReservations;
+	private int numberOfSinglesReserved;
+	private int numberOfDoublesReserved;
+	private int occupancyRate;
+	private int totalRevenue;
 	
-	public Report() {
-		
-	}
-	
-	ArrayList<Reservation> listOfReservations(HotelSystem hotel) {
-		return hotel.getListOfReservations();
-	}
-	
-	ArrayList<Room>listOfRooms(HotelSystem hotel) {
-		return hotel.getListOfRooms();
-	}
-	
-	/*
-	ArrayList listOfPayments() {
-		
-	}
-	*/
-	
-	ArrayList<Customer> listOfCustomers(HotelSystem hotel) {
-		return hotel.getListOfCustomers();
-	}
-	
-	int getRevenue(Date date) {
-		
-	}
-	
-	getOccupancy() {
+	public Report createReport() {
 		
 	}
 }
