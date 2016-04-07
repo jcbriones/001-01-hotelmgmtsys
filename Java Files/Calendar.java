@@ -34,12 +34,12 @@ public class Calendar {
 
 	public boolean checkDate(Room rm, int m, int d, int y)
 	{
-		Iterator<Reservation> rsvps = ListOfReservations.iterator();
+		Iterator<Reservation> rsvps = HotelSystem.getDB().getListOfReservations().iterator();
 		Date date = new Date(m,d,y);
 		while(rsvps.hasNext())
 		{
 			Reservation rsvp = rsvps.next();
-			if (rm.getRoomNumber() == rsvp.getRoom().getRoomNumber() && rsvp.getDate().equals(date))
+			if (rm == rsvp.getRoom() && !rsvp.getDate().equals(date))
 				return true;
 		}
 		return false;
