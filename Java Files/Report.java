@@ -9,7 +9,6 @@
  * This is the Report class which generate reports of the hotel system.
  */
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Report {
 	private int numebrOfReservations;
@@ -18,7 +17,17 @@ public class Report {
 	private int occupancyRate;
 	private int totalRevenue;
 	
-	public Report createReport() {
-		
+	public Report(int reservations, int singles, int doubles, int occupancy, int revenue) {
+		this.numebrOfReservations = reservations;
+		this.numberOfSinglesReserved = singles;
+		this.numberOfDoublesReserved = doubles;
+		this.occupancyRate = occupancy;
+		this.totalRevenue = revenue;
+	}
+	
+	public Report createReport(Date first, Date second) {
+		Calendar cal = new Calendar();
+		double revenue = cal.RevinueByPeriod(first, second);
+		int occupancy = cal.TotalOcucpancy();
 	}
 }
