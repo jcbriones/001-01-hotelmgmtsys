@@ -9,7 +9,9 @@
  */
 public final class ProcessPayment {
 	public boolean processPayment(CreditCard card, int amount) {
-		System.out.println("Your card was verified");
-		return true;
+		if (amount < 0 || card == null)
+			return false;
+		else
+			return true;
 	}
 }

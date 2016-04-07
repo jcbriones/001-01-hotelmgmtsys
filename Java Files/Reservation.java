@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /*
  * Reservation.java
  * 
@@ -15,9 +17,7 @@ public class Reservation
 	private int reservedTo;
 	private Room room;
 	private int numberOfOccupants;
-	private int month;
-	private int day;
-	private int year;
+	private Date date;
 	private int numberOfNights;
 	private double balance;
 	private double roomCost;
@@ -28,9 +28,7 @@ public class Reservation
 		this.reservedTo = customerID;
 		this.room = room;
 		this.numberOfOccupants = occupants;
-		this.month = m;
-		this.day = d;
-		this.year = y;
+		this.date = new Date(m,d,y);
 		this.numberOfNights = nod;
 		this.balance = bal;
 		this.roomCost = cost;
@@ -92,29 +90,38 @@ public class Reservation
 	}
 	
 	public int getMonth() {
-		return month;
+		return date.getMonth();
 	}
 
 	public void setMonth(int month) {
-		this.month = month;
+		this.date.setMonth(month);
 	}
 
 	public int getDay() {
-		return day;
+		return date.getDay();
 	}
 
 	public void setDay(int day) {
-		this.day = day;
+		this.date.setDay(day);
 	}
 
 	public int getYear() {
-		return year;
+		return date.getYear();
 	}
 
 	public void setYear(int year) {
-		this.year = year;
+		this.date.setYear(year);
 	}
 
+	public Date getDate() {
+		return date;
+	}
+	
+	// TODO:
+	public ArrayList<Date> getBookingDate() {
+		return null;
+	}
+	
 	public int getNumberOfNights() {
 		return numberOfNights;
 	}
