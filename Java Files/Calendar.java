@@ -34,12 +34,12 @@ public class Calendar {
 
 	public boolean checkDate(Room rm, int m, int d, int y)
 	{
-		Iterator<Reservation> rsvps = ListOfReservations.iterator();
+		Iterator<Reservation> rsvps = HotelSystem.getDB().getListOfReservations().iterator();
 		Date date = new Date(m,d,y);
 		while(rsvps.hasNext())
 		{
 			Reservation rsvp = rsvps.next();
-			if (rm.getRoomNumber() == rsvp.getRoom().getRoomNumber() && rsvp.getDate().equals(date))
+			if (rm == rsvp.getRoom() && !rsvp.getDate().equals(date))
 				return true;
 		}
 		return false;
@@ -134,5 +134,22 @@ public class Calendar {
 
 
 		return Revenue;
+	}
+
+	//returns a list containing occupied rooms within a range
+	//arst
+	public ArrayList<Room> OccupiedRoomsInRange(Date day1, Date day2)
+	{
+		ArrayList<Reservation> rsvp = ReservationByDateRange(day1, day2);
+		ArrayList<Room> OccupiedRooms = new ArrayList<>();
+		Iterator<Reservation> it = rsvp.iterator();
+		Reservation CurrRes;
+
+		while(it.hasNext())
+		{
+			CurrRes = it.next();
+			OccupiedRooms.add(CurrRes.getRoom());
+		}
+		return OccupiedRooms;
 	}
 }
