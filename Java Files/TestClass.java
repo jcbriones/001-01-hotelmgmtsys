@@ -271,7 +271,7 @@ public class TestClass {
 	private static void makeReservation(User user)
 	{
 		// Should create a room first before making a reservation
-		if (hotelSystem.getDB().getListOfRooms().size() == 0)
+		if (HotelSystem.getDB().getListOfRooms().size() == 0)
 		{
 			System.out.println("Room is empty. Cannot create a reservation. Admins, create a room first.");
 			return;
@@ -280,7 +280,7 @@ public class TestClass {
 		System.out.println("======\nMake Reservation:\n======");
 		System.out.println("Select a Room:");
 		// View the list of available rooms to users
-		Iterator<Room> itr = hotelSystem.getDB().getListOfRooms().iterator();
+		Iterator<Room> itr = HotelSystem.getDB().getListOfRooms().iterator();
 		Room rm = null;
 		while(itr.hasNext() && rm == null)
 		{
@@ -292,7 +292,7 @@ public class TestClass {
 				break;
 
 			if (!itr.hasNext())
-				itr = hotelSystem.getDB().getListOfRooms().iterator();
+				itr = HotelSystem.getDB().getListOfRooms().iterator();
 		}
 		System.out.println("How many are you in a room?:");
 		int occupants = keyboard.nextInt();
