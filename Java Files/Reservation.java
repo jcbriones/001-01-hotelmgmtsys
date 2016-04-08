@@ -13,20 +13,22 @@ public class Reservation
 {
 	private static int UNIQUE_ID = 0;
 
-	private int rsvpID;
-	private int reservedTo;
-	private Room room;
-	private int numberOfOccupants;
 	private ArrayList<Date> dates;
+	private Room room;
+	private User reservedTo;
+	private int rsvpID;
+	private int numberOfOccupants;
 	private int numberOfNights;
 	private double balance;
 	private double roomCost;
+	private boolean guaranteed;
 	private boolean bookingCompleted;
+	private boolean checkedIn;
 
-	public Reservation(int customerID, Room room, int occupants, int m, int d, int y, int numberOfNights, double bal, double cost)
+	public Reservation(User user, Room room, int occupants, int m, int d, int y, int numberOfNights, double bal, double cost)
 	{
 		this.rsvpID = UNIQUE_ID++;
-		this.reservedTo = customerID;
+		this.reservedTo = user;
 		this.room = room;
 		this.numberOfOccupants = occupants;
 		this.dates = new ArrayList<Date>();
@@ -35,20 +37,23 @@ public class Reservation
 		this.numberOfNights = numberOfNights;
 		this.balance = bal;
 		this.roomCost = cost;
+		this.guaranteed = false;
 		this.bookingCompleted = false;
+		this.checkedIn = false;
 	}
 
 	//Should call ProcessPayment's validate Payment and send it
 	//This reservation's CreditCard
-	public boolean validatePayment()
+	public boolean validatePayment(double amount)
 	{
-		return true;
+		return ProcessPayment.processPayment(reservedTo.getCreditCard(), amount);
 	}
 
 	/* =======================================
 	 * Setters and Getters
 	 * =======================================
 	 */
+
 	public int getRsvpID() {
 		return rsvpID;
 	}
@@ -57,11 +62,11 @@ public class Reservation
 		this.rsvpID = rsvpID;
 	}
 
-	public int getReservedTo() {
+	public User getReservedTo() {
 		return reservedTo;
 	}
 
-	public void setReservedTo(int reservedTo) {
+	public void setReservedTo(User reservedTo) {
 		this.reservedTo = reservedTo;
 	}
 
@@ -81,20 +86,12 @@ public class Reservation
 		this.numberOfOccupants = numberOfOccupants;
 	}
 
-	public double getBalance() {
-		return balance;
-	}
-
-	public void setBalance(int balance) {
-		this.balance = balance;
-	}
-
-	public double getRoomCost() {
-		return roomCost;
-	}
-
 	public ArrayList<Date> getDates() {
 		return dates;
+	}
+
+	public void setDates(ArrayList<Date> dates) {
+		this.dates = dates;
 	}
 
 	public int getNumberOfNights() {
@@ -105,12 +102,44 @@ public class Reservation
 		this.numberOfNights = numberOfNights;
 	}
 
-	public boolean getBookingCompleted() {
+	public double getBalance() {
+		return balance;
+	}
+
+	public void setBalance(double balance) {
+		this.balance = balance;
+	}
+
+	public double getRoomCost() {
+		return roomCost;
+	}
+
+	public void setRoomCost(double roomCost) {
+		this.roomCost = roomCost;
+	}
+
+	public boolean isGuaranteed() {
+		return guaranteed;
+	}
+
+	public void setGuaranteed(boolean guaranteed) {
+		this.guaranteed = guaranteed;
+	}
+
+	public boolean isBookingCompleted() {
 		return bookingCompleted;
 	}
 
-	public void setBookingCompleted(boolean val) {
-		this.bookingCompleted = val;
+	public void setBookingCompleted(boolean bookingCompleted) {
+		this.bookingCompleted = bookingCompleted;
+	}
+
+	public boolean isCheckedIn() {
+		return checkedIn;
+	}
+
+	public void setCheckedIn(boolean checkedIn) {
+		this.checkedIn = checkedIn;
 	}
 
 }

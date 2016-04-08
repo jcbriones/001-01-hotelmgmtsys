@@ -27,12 +27,12 @@ public class HotelSystem {
 		db = new Database();
 		cal = new Calendar();
 	}
-	
+
 	/* =======================================
 	 * List of Functions of a HotelSystem
 	 * =======================================
 	 */
-	
+
 	// Rooms
 	public Room addRoom(int roomNumber, boolean isDouble, double price)
 	{
@@ -66,7 +66,7 @@ public class HotelSystem {
 	}
 
 	// Reservations
-	public Reservation addReservation(int reservedTo, Room rm, int numberOfOccupants, int month, int day, int year, int numberOfNights)
+	public Reservation addReservation(User reservedTo, Room rm, int numberOfOccupants, int month, int day, int year, int numberOfNights)
 	{
 		ArrayList<Date> dates = new ArrayList<Date>();
 		for (int i = 0; i <= numberOfNights; i++)
@@ -75,13 +75,14 @@ public class HotelSystem {
 		{
 			Reservation rsvp = new Reservation(reservedTo, rm, numberOfOccupants, month, day, year, numberOfNights, rm.getPrice()*numberOfNights, rm.getPrice());
 			db.getListOfReservations().add(rsvp);
+
 			return rsvp;
 		}
 		else
 			return null;
 	}
 
-	public Reservation getReservation(int userID)
+	public Reservation getReservation(User usr)
 	{
 		// Search the list
 		Iterator<Reservation> itr = db.getListOfReservations().iterator();
@@ -89,13 +90,13 @@ public class HotelSystem {
 		while(itr.hasNext())
 		{
 			rsvp = itr.next();
-			if (rsvp.getReservedTo() == userID)
+			if (rsvp.getReservedTo() == usr)
 				return rsvp;
 		}
 		return null;
 	}
-	
-	public ArrayList<Reservation> getReservations(int userID)
+
+	public ArrayList<Reservation> getReservations(User usr)
 	{
 		// Search the list
 		Iterator<Reservation> itr = db.getListOfReservations().iterator();
@@ -104,12 +105,12 @@ public class HotelSystem {
 		while(itr.hasNext())
 		{
 			rsvp = itr.next();
-			if (rsvp.getReservedTo() == userID)
+			if (rsvp.getReservedTo() == usr)
 				rsvps.add(rsvp);
 		}
 		return rsvps;
 	}
-	
+
 	public boolean deleteReservation(Reservation rsvp)
 	{
 		return db.getListOfReservations().remove(rsvp);
@@ -142,6 +143,7 @@ public class HotelSystem {
 		return null;
 	}
 
+	// Delete the specified User in the database.
 	public boolean deleteUser(User usr)
 	{
 		if (db.getListOfUsers().remove(usr))
@@ -153,7 +155,7 @@ public class HotelSystem {
 	}
 
 
-	// Used for verifying logins
+	// Used for verifying logins and returning the User that matches the given user and pass
 	public User loginUser(String username, String password)
 	{
 		User usr = getUser(username);
