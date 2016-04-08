@@ -14,11 +14,12 @@ public class User {
 	
 	// Instance variables
 	private int userID;
+	private int accountType;	// 0 = User, 1 = Staff, 2 = Admin
 	private String username;
 	private String password;
 	private String fullName;
-	private int accountType;	// 0 = User, 1 = Staff, 2 = Admin
 	private boolean isBanned;
+	private CreditCard cc;
 	
 	public User(String user, String pass, String name, int type)
 	{
@@ -28,6 +29,7 @@ public class User {
 		fullName = name;
 		accountType = type;
 		isBanned = false;
+		cc = null;
 	}
 	
 	/* =======================================
@@ -76,4 +78,13 @@ public class User {
 	public void setBanned(boolean isBanned) {
 		this.isBanned = isBanned;
 	}
+
+	public CreditCard getCreditCard() {
+		return cc;
+	}
+
+	public void setCreditCard(CreditCard cc) {
+		this.cc = cc;
+	}
+	
 }

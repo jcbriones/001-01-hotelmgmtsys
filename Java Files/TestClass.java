@@ -174,7 +174,7 @@ public class TestClass {
 
 	private static void lookReservation() {
 		System.out.println("======\nLook for Reservations of the User: " + currentUser.getUsername() + "\n======");
-		ArrayList<Reservation> list = hotelSystem.getReservations(currentUser.getUserID());
+		ArrayList<Reservation> list = hotelSystem.getReservations(currentUser);
 		Iterator<Reservation> itr = list.iterator();
 		Reservation rsvp;
 
@@ -190,7 +190,9 @@ public class TestClass {
 			System.out.println("Reserved to: " + rsvp.getReservedTo());
 			System.out.println("Room: " + rsvp.getRoom().getRoomNumber());
 			System.out.println("Number of Occupants: " + rsvp.getNumberOfOccupants());
-			System.out.println("Booked on: " + rsvp.getMonth() + "/" + rsvp.getDay() + "/" + rsvp.getYear());
+			System.out.println("Booked on the following dates:");
+			for (int i = 0; i < rsvp.getDates().size(); i++)
+				System.out.println("\t" + rsvp.getDates().get(i).toString());
 			System.out.println("Number of Nights of Stay: " + rsvp.getNumberOfNights());
 			System.out.println("Balance: " + rsvp.getBalance());
 			System.out.println("Room Cost Per Night: " + rsvp.getRoomCost());
@@ -271,7 +273,7 @@ public class TestClass {
 	private static void makeReservation(User user)
 	{
 		// Should create a room first before making a reservation
-		if (hotelSystem.getDB().getListOfRooms().size() == 0)
+		if (HotelSystem.getDB().getListOfRooms().size() == 0)
 		{
 			System.out.println("Room is empty. Cannot create a reservation. Admins, create a room first.");
 			return;
@@ -280,7 +282,7 @@ public class TestClass {
 		System.out.println("======\nMake Reservation:\n======");
 		System.out.println("Select a Room:");
 		// View the list of available rooms to users
-		Iterator<Room> itr = hotelSystem.getDB().getListOfRooms().iterator();
+		Iterator<Room> itr = HotelSystem.getDB().getListOfRooms().iterator();
 		Room rm = null;
 		while(itr.hasNext() && rm == null)
 		{
@@ -292,7 +294,7 @@ public class TestClass {
 				break;
 
 			if (!itr.hasNext())
-				itr = hotelSystem.getDB().getListOfRooms().iterator();
+				itr = HotelSystem.getDB().getListOfRooms().iterator();
 		}
 		System.out.println("How many are you in a room?:");
 		int occupants = keyboard.nextInt();
@@ -306,7 +308,7 @@ public class TestClass {
 		System.out.println("How many nights?: ");
 		int numberOfNights = keyboard.nextInt();
 		keyboard.nextLine();
-		if (hotelSystem.addReservation(user.getUserID(), rm, occupants, month, day, year, numberOfNights) != null)
+		if (hotelSystem.addReservation(user, rm, occupants, month, day, year, numberOfNights) != null)
 			System.out.println("You have successfully added a reservation under " + user.getFullName() + "'s account");
 		else
 			System.out.println("Unfortunately, this date and room is already taken. Please try a different room or date.");
