@@ -84,13 +84,15 @@ public class TestClass {
 			System.out.println("\t4: Create New Customer");
 			System.out.println("\t5: Look for User");
 			System.out.println("\t6: View Room Info");
+			System.out.println("\t7: Check-In Customer");
+			System.out.println("\t8: Check-Out Customer");
 		}
 		// Admins Only Menu
 		if(loggedInUser.getAccountType() >= 2)
 		{
-			System.out.println("\t7: Create New Staff");
-			System.out.println("\t8: Create New Admin");
-			System.out.println("\t9: Create New Room");
+			System.out.println("\t9: Create New Staff");
+			System.out.println("\t10: Create New Admin");
+			System.out.println("\t11: Create New Room");
 
 		}
 
@@ -127,19 +129,31 @@ public class TestClass {
 			lookRoom();
 			break;
 
-		case "7":	// Create Staff
+		case "7":	// Check-in the currentUser
+			if (!hotelSystem.checkPriviledge(loggedInUser, 1))
+				break;
+			checkIn();
+			break;
+
+		case "8":	// Check-out the currentUser
+			if (!hotelSystem.checkPriviledge(loggedInUser, 1))
+				break;
+			checkOut();
+			break;
+
+		case "9":	// Create Staff
 			if (!hotelSystem.checkPriviledge(loggedInUser, 2))
 				break;
 			createUser(1);
 			break;
 
-		case "8":	// Create Admin
+		case "10":	// Create Admin
 			if (!hotelSystem.checkPriviledge(loggedInUser, 2))
 				break;
 			createUser(2);
 			break;
 
-		case "9":	// Create Room
+		case "11":	// Create Room
 			if (!hotelSystem.checkPriviledge(loggedInUser, 2))
 				break;
 			createRoom();
@@ -150,6 +164,18 @@ public class TestClass {
 			break;
 		}
 
+	}
+
+	private static void checkOut() {
+		System.out.println("======\nCheck-In\n======");
+		// Show the list of reservations first then select the given reservation
+		// then shows a menu about checking-in
+		
+	}
+
+	private static void checkIn() {
+		System.out.println("======\nCheck-Out\n======");
+		
 	}
 
 	private static void createRoom() {
@@ -172,10 +198,10 @@ public class TestClass {
 		System.out.println("======\nLook for Room\n======");
 		for (int i = 0; i < HotelSystem.getDB().getListOfRooms().size(); i++)
 		{
-		
-		System.out.println("Room Number:\t" + HotelSystem.getDB().getListOfRooms().get(i).getRoomNumber());
-		System.out.println(HotelSystem.getDB().getListOfRooms().get(i).isDouble() ? "Type:\t\tDouble" : "Type:\t\tSingle");
-		System.out.println("Price:\t\t" + HotelSystem.getDB().getListOfRooms().get(i).getPrice());
+
+			System.out.println("Room Number:\t" + HotelSystem.getDB().getListOfRooms().get(i).getRoomNumber());
+			System.out.println(HotelSystem.getDB().getListOfRooms().get(i).isDouble() ? "Type:\t\tDouble" : "Type:\t\tSingle");
+			System.out.println("Price:\t\t" + HotelSystem.getDB().getListOfRooms().get(i).getPrice());
 		}
 	}
 
@@ -194,7 +220,7 @@ public class TestClass {
 		{
 			rsvp = itr.next();
 			System.out.println("Reservation ID:\t\t" + rsvp.getRsvpID());
-			System.out.println("Reserved to:\t\t" + rsvp.getReservedTo());
+			System.out.println("Reserved to:\t\t" + rsvp.getReservedTo().getFullName());
 			System.out.println("Room:\t\t\t" + rsvp.getRoom().getRoomNumber());
 			System.out.println("Number of Occupants:\t" + rsvp.getNumberOfOccupants());
 			System.out.println("Booked on the following dates:");
@@ -206,7 +232,7 @@ public class TestClass {
 			System.out.println("Total Room Cost:\t" + rsvp.getRoomCost()*rsvp.getNumberOfNights());
 			System.out.println();
 		}
-		System.out.println("Select the number of the following reservations you would like to modify or delete? (m or d)");
+		System.out.println("Select the Reservation ID of the following reservations you would like to modify or delete? (m or d)");
 		// Menu for modify or delete user here
 	}
 
