@@ -23,6 +23,7 @@ public class Reservation
 	private double roomCost;
 	private boolean guaranteed;
 	private boolean bookingCompleted;
+	private boolean checkedIn;
 
 	public Reservation(User user, Room room, int occupants, int m, int d, int y, int numberOfNights, double bal, double cost)
 	{
@@ -38,6 +39,7 @@ public class Reservation
 		this.roomCost = cost;
 		this.guaranteed = false;
 		this.bookingCompleted = false;
+		this.checkedIn = false;
 	}
 
 	//Should call ProcessPayment's validate Payment and send it
@@ -130,6 +132,14 @@ public class Reservation
 
 	public void setBookingCompleted(boolean bookingCompleted) {
 		this.bookingCompleted = bookingCompleted;
+	}
+
+	public boolean isCheckedIn() {
+		return checkedIn;
+	}
+
+	public void setCheckedIn(boolean checkedIn) {
+		this.checkedIn = checkedIn;
 	}
 
 }

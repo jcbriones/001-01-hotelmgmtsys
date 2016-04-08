@@ -51,4 +51,16 @@ public class Date {
 	{
 		return String.format("%d/%d/%d",this.month,this.day,year);
 	}
+
+	// TODO: Get the difference between two dates. Example: this-> 02/01/16, that 01/29/16 has the dates 29,30,31,1 so it would return 4
+	public int getDifferenceFrom(Date that) {
+		int monthDiff = this.getMonth() - that.getMonth();
+		int dayDiff = this.getDay() - that.getDay();
+		int dayYear = this.getYear() - that.getYear();
+		return dayDiff + 1;
+	}
+
+	public boolean isBefore(Date that) {
+		return this.getMonth() - that.getMonth() >= 0 && this.getDay() - that.getDay() >= 0 || this.getYear() - that.getYear() >= 0;
+	}
 }
