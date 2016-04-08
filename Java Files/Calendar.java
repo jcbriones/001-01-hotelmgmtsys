@@ -1,4 +1,3 @@
-
 /*
  * Calendar.java
  * 
@@ -12,19 +11,25 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Calendar {
-	ArrayList<Reservation> ListOfReservations = HotelSystem.getDB().getListOfReservations();
-	int TotalOccupancy;
-	double Revenue;
+	private ArrayList<Reservation> listOfReservations;
+	private int TotalOccupancy;
+	private double Revenue;
 
+
+	// Constructor
+	public Calendar()
+	{
+		listOfReservations = HotelSystem.getDB().getListOfReservations();
+	}
 	//Goes through the events  in the Hotel System
 	//And return all events that are happening at the provided date
 	public ArrayList<Reservation> ReservationByDate(Date date) {
 		ArrayList<Reservation> ReservationOnDate = new ArrayList<Reservation>();
-		for(int i=0;i<ListOfReservations.size(); i++)
+		for(int i=0;i<listOfReservations.size(); i++)
 		{
-			if(ListOfReservations.get(i).equals(date))
+			if(listOfReservations.get(i).equals(date))
 			{
-				ReservationOnDate.add(ListOfReservations.get(i));
+				ReservationOnDate.add(listOfReservations.get(i));
 			}
 		}
 		return ReservationOnDate;
@@ -32,17 +37,14 @@ public class Calendar {
 
 
 
-	public boolean checkDate(Room rm, int m, int d, int y)
+	public boolean checkDate(Room rm, ArrayList<Date> dates)
 	{
-		Iterator<Reservation> rsvps = HotelSystem.getDB().getListOfReservations().iterator();
-		Date date = new Date(m,d,y);
-		while(rsvps.hasNext())
-		{
-			Reservation rsvp = rsvps.next();
-			if (rm == rsvp.getRoom() && !rsvp.getDate().equals(date))
-				return true;
-		}
-		return false;
+		for (int i = 0; i < listOfReservations.size(); i++)
+			for (int j = 0; j < listOfReservations.get(i).getDates().size(); j++)
+				for (int k = 0; k < dates.size(); k++)
+				if (listOfReservations.get(i).getDates().get(j).equals(dates.get(k)) && listOfReservations.get(i).getRoom() == rm)
+					return false;
+		return true;
 	}
 
 
@@ -50,9 +52,9 @@ public class Calendar {
 	public int TotalOcucpancy()
 	{
 		TotalOccupancy = 0;
-		for(int i=0;i<ListOfReservations.size();i++)
+		for(int i=0;i<listOfReservations.size();i++)
 		{
-			TotalOccupancy += ListOfReservations.get(i).getNumberOfOccupants();
+			TotalOccupancy += listOfReservations.get(i).getNumberOfOccupants();
 		}
 		return TotalOccupancy;
 	}
