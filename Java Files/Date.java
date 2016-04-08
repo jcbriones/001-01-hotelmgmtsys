@@ -1,14 +1,23 @@
-/**
- * Created by Lvovich on 4/5/2016.
+/*
+ * Date.java
+ * 
+ * CS321-001 - George Mason University
+ * Group 01
+ * @author: Jc Briones, Pavan Vittala, Ken Matsuda, Matt Edwards
+ * 
+ * This is the Date class which holds the days in our Calendar.
  */
+
 public class Date {
 	private int month,day,year;
+	private Room rm;
 
-	public Date(int month, int day, int year)
+	public Date(Room rm, int month, int day, int year)
 	{
 		this.month = month;
 		this.day = day;
 		this.year = year;
+		this.rm = rm;
 	}
 
 	public int getDay() {
@@ -37,34 +46,10 @@ public class Date {
 
 	public boolean equals(Date that)
 	{
-		return this.getDay() == that.getDay() &&
-				this.getMonth() == that.getMonth() &&
-				this.getYear() == that.getYear();
-	}
-
-	public boolean isBefore(Date date)
-	{
-		return (this.year <= date.year) &&
-				(this.month <= date.month) &&
-				(this.day < date. day);
-
-	}
-
-	public int maxDays()
-	{
-		//30 days
-		if(this.getMonth() == 4 ||
-				this.getMonth() == 6 ||
-				this.getMonth() == 9 ||
-				this.getMonth() == 11)
-			return 30;
-
-		//28 days (not counting leap year because F that, can change later
-		if(this.getMonth() == 2)
-			return 28;
-
-		//Everything else has 31 days
-		return 31;
+		return this.rm == that.rm &&
+				this.month == that.month &&
+				this.day == that.day &&
+				this.year == that.year;
 	}
 
 	public String toString()

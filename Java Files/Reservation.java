@@ -28,7 +28,7 @@ public class Reservation
 		this.reservedTo = customerID;
 		this.room = room;
 		this.numberOfOccupants = occupants;
-		this.date = new Date(m,d,y);
+		this.date = new Date(r, m,d,y);
 		this.numberOfNights = nod;
 		this.balance = bal;
 		this.roomCost = cost;
@@ -88,7 +88,7 @@ public class Reservation
 	public double getRoomCost() {
 		return roomCost;
 	}
-	
+
 	public int getMonth() {
 		return date.getMonth();
 	}
@@ -116,12 +116,7 @@ public class Reservation
 	public Date getDate() {
 		return date;
 	}
-	
-	// TODO:
-	public ArrayList<Date> getBookingDate() {
-		return null;
-	}
-	
+
 	public int getNumberOfNights() {
 		return numberOfNights;
 	}

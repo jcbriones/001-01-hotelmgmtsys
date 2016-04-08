@@ -14,6 +14,7 @@ public class Database {
 	private ArrayList<Room> listOfRooms;
 	private ArrayList<Reservation> listOfReservations;
 	private ArrayList<User> listOfUsers;
+	private ArrayList<Date> listOfBookedDates;
 
 	// Constructor
 	public Database()
@@ -21,6 +22,7 @@ public class Database {
 		listOfRooms = new ArrayList<Room>();
 		listOfReservations = new ArrayList<Reservation>();
 		listOfUsers = new ArrayList<User>();
+		listOfBookedDates = new ArrayList<Date>();
 	}
 
 	/* =======================================
@@ -37,6 +39,10 @@ public class Database {
 
 	public ArrayList<User> getListOfUsers() {
 		return listOfUsers;
+	}
+	
+	public ArrayList<Date> getListOfBookedDates() {
+		return listOfBookedDates;
 	}
 
 }
