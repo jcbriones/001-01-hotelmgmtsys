@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 /*
  * Reservation.java
  * 
@@ -9,6 +7,8 @@ import java.util.ArrayList;
  * 
  * This is the Reservation class where good things happen. Just wait...
  */
+import java.util.ArrayList;
+
 public class Reservation
 {
 	private static int UNIQUE_ID = 0;
@@ -17,21 +17,27 @@ public class Reservation
 	private int reservedTo;
 	private Room room;
 	private int numberOfOccupants;
-	private Date date;
+	private ArrayList<Date> dates;
 	private int numberOfNights;
 	private double balance;
 	private double roomCost;
+	private boolean guaranteed;
+	private boolean bookingCompleted;
 
-	public Reservation(int customerID, Room room, int occupants, int m, int d, int y, int nod, double bal, double cost)
+	public Reservation(int customerID, Room room, int occupants, int m, int d, int y, int numberOfNights, double bal, double cost, boolean guaranteed)
 	{
 		this.rsvpID = UNIQUE_ID++;
 		this.reservedTo = customerID;
 		this.room = room;
 		this.numberOfOccupants = occupants;
-		this.date = new Date(m,d,y);
-		this.numberOfNights = nod;
+		this.dates = new ArrayList<Date>();
+		for(int i = 0; i <= numberOfNights; i++)
+			dates.add(new Date(m, d + i, y));
+		this.numberOfNights = numberOfNights;
 		this.balance = bal;
 		this.roomCost = cost;
+		this.guaranteed = guaranteed;
+		this.bookingCompleted = false;
 	}
 
 	//Should call ProcessPayment's validate Payment and send it
@@ -88,40 +94,11 @@ public class Reservation
 	public double getRoomCost() {
 		return roomCost;
 	}
-	
-	public int getMonth() {
-		return date.getMonth();
+
+	public ArrayList<Date> getDates() {
+		return dates;
 	}
 
-	public void setMonth(int month) {
-		this.date.setMonth(month);
-	}
-
-	public int getDay() {
-		return date.getDay();
-	}
-
-	public void setDay(int day) {
-		this.date.setDay(day);
-	}
-
-	public int getYear() {
-		return date.getYear();
-	}
-
-	public void setYear(int year) {
-		this.date.setYear(year);
-	}
-
-	public Date getDate() {
-		return date;
-	}
-	
-	// TODO:
-	public ArrayList<Date> getBookingDate() {
-		return null;
-	}
-	
 	public int getNumberOfNights() {
 		return numberOfNights;
 	}
@@ -130,5 +107,20 @@ public class Reservation
 		this.numberOfNights = numberOfNights;
 	}
 
+	public boolean getGuaranteed() {
+		return guaranteed;
+	}
+
+	public void setGuaranteed(boolean val) {
+		this.guaranteed = val;
+	}
+
+	public boolean getBookingCompleted() {
+		return bookingCompleted;
+	}
+
+	public void setBookingCompleted(boolean val) {
+		this.bookingCompleted = val;
+	}
 
 }
