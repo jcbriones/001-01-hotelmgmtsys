@@ -7,123 +7,49 @@
  * 
  * This is the Calendar class which preview the list of reservations in a calendar format.
  */
-import javax.swing.text.html.HTMLDocument;
-import java.util.*;
+import java.util.ArrayList;
 
 public class Calendar {
-    public Date Today;
-    //revinue by a period of time
-    private double Revinue;
-    //Number of people in the hotel
-    private int TotalOccupancy;
+	private ArrayList<Reservation> listOfReservations;
 
-    public ArrayList<Reservation> ListOfReservations = new ArrayList<Reservation>();
+	// Constructor
+	public Calendar()
+	{
+		listOfReservations = HotelSystem.getDB().getListOfReservations();
+	}
 
-    public Date Today(){return Today;}
+	public boolean checkDate(Room rm, ArrayList<Date> dates)
+	{
+		for (int i = 0; i < listOfReservations.size(); i++)
+			for (int j = 0; j < listOfReservations.get(i).getDates().size(); j++)
+				for (int k = 0; k < dates.size(); k++)
+					if (listOfReservations.get(i).getDates().get(j).equals(dates.get(k)) && listOfReservations.get(i).getRoom() == rm)
+						return false;
+		return true;
+	}
 
-    public void addReservation(Reservation res)
-    {
-        ListOfReservations.add(res);
-    }
+	// Given a range of dates, collect the list of Reservation during that given time.
+	public ArrayList<Reservation> ReservationByDateRange(Date day1, Date day2)
+	{
+		// Error checking for if day2 is before day1
+		if (day2.isBefore(day1))
+			throw new RuntimeException();
+		
+		// Range of Dates
+		ArrayList<Date> dates = new ArrayList<Date>();
+		int diff = day2.getDifferenceFrom(day1);
+		for (int i = 0; i <= diff; i++)
+			dates.add(new Date(day1.getMonth(), day1.getDay() + i, day1.getYear()));
 
+		// List will be holding all the reservations within the range given
+		ArrayList<Reservation> list = new ArrayList<Reservation>();
 
-    //Goes through the events  in the Hotel System
-    //And return all events that are happening at the provided date
-    public ArrayList<Reservation> ReservationByDate(Date date) {
-        ArrayList<Reservation> ReservationOnDate = new ArrayList<Reservation>();
-        for(int i=0;i<ListOfReservations.size(); i++)
-        {
-            if(ListOfReservations.get(i).equals(date))
-            {
-                ReservationOnDate.add(ListOfReservations.get(i));
-            }
-        }
-        return ReservationOnDate;
-    }
+		for (int i = 0; i < listOfReservations.size(); i++)
+			for (int j = 0; j < listOfReservations.get(i).getDates().size(); j++)
+				for (int k = 0; k < dates.size(); k++)
+					if (listOfReservations.get(i).getDates().get(j).equals(dates.get(k)) && !list.contains(listOfReservations.get(i)))
+						list.add(listOfReservations.get(i));
+		return list;
+	}
 
-
-    //Returns the total occupancy of people that have a reservation at the hotel
-    public int TotalOcucpancy()
-    {
-        TotalOccupancy = 0;
-        for(int i=0;i<ListOfReservations.size();i++)
-        {
-            TotalOccupancy += ListOfReservations.get(i).getNumberOfOccupants();
-        }
-        return TotalOccupancy;
-    }
-
-    //Given a range of dates, collect the revinue during that pime.
-    //going to be given Day1 and Day2
-    public ArrayList<Reservation> ReservationByDateRange(Date day1, Date day2)
-    {
-        //error checking for if day2 is before day1
-        if(day2.isBefore(day1))
-            throw new RuntimeException();
-
-        //List will be holding all the reservations within the range given
-        ArrayList<Reservation> List = new ArrayList<Reservation>();
-        //CurrDayList will be holding the reservations for the current day
-        ArrayList<Reservation> CurrDayList = new ArrayList<Reservation>();
-        //Iterator for the Current Day's Reservations
-        Iterator<Reservation> it;
-        //The Current Reservation that I'm comparing
-        Reservation CurrRes;
-
-        for(int y=day1.getYear();y<=day2.getYear();y++)
-        {
-            for(int m=day1.getMonth();m<=day2.getMonth();m++)
-            {
-                for( int d=day1.getDay();d<=day2.getDay();d++)
-                {
-                    CurrDayList = ReservationByDate(new Date(d,day1.getMonth(),day1.getYear()));
-                    it = CurrDayList.iterator();
-                    while(it.hasNext())
-                    {
-                        CurrRes = it.next();
-                        if(!List.contains(CurrRes))
-                        {
-                            List.add(CurrRes);
-                        }
-                    }
-                }
-            }
-        }
-
-        return List;
-    }
-
-    //Given a period of time, will add up all the revinue from the rooms throughout the period
-    public double RevinueByPeriod(Date day1, Date day2)
-    {
-        Revinue = 0.0;
-        //Same error checking as before
-        if(day2.isBefore(day1))
-            throw new RuntimeException();
-
-        ArrayList<Reservation> CurrDayList = new ArrayList<Reservation>();
-        //Iterator for the Current Day's Reservations
-        Iterator<Reservation> it;
-        //The Current Reservation that I'm comparing
-        Reservation CurrRes;
-
-        for(int y=day1.getYear();y<=day2.getYear();y++)
-        {
-            for(int m=day1.getMonth();m<=day2.getMonth();m++)
-            {
-                for( int d=day1.getDay();d<=day2.getDay();d++)
-                {
-                    CurrDayList = ReservationByDate(new Date(d,day1.getMonth(),day1.getYear()));
-                    it = CurrDayList.iterator();
-                    while(it.hasNext())
-                    {
-                        CurrRes = it.next();
-                        Revinue += CurrRes.getRoomCost();
-                    }
-                }
-            }
-        }
-
-        return Revinue;
-    }
 }
