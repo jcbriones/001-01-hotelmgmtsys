@@ -157,7 +157,7 @@ public class TestClass {
 		System.out.println("Enter the Room Number:");
 		int rmNumber = keyboard.nextInt();
 		System.out.println("Is it Double? (y or n):");
-		boolean isDouble = keyboard.nextBoolean();
+		boolean isDouble = ("y".equals(keyboard.next().toLowerCase()) ? true : false);
 		System.out.println("How much does the Room cost?:");
 		double price = keyboard.nextDouble();
 		keyboard.nextLine();
@@ -169,7 +169,14 @@ public class TestClass {
 	}
 
 	private static void lookRoom() {
-
+		System.out.println("======\nLook for Room\n======");
+		for (int i = 0; i < HotelSystem.getDB().getListOfRooms().size(); i++)
+		{
+		
+		System.out.println("Room Number:\t" + HotelSystem.getDB().getListOfRooms().get(i).getRoomNumber());
+		System.out.println(HotelSystem.getDB().getListOfRooms().get(i).isDouble() ? "Type:\t\tDouble" : "Type:\t\tSingle");
+		System.out.println("Price:\t\t" + HotelSystem.getDB().getListOfRooms().get(i).getPrice());
+		}
 	}
 
 	private static void lookReservation() {
@@ -186,17 +193,17 @@ public class TestClass {
 		while(itr.hasNext())
 		{
 			rsvp = itr.next();
-			System.out.println("Reservation ID: " + rsvp.getRsvpID());
-			System.out.println("Reserved to: " + rsvp.getReservedTo());
-			System.out.println("Room: " + rsvp.getRoom().getRoomNumber());
-			System.out.println("Number of Occupants: " + rsvp.getNumberOfOccupants());
+			System.out.println("Reservation ID:\t\t" + rsvp.getRsvpID());
+			System.out.println("Reserved to:\t\t" + rsvp.getReservedTo());
+			System.out.println("Room:\t\t\t" + rsvp.getRoom().getRoomNumber());
+			System.out.println("Number of Occupants:\t" + rsvp.getNumberOfOccupants());
 			System.out.println("Booked on the following dates:");
 			for (int i = 0; i < rsvp.getDates().size(); i++)
 				System.out.println("\t" + rsvp.getDates().get(i).toString());
-			System.out.println("Number of Nights of Stay: " + rsvp.getNumberOfNights());
-			System.out.println("Balance: " + rsvp.getBalance());
-			System.out.println("Room Cost Per Night: " + rsvp.getRoomCost());
-			System.out.println("Total Room Cost: " + rsvp.getRoomCost()*rsvp.getNumberOfNights());
+			System.out.println("# of Nights of Stay:\t" + rsvp.getNumberOfNights());
+			System.out.println("Balance:\t\t" + rsvp.getBalance());
+			System.out.println("Room Cost Per Night:\t" + rsvp.getRoomCost());
+			System.out.println("Total Room Cost:\t" + rsvp.getRoomCost()*rsvp.getNumberOfNights());
 			System.out.println();
 		}
 		System.out.println("Select the number of the following reservations you would like to modify or delete? (m or d)");
@@ -287,7 +294,8 @@ public class TestClass {
 		while(itr.hasNext() && rm == null)
 		{
 			rm = itr.next();
-			System.out.println("Room Number: " + rm.getRoomNumber());
+			System.out.println("\nRoom Number: " + rm.getRoomNumber());
+			System.out.println(rm.isDouble() ? "Type: Double" : "Type: Single");
 			System.out.println("Price: " + rm.getPrice());
 			System.out.println("- Would you like to use this room? Y or N");
 			if (keyboard.nextLine().toLowerCase() == "y")
@@ -299,13 +307,13 @@ public class TestClass {
 		System.out.println("How many are you in a room?:");
 		int occupants = keyboard.nextInt();
 		System.out.println("When are you using this room?");
-		System.out.println("Month (1-12): ");
+		System.out.println("Month (1-12):");
 		int month = keyboard.nextInt();
-		System.out.println("Day (DD): ");
+		System.out.println("Day (DD):");
 		int day = keyboard.nextInt();
-		System.out.println("Year (YYYY): ");
+		System.out.println("Year (YYYY):");
 		int year = keyboard.nextInt();
-		System.out.println("How many nights?: ");
+		System.out.println("How many nights?:");
 		int numberOfNights = keyboard.nextInt();
 		keyboard.nextLine();
 		if (hotelSystem.addReservation(user, rm, occupants, month, day, year, numberOfNights) != null)
