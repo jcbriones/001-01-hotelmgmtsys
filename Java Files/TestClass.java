@@ -190,7 +190,9 @@ public class TestClass {
 			System.out.println("Reserved to: " + rsvp.getReservedTo());
 			System.out.println("Room: " + rsvp.getRoom().getRoomNumber());
 			System.out.println("Number of Occupants: " + rsvp.getNumberOfOccupants());
-			System.out.println("Booked on: " + rsvp.getMonth() + "/" + rsvp.getDay() + "/" + rsvp.getYear());
+			System.out.println("Booked on the following dates:");
+			for (int i = 0; i < rsvp.getDates().size(); i++)
+				System.out.println("\t" + rsvp.getDates().get(i).toString());
 			System.out.println("Number of Nights of Stay: " + rsvp.getNumberOfNights());
 			System.out.println("Balance: " + rsvp.getBalance());
 			System.out.println("Room Cost Per Night: " + rsvp.getRoomCost());

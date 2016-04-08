@@ -7,6 +7,7 @@
  * 
  * This is the where all the payments are being processed through the use of functions.
  */
+
 public final class ProcessPayment {
 	public boolean processPayment(CreditCard card, int amount) {
 		if (amount < 0 || card == null)

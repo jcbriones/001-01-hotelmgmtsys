@@ -10,14 +10,12 @@
 
 public class Date {
 	private int month,day,year;
-	private Room rm;
 
-	public Date(Room rm, int month, int day, int year)
+	public Date(int month, int day, int year)
 	{
 		this.month = month;
 		this.day = day;
 		this.year = year;
-		this.rm = rm;
 	}
 
 	public int getDay() {
@@ -46,10 +44,7 @@ public class Date {
 
 	public boolean equals(Date that)
 	{
-		return this.rm == that.rm &&
-				this.month == that.month &&
-				this.day == that.day &&
-				this.year == that.year;
+		return this.month == that.month && this.day == that.day && this.year == that.year;
 	}
 
 	public String toString()

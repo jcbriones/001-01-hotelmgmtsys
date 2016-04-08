@@ -12,7 +12,6 @@ import java.util.Iterator;
 
 public class Calendar {
 	private ArrayList<Reservation> listOfReservations;
-	private ArrayList<Date> listOfBookedDates;
 	private int TotalOccupancy;
 	private double Revenue;
 
@@ -21,7 +20,6 @@ public class Calendar {
 	public Calendar()
 	{
 		listOfReservations = HotelSystem.getDB().getListOfReservations();
-		listOfBookedDates = HotelSystem.getDB().getListOfBookedDates();
 	}
 	//Goes through the events  in the Hotel System
 	//And return all events that are happening at the provided date
@@ -39,17 +37,14 @@ public class Calendar {
 
 
 
-	public boolean checkDate(Room rm, int m, int d, int y)
+	public boolean checkDate(Room rm, ArrayList<Date> dates)
 	{
-		Iterator<Date> bd = listOfBookedDates.iterator();
-		Date thisDate = new Date(rm, m,d,y);
-		while(bd.hasNext())
-		{
-			Date thatDate = bd.next();
-			if (thisDate.equals(thatDate))
-				return true;
-		}
-		return false;
+		for (int i = 0; i < listOfReservations.size(); i++)
+			for (int j = 0; j < listOfReservations.get(i).getDates().size(); j++)
+				for (int k = 0; k < dates.size(); k++)
+				if (listOfReservations.get(i).getDates().get(j).equals(dates.get(k)) && listOfReservations.get(i).getRoom() == rm)
+					return false;
+		return true;
 	}
 
 
