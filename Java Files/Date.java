@@ -1,6 +1,13 @@
-/**
- * Created by Lvovich on 4/5/2016.
+/*
+ * Date.java
+ * 
+ * CS321-001 - George Mason University
+ * Group 01
+ * @author: Jc Briones, Pavan Vittala, Ken Matsuda, Matt Edwards
+ * 
+ * This is the Date class which holds the days in our Calendar.
  */
+
 public class Date {
 	private int month,day,year;
 
@@ -37,38 +44,23 @@ public class Date {
 
 	public boolean equals(Date that)
 	{
-		return this.getDay() == that.getDay() &&
-				this.getMonth() == that.getMonth() &&
-				this.getYear() == that.getYear();
-	}
-
-	public boolean isBefore(Date date)
-	{
-		return (this.year <= date.year) &&
-				(this.month <= date.month) &&
-				(this.day < date. day);
-
-	}
-
-	public int maxDays()
-	{
-		//30 days
-		if(this.getMonth() == 4 ||
-				this.getMonth() == 6 ||
-				this.getMonth() == 9 ||
-				this.getMonth() == 11)
-			return 30;
-
-		//28 days (not counting leap year because F that, can change later
-		if(this.getMonth() == 2)
-			return 28;
-
-		//Everything else has 31 days
-		return 31;
+		return this.month == that.month && this.day == that.day && this.year == that.year;
 	}
 
 	public String toString()
 	{
 		return String.format("%d/%d/%d",this.month,this.day,year);
+	}
+
+	// TODO: Get the difference between two dates. Example: this-> 02/01/16, that 01/29/16 has the dates 29,30,31,1 so it would return 4
+	public int getDifferenceFrom(Date that) {
+		int monthDiff = this.getMonth() - that.getMonth();
+		int dayDiff = this.getDay() - that.getDay();
+		int dayYear = this.getYear() - that.getYear();
+		return dayDiff + 1;
+	}
+
+	public boolean isBefore(Date that) {
+		return this.getMonth() - that.getMonth() >= 0 && this.getDay() - that.getDay() >= 0 || this.getYear() - that.getYear() >= 0;
 	}
 }

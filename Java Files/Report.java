@@ -26,7 +26,7 @@ public class Report {
 		this.totalRevenue = revenue;
 	}
 	
-	public Report createReport(Date first, Date second) {
+	public void generateReport(Date first, Date second) {
 		Calendar cal = new Calendar();
 		double revenue = cal.RevenueRange(first, second);
 		int occupancy = cal.TotalOcucpancy();
@@ -45,6 +45,5 @@ public class Report {
 			}
 		}
 		occupancy = (occupancy/10)*100;
-		Report report = new Report(numReservations, numSingles, numDoubles, occupancy, revenue);
 	}
 }
