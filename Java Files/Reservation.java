@@ -13,21 +13,21 @@ public class Reservation
 {
 	private static int UNIQUE_ID = 0;
 
-	private int rsvpID;
-	private int reservedTo;
-	private Room room;
-	private int numberOfOccupants;
 	private ArrayList<Date> dates;
+	private Room room;
+	private User reservedTo;
+	private int rsvpID;
+	private int numberOfOccupants;
 	private int numberOfNights;
 	private double balance;
 	private double roomCost;
 	private boolean guaranteed;
 	private boolean bookingCompleted;
 
-	public Reservation(int customerID, Room room, int occupants, int m, int d, int y, int numberOfNights, double bal, double cost, boolean guaranteed)
+	public Reservation(User user, Room room, int occupants, int m, int d, int y, int numberOfNights, double bal, double cost)
 	{
 		this.rsvpID = UNIQUE_ID++;
-		this.reservedTo = customerID;
+		this.reservedTo = user;
 		this.room = room;
 		this.numberOfOccupants = occupants;
 		this.dates = new ArrayList<Date>();
@@ -36,15 +36,15 @@ public class Reservation
 		this.numberOfNights = numberOfNights;
 		this.balance = bal;
 		this.roomCost = cost;
-		this.guaranteed = guaranteed;
+		this.guaranteed = false;
 		this.bookingCompleted = false;
 	}
 
 	//Should call ProcessPayment's validate Payment and send it
 	//This reservation's CreditCard
-	public boolean validatePayment()
+	public boolean validatePayment(double amount)
 	{
-		return true;
+		return ProcessPayment.processPayment(reservedTo.getCreditCard(), amount);
 	}
 
 	/* =======================================
@@ -60,11 +60,11 @@ public class Reservation
 		this.rsvpID = rsvpID;
 	}
 
-	public int getReservedTo() {
+	public User getReservedTo() {
 		return reservedTo;
 	}
 
-	public void setReservedTo(int reservedTo) {
+	public void setReservedTo(User reservedTo) {
 		this.reservedTo = reservedTo;
 	}
 

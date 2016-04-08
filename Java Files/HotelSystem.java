@@ -66,7 +66,7 @@ public class HotelSystem {
 	}
 
 	// Reservations
-	public Reservation addReservation(int reservedTo, Room rm, int numberOfOccupants, int month, int day, int year, int numberOfNights)
+	public Reservation addReservation(User reservedTo, Room rm, int numberOfOccupants, int month, int day, int year, int numberOfNights)
 	{
 		ArrayList<Date> dates = new ArrayList<Date>();
 		for (int i = 0; i <= numberOfNights; i++)
@@ -75,13 +75,14 @@ public class HotelSystem {
 		{
 			Reservation rsvp = new Reservation(reservedTo, rm, numberOfOccupants, month, day, year, numberOfNights, rm.getPrice()*numberOfNights, rm.getPrice());
 			db.getListOfReservations().add(rsvp);
+			
 			return rsvp;
 		}
 		else
 			return null;
 	}
 
-	public Reservation getReservation(int userID)
+	public Reservation getReservation(User usr)
 	{
 		// Search the list
 		Iterator<Reservation> itr = db.getListOfReservations().iterator();
@@ -89,13 +90,13 @@ public class HotelSystem {
 		while(itr.hasNext())
 		{
 			rsvp = itr.next();
-			if (rsvp.getReservedTo() == userID)
+			if (rsvp.getReservedTo() == usr)
 				return rsvp;
 		}
 		return null;
 	}
 	
-	public ArrayList<Reservation> getReservations(int userID)
+	public ArrayList<Reservation> getReservations(User usr)
 	{
 		// Search the list
 		Iterator<Reservation> itr = db.getListOfReservations().iterator();
@@ -104,7 +105,7 @@ public class HotelSystem {
 		while(itr.hasNext())
 		{
 			rsvp = itr.next();
-			if (rsvp.getReservedTo() == userID)
+			if (rsvp.getReservedTo() == usr)
 				rsvps.add(rsvp);
 		}
 		return rsvps;

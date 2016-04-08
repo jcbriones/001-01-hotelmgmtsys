@@ -174,7 +174,7 @@ public class TestClass {
 
 	private static void lookReservation() {
 		System.out.println("======\nLook for Reservations of the User: " + currentUser.getUsername() + "\n======");
-		ArrayList<Reservation> list = hotelSystem.getReservations(currentUser.getUserID());
+		ArrayList<Reservation> list = hotelSystem.getReservations(currentUser);
 		Iterator<Reservation> itr = list.iterator();
 		Reservation rsvp;
 
@@ -308,7 +308,7 @@ public class TestClass {
 		System.out.println("How many nights?: ");
 		int numberOfNights = keyboard.nextInt();
 		keyboard.nextLine();
-		if (hotelSystem.addReservation(user.getUserID(), rm, occupants, month, day, year, numberOfNights) != null)
+		if (hotelSystem.addReservation(user, rm, occupants, month, day, year, numberOfNights) != null)
 			System.out.println("You have successfully added a reservation under " + user.getFullName() + "'s account");
 		else
 			System.out.println("Unfortunately, this date and room is already taken. Please try a different room or date.");
