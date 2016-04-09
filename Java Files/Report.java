@@ -42,7 +42,8 @@ public class Report {
 			}
 
 			// Revenue
-			totalRevenue += rsvps.get(i).getRoomCost() * rsvps.get(i).getNumberOfNights();
+			if(rsvps.get(i).isBookingCompleted())
+				totalRevenue += rsvps.get(i).getRoomCost() * rsvps.get(i).getNumberOfNights();
 		}
 
 		// Occupancy Rate
@@ -75,14 +76,15 @@ public class Report {
 			}
 
 			// Revenue
-			totalRevenue += rsvps.get(i).getRoomCost() * rsvps.get(i).getNumberOfNights();
+			if(rsvps.get(i).isBookingCompleted())
+				totalRevenue += rsvps.get(i).getRoomCost() * rsvps.get(i).getNumberOfNights();
 		}
 
 		// Occupancy Rate
 		occupancyRate = (occupancyCount / HotelSystem.getDB().getListOfRooms().size())*100;
 		return this;
 	}
-	
+
 	public String toString()
 	{
 		StringBuilder str = new StringBuilder();

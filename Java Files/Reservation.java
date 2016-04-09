@@ -46,7 +46,7 @@ public class Reservation
 	// This reservation's CreditCard
 	public boolean validatePayment(double amount)
 	{
-		return ProcessPayment.processPayment(reservedTo.getCreditCard(), amount);
+		return ProcessPayment.processPayment(reservedTo.getDefaultCard(), amount);
 	}
 
 	public String toString()

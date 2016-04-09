@@ -20,6 +20,16 @@ public class TestClass {
 		print(hs.addReservation(HotelSystem.getDB().getListOfUsers().get(0), HotelSystem.getDB().getListOfRooms().get(2), 2, 3, 13, 2016, 3).toString());
 		print(hs.addReservation(HotelSystem.getDB().getListOfUsers().get(1), HotelSystem.getDB().getListOfRooms().get(0), 2, 3, 17, 2016, 3).toString());
 		print(hs.addReservation(HotelSystem.getDB().getListOfUsers().get(1), HotelSystem.getDB().getListOfRooms().get(1), 2, 3, 17, 2016, 3).toString());
+		
+		// Current User
+		User usr = hs.getUser("user1");
+		// Add Credit Card
+		print(hs.addCreditCard(usr, usr.getFullName(), "Visa", "12341234123412", 123, 10, 2016, "4400 University Dr", "", "Fairfax", "VA", 22030).toString());
+		// Check-In
+		print(hs.checkInReservation(hs.getReservation(0)).toString());
+		print(hs.checkOutReservation(hs.getReservation(0)).toString());
+		// Get the reservation again to view the current balance.
+		print(hs.getReservation(0).toString());
 
 		print(hs.generateReportAll().toString());
 		print(hs.generateReportRange(date1, date2).toString());
