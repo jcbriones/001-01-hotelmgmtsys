@@ -1,5 +1,3 @@
-import java.util.GregorianCalendar;
-
 /*
  * Date.java
  * 
@@ -54,12 +52,11 @@ public class Date {
 		return String.format("%d/%d/%d",this.month, this.day, this.year);
 	}
 
-	// TODO: Get the difference between two dates. Example: this-> 02/01/16, that 01/29/16 has the dates 29,30,31,1 so it would return 4
 	public int getDifferenceFrom(Date that) {
 		if (this.year == that.year && this.month == that.month && this.day == that.day) {
 			return 0;
 		}
-		
+
 		Date day1 = this;
 		Date day2 = that;
 		boolean reversed = false;
@@ -67,12 +64,12 @@ public class Date {
 				(this.year > that.year) || 
 				(this.year == that.year && this.month > that.month) || 
 				(this.year == that.year && this.month == that.month && this.day > that.day)
-			) {
+				) {
 			day1 = that;
 			day2 = this;
 			reversed = true;
 		}
-		
+
 		int count = 0;
 		int month = day1.month;
 		int day = day1.day;
@@ -97,57 +94,50 @@ public class Date {
 		}
 		return count;
 	}
-	
+
 	public int maxDayInMonth(int month, int year) {
-		GregorianCalendar cal = new GregorianCalendar();
-		
-		if (month == 1) {
+		switch(month)
+		{
+		case 1:
+		case 3:
+		case 5:
+		case 7:
+		case 8:
+		case 10:
+		case 12:
 			return 31;
-		} else if (month == 2) {
-			if (cal.isLeapYear(year)) {
+		case 4:
+		case 6:
+		case 9:
+		case 11:
+			return 30;
+		case 2:
+			// Check for Leap Year
+			if ((year % 400 == 0) || ((year % 4 == 0) && (year % 100 != 0)))
 				return 29;
-			} else {
+			else
 				return 28;
-			}
-		} else if (month == 3) {
-			return 31;
-		} else if (month == 4) {
-			return 30;
-		} else if (month == 5) {
-			return 31;
-		} else if (month == 6) {
-			return 30;
-		} else if (month == 7) {
-			return 31;
-		} else if (month == 8) {
-			return 31;
-		} else if (month == 9) {
-			return 30;
-		} else if (month == 10) {
-			return 31;
-		} else if (month == 11) {
-			return 30;
-		} else if (month == 12) {
-			return 31;
+		default:
+			return -1;
 		}
-		return -1;
 	}
-	
+
 
 	public boolean isBefore(Date that) {
 		return this.getMonth() - that.getMonth() >= 0 && this.getDay() - that.getDay() >= 0 || this.getYear() - that.getYear() >= 0;
 	}
-	
-	
+
+
 	public static void main(String[] args) {
 		Date date1 = new Date(12, 11, 2012);
-		Date date2 = new Date(12, 11, 2015);
-		
+		Date date2 = new Date(12, 10, 2012);
+
 		int max = date1.maxDayInMonth(2, 2016);
-		
+
 		int diff = date1.getDifferenceFrom(date2);
-		
+
 		System.out.println("Range: " + diff);
 		System.out.println("Max: " + max);
+		System.out.println("isBefore: " + date1.isBefore(date2));
 	}
 }
