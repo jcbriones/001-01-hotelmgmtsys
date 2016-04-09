@@ -38,7 +38,6 @@ public class Reservation
 		this.numberOfNights = numberOfNights;
 		this.balance = bal;
 		this.roomCost = cost;
-		this.guaranteed = false;
 		this.bookingCompleted = false;
 		this.checkedIn = false;
 	}
