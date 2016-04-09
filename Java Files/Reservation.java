@@ -32,6 +32,7 @@ public class Reservation
 		this.room = room;
 		this.numberOfOccupants = occupants;
 		this.dates = new ArrayList<Date>();
+		this.guaranteed = guaranteed;
 		for(int i = 0; i <= numberOfNights; i++)
 			dates.add(new Date(m, d + i, y));
 		this.numberOfNights = numberOfNights;
