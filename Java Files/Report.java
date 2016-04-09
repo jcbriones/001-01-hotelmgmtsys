@@ -42,6 +42,12 @@ public class Report {
 			else
 				numberOfSinglesReserved++;
 		}
+<<<<<<< Updated upstream
+=======
+		occupancy = (occupancy/10)*100;
+		Report report = new Report(numReservations, numSingles, numDoubles, occupancy, revenue);
+		return report;
+>>>>>>> Stashed changes
 	}
 
 	public void generateReportAll()
