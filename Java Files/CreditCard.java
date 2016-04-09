@@ -14,6 +14,8 @@
  */
 public class CreditCard {
 	private String nameOnCard;
+	private String type;
+	private String cardNumber;
 	private int CCV;
 	private int expDateM;
 	private int expDateY;
@@ -60,6 +62,22 @@ public class CreditCard {
 
 	public void setNameOnCard(String nameOnCard) {
 		this.nameOnCard = nameOnCard;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getCardNumber() {
+		return cardNumber;
+	}
+
+	public void setCardNumber(String cardNumber) {
+		this.cardNumber = cardNumber;
 	}
 
 	public int getCCV() {

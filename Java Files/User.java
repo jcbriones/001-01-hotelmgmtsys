@@ -19,7 +19,7 @@ public class User {
 	private String password;
 	private String fullName;
 	private boolean isBanned;
-	private CreditCard cc;
+	private CreditCard creditCard;
 	
 	public User(String user, String pass, String name, int type)
 	{
@@ -93,11 +93,11 @@ public class User {
 	}
 
 	public CreditCard getCreditCard() {
-		return cc;
+		return creditCard;
 	}
 
-	public void setCreditCard(CreditCard cc) {
-		this.cc = cc;
+	public void setCreditCard(CreditCard creditCard) {
+		this.creditCard = creditCard;
 	}
 	
 }
