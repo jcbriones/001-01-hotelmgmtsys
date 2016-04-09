@@ -38,7 +38,6 @@ public class Calendar {
 		// Range of Dates
 		ArrayList<Date> dates = new ArrayList<Date>();
 		int diff = day1.getDifferenceFrom(day2);
-		System.out.println(diff);
 		for (int i = 0; i <= diff; i++)
 			dates.add(new Date(day1.getMonth(), day1.getDay() + i, day1.getYear()));
 
