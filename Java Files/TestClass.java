@@ -3,6 +3,45 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 public class TestClass {
+
+	// RENAME THIS MAIN CLASS TO main2 IF YOU WANT TO USE THE OTHER ONE
+	public static void main(String[] args) {
+		Date date1 = new Date(3, 12, 2016);
+		Date date2 = new Date(3, 13, 2016);
+
+		HotelSystem hs = new HotelSystem();
+		print(hs.addRoom(101, false, 100.50) != null ? "Success adding Room" : "Whoah");
+		print(hs.addRoom(102, false, 213.20) != null ? "Success adding Room" : "Whoah");
+		print(hs.addRoom(103, true, 163.50) != null ? "Success adding Room" : "Whoah");
+		print(hs.addUser("user1", "pass", "Full Name User 1", 0) != null ? "Success adding User" : "Whoah");
+		print(hs.addUser("user2", "pass", "Full Name User 2", 0) != null ? "Success adding User" : "Whoah");
+		print(hs.addReservation(HotelSystem.getDB().getListOfUsers().get(0), HotelSystem.getDB().getListOfRooms().get(0), 2, 3, 13, 2016, 3) != null ? "Success adding Reservation" : "Whoah");
+		print(hs.addReservation(HotelSystem.getDB().getListOfUsers().get(0), HotelSystem.getDB().getListOfRooms().get(2), 2, 3, 13, 2016, 3) != null ? "Success adding Reservation" : "Whoah");
+		print(hs.addReservation(HotelSystem.getDB().getListOfUsers().get(1), HotelSystem.getDB().getListOfRooms().get(0), 2, 3, 17, 2016, 3) != null ? "Success adding Reservation" : "Whoah");
+		print(hs.addReservation(HotelSystem.getDB().getListOfUsers().get(1), HotelSystem.getDB().getListOfRooms().get(1), 2, 3, 17, 2016, 3) != null ? "Success adding Reservation" : "Whoah");
+
+		Report rp = hs.generateReportAll();
+
+		print("");
+		print("Management Report for All:");
+		print("Number of Reservations: " + rp.getNumberOfReservations());
+		print("Single Rooms Reserved: " + rp.getNumberOfSinglesReserved());
+		print("Double Rooms Reserved: " + rp.getNumberOfDoublesReserved());
+		print("Occupany Rate: " + rp.getOccupancyRate());
+		print("Total Revenue: " + rp.getTotalRevenue());
+
+		Report rp2 = hs.generateReportRange(date1,date2);
+
+		print("");
+		print("Management Report for " + date1.toString() + " to " + date2.toString() + " :");
+		print("Number of Reservations: " + rp2.getNumberOfReservations());
+		print("Single Rooms Reserved: " + rp2.getNumberOfSinglesReserved());
+		print("Double Rooms Reserved: " + rp2.getNumberOfDoublesReserved());
+		print("Occupany Rate: " + rp2.getOccupancyRate());
+		print("Total Revenue: " + rp2.getTotalRevenue());
+	}
+
+	// NOTE: RENAME MAIN CLASS BELOW IF YOU WANT TO USE THE MANUAL ADDITION
 	/* ===========================================
 	 * SETTINGS:
 	 * Change the following info below for the
@@ -10,14 +49,14 @@ public class TestClass {
 	 * using.
 	 * ============ Begin of Settings ============
 	 */
-	
+
 	// Hotel Name
 	protected static String hotelName = "NotYourOrdinary Hotel";
-	
+
 	// Initial Admin User
 	protected static String username = "admin";
 	protected static String password = "cs321";
-	
+
 	// Initial Customer User
 	protected static String cusername = "user";
 	protected static String cpassword = "pass";
@@ -43,7 +82,7 @@ public class TestClass {
 	private static User currentUser;
 
 	// Sample main class
-	public static void main(String[] args)
+	public static void main2(String[] args)
 	{	
 		// Set the hotel name;
 		hotelSystem.setHotelName(hotelName);
@@ -55,18 +94,18 @@ public class TestClass {
 
 		// Show the menu to the appropriate user.
 		while(true) {
-			System.out.println("** Welcome to " + hotelSystem.getHotelName() + " **");
-			System.out.println("Currently logged in as\t:\t" + loggedInUser.getFullName());
-			System.out.println("Type of Account\t\t:\t" + (loggedInUser.getAccountType() > 0 ? (loggedInUser.getAccountType() > 1 ? "Admin" : "Staff") : "Customer"));
+			print("** Welcome to " + hotelSystem.getHotelName() + " **");
+			print("Currently logged in as\t:\t" + loggedInUser.getFullName());
+			print("Type of Account\t\t:\t" + (loggedInUser.getAccountType() > 0 ? (loggedInUser.getAccountType() > 1 ? "Admin" : "Staff") : "Customer"));
 
 			// Show this because admin supposed to create a reservation using the user's account.
 			if(loggedInUser.getAccountType() >= 1)
 			{
-				System.out.println("You are a(n) staff/admin, please enter the username of the customer you are helping:");
+				print("You are a(n) staff/admin, please enter the username of the customer you are helping:");
 				do {
 					currentUser = hotelSystem.getUser(keyboard.nextLine());
 					if (currentUser == null)
-						System.out.println("Cannot find user. Try again.");
+						print("Cannot find user. Try again.");
 				} while (currentUser == null);
 
 			} else {
@@ -74,35 +113,35 @@ public class TestClass {
 			}
 
 			if (loggedInUser.getAccountType() > 0)
-				System.out.println("You are currently helping customer:\t" + currentUser.getFullName());
-			System.out.println();
+				print("You are currently helping customer:\t" + currentUser.getFullName());
+			print("");
 			PrintMenu();
-			System.out.println();
+			print("");
 		}
 	}
 
 	private static void PrintMenu() {
-		System.out.println("Select one of the following(Enter the number):");
+		print("Select one of the following(Enter the number):");
 
 		// Standard Users Menu
-		System.out.println("\t1: Create Reservation");
-		System.out.println("\t2: Look for Reservation");
-		System.out.println("\t3: Login Different Account");
+		print("\t1: Create Reservation");
+		print("\t2: Look for Reservation");
+		print("\t3: Login Different Account");
 		// Staffs and Admins Menu
 		if(loggedInUser.getAccountType() >= 1)	
 		{
-			System.out.println("\t4: Create New Customer");
-			System.out.println("\t5: Look for User");
-			System.out.println("\t6: View Room Info");
-			System.out.println("\t7: Check-In Customer");
-			System.out.println("\t8: Check-Out Customer");
+			print("\t4: Create New Customer");
+			print("\t5: Look for User");
+			print("\t6: View Room Info");
+			print("\t7: Check-In Customer");
+			print("\t8: Check-Out Customer");
 		}
 		// Admins Only Menu
 		if(loggedInUser.getAccountType() >= 2)
 		{
-			System.out.println("\t9: Create New Staff");
-			System.out.println("\t10: Create New Admin");
-			System.out.println("\t11: Create New Room");
+			print("\t9: Create New Staff");
+			print("\t10: Create New Admin");
+			print("\t11: Create New Room");
 
 		}
 
@@ -170,137 +209,137 @@ public class TestClass {
 			break;
 
 		default:
-			System.out.println("Menu not found. Try again.");
+			print("Menu not found. Try again.");
 			break;
 		}
 
 	}
 
 	private static void checkOut() {
-		System.out.println("======\nCheck-In\n======");
+		print("======\nCheck-In\n======");
 		// Show the list of reservations first then select the given reservation
 		// then shows a menu about checking-in
-		
+
 	}
 
 	private static void checkIn() {
-		System.out.println("======\nCheck-Out\n======");
-		
+		print("======\nCheck-Out\n======");
+
 	}
 
 	private static void createRoom() {
-		System.out.println("======\nCreate Room\n======");
-		System.out.println("Enter the Room Number:");
+		print("======\nCreate Room\n======");
+		print("Enter the Room Number:");
 		int rmNumber = keyboard.nextInt();
-		System.out.println("Is it Double? (y or n):");
+		print("Is it Double? (y or n):");
 		boolean isDouble = ("y".equals(keyboard.next().toLowerCase()) ? true : false);
-		System.out.println("How much does the Room cost?:");
+		print("How much does the Room cost?:");
 		double price = keyboard.nextDouble();
 		keyboard.nextLine();
 
 		if (hotelSystem.addRoom(rmNumber, isDouble, price) != null)
-			System.out.println("Successfully added a new room");
+			print("Successfully added a new room");
 		else
-			System.out.println("Room " + rmNumber + " is already in the system. Please look for that room or use a different room number.");
+			print("Room " + rmNumber + " is already in the system. Please look for that room or use a different room number.");
 	}
 
 	private static void lookRoom() {
-		System.out.println("======\nLook for Room\n======");
+		print("======\nLook for Room\n======");
 		for (int i = 0; i < HotelSystem.getDB().getListOfRooms().size(); i++)
 		{
 
-			System.out.println("Room Number:\t" + HotelSystem.getDB().getListOfRooms().get(i).getRoomNumber());
-			System.out.println(HotelSystem.getDB().getListOfRooms().get(i).isDouble() ? "Type:\t\tDouble" : "Type:\t\tSingle");
-			System.out.println("Price:\t\t" + HotelSystem.getDB().getListOfRooms().get(i).getPrice());
+			print("Room Number:\t" + HotelSystem.getDB().getListOfRooms().get(i).getRoomNumber());
+			print(HotelSystem.getDB().getListOfRooms().get(i).isDouble() ? "Type:\t\tDouble" : "Type:\t\tSingle");
+			print("Price:\t\t" + HotelSystem.getDB().getListOfRooms().get(i).getPrice());
 		}
 	}
 
 	private static void lookReservation() {
-		System.out.println("======\nLook for Reservations of the User: " + currentUser.getUsername() + "\n======");
+		print("======\nLook for Reservations of the User: " + currentUser.getUsername() + "\n======");
 		ArrayList<Reservation> list = hotelSystem.getReservations(currentUser);
 		Iterator<Reservation> itr = list.iterator();
 		Reservation rsvp;
 
 		if (list.isEmpty())
 		{
-			System.out.println("There are no reservations under this account");
+			print("There are no reservations under this account");
 			return;
 		}
 		while(itr.hasNext())
 		{
 			rsvp = itr.next();
-			System.out.println("Reservation ID:\t\t" + rsvp.getRsvpID());
-			System.out.println("Reserved to:\t\t" + rsvp.getReservedTo().getFullName());
-			System.out.println("Room:\t\t\t" + rsvp.getRoom().getRoomNumber());
-			System.out.println("Number of Occupants:\t" + rsvp.getNumberOfOccupants());
-			System.out.println("Booked on the following dates:");
+			print("Reservation ID:\t\t" + rsvp.getRsvpID());
+			print("Reserved to:\t\t" + rsvp.getReservedTo().getFullName());
+			print("Room:\t\t\t" + rsvp.getRoom().getRoomNumber());
+			print("Number of Occupants:\t" + rsvp.getNumberOfOccupants());
+			print("Booked on the following dates:");
 			for (int i = 0; i < rsvp.getDates().size(); i++)
-				System.out.println("\t" + rsvp.getDates().get(i).toString());
-			System.out.println("# of Nights of Stay:\t" + rsvp.getNumberOfNights());
-			System.out.println("Balance:\t\t" + rsvp.getBalance());
-			System.out.println("Room Cost Per Night:\t" + rsvp.getRoomCost());
-			System.out.println("Total Room Cost:\t" + rsvp.getRoomCost()*rsvp.getNumberOfNights());
-			System.out.println();
+				print("\t" + rsvp.getDates().get(i).toString());
+			print("# of Nights of Stay:\t" + rsvp.getNumberOfNights());
+			print("Balance:\t\t" + rsvp.getBalance());
+			print("Room Cost Per Night:\t" + rsvp.getRoomCost());
+			print("Total Room Cost:\t" + rsvp.getRoomCost()*rsvp.getNumberOfNights());
+			print("");
 		}
-		System.out.println("Select the Reservation ID of the following reservations you would like to modify or delete? (m or d)");
+		print("Select the Reservation ID of the following reservations you would like to modify or delete? (m or d)");
 		// Menu for modify or delete user here
 	}
 
 	private static void loginUser() {
-		System.out.println("======\nLogin Window\n======");
-		System.out.println("Enter the username:");
+		print("======\nLogin Window\n======");
+		print("Enter the username:");
 		String loginUser = keyboard.nextLine();
-		System.out.println("Enter the user's password");
+		print("Enter the user's password");
 		String loginPass = keyboard.nextLine();
 		// Look for the User and check if password matches.
 		// If yes, return the user.
 		User tmp = hotelSystem.loginUser(loginUser, loginPass);
 		if (tmp != null)
 		{
-			System.out.println("Success. You are now logged in as: " + tmp.getFullName());
+			print("Success. You are now logged in as: " + tmp.getFullName());
 			loggedInUser = tmp;
 		}
 		// Else, return a message saying incorrect;
 		else
-			System.out.println("Your username or password is incorrect. Please try again.");
+			print("Your username or password is incorrect. Please try again.");
 	}
 
 	private static void createUser(int rank) {
-		System.out.println("======\nCreate New Customer\n======");
-		System.out.println("Enter username: ");
+		print("======\nCreate New Customer\n======");
+		print("Enter username: ");
 		String user = keyboard.nextLine();
-		System.out.println("Enter password: ");
+		print("Enter password: ");
 		String pass = keyboard.nextLine();
-		System.out.println("Enter full name of user: ");
+		print("Enter full name of user: ");
 		String fullName = keyboard.nextLine();
 
 		if (hotelSystem.addUser(user, pass, fullName, rank) != null)
-			System.out.println("Successfully added a new user");
+			print("Successfully added a new user");
 		else
-			System.out.println("A username " + user + " is already in the system. Please look for that user or use a different username");
+			print("A username " + user + " is already in the system. Please look for that user or use a different username");
 	}
 
 	private static void lookUser() {
-		System.out.println("======\nLook For User\n======");
+		print("======\nLook For User\n======");
 
-		System.out.println("Enter the username of user:");
+		print("Enter the username of user:");
 		User usr = hotelSystem.getUser(keyboard.nextLine());
 		if (usr == null)
-			System.out.println("Cannot find user with that username.");
+			print("Cannot find user with that username.");
 		else
 		{
-			System.out.println("Found user " + usr.getFullName());
-			System.out.println("== Account Details ==");
-			System.out.println("User ID: " + usr.getUserID());
-			System.out.println("Username: " + usr.getUsername());
-			System.out.println("Password: " + usr.getPassword());
-			System.out.println("Full Name: " + usr.getFullName());
-			System.out.println("Account Type: " + usr.getAccountType());
-			System.out.println("=====================");
+			print("Found user " + usr.getFullName());
+			print("== Account Details ==");
+			print("User ID: " + usr.getUserID());
+			print("Username: " + usr.getUsername());
+			print("Password: " + usr.getPassword());
+			print("Full Name: " + usr.getFullName());
+			print("Account Type: " + usr.getAccountType());
+			print("=====================");
 		}
 
 		// Menu for modify or delete user here
-		System.out.println("Select one of the following you would like to do with this user?");
+		print("Select one of the following you would like to do with this user?");
 		switch(keyboard.nextLine())
 		{
 		case "m":
@@ -318,43 +357,48 @@ public class TestClass {
 		// Should create a room first before making a reservation
 		if (HotelSystem.getDB().getListOfRooms().size() == 0)
 		{
-			System.out.println("Room is empty. Cannot create a reservation. Admins, create a room first.");
+			print("Room is empty. Cannot create a reservation. Admins, create a room first.");
 			return;
 		}
 
-		System.out.println("======\nMake Reservation:\n======");
-		System.out.println("Select a Room:");
+		print("======\nMake Reservation:\n======");
+		print("Select a Room:");
 		// View the list of available rooms to users
 		Iterator<Room> itr = HotelSystem.getDB().getListOfRooms().iterator();
 		Room rm = null;
 		while(itr.hasNext() && rm == null)
 		{
 			rm = itr.next();
-			System.out.println("\nRoom Number: " + rm.getRoomNumber());
-			System.out.println(rm.isDouble() ? "Type: Double" : "Type: Single");
-			System.out.println("Price: " + rm.getPrice());
-			System.out.println("- Would you like to use this room? Y or N");
+			print("\nRoom Number: " + rm.getRoomNumber());
+			print(rm.isDouble() ? "Type: Double" : "Type: Single");
+			print("Price: " + rm.getPrice());
+			print("- Would you like to use this room? Y or N");
 			if (keyboard.nextLine().toLowerCase() == "y")
 				break;
 
 			if (!itr.hasNext())
 				itr = HotelSystem.getDB().getListOfRooms().iterator();
 		}
-		System.out.println("How many are you in a room?:");
+		print("How many are you in a room?:");
 		int occupants = keyboard.nextInt();
-		System.out.println("When are you using this room?");
-		System.out.println("Month (1-12):");
+		print("When are you using this room?");
+		print("Month (1-12):");
 		int month = keyboard.nextInt();
-		System.out.println("Day (DD):");
+		print("Day (DD):");
 		int day = keyboard.nextInt();
-		System.out.println("Year (YYYY):");
+		print("Year (YYYY):");
 		int year = keyboard.nextInt();
-		System.out.println("How many nights?:");
+		print("How many nights?:");
 		int numberOfNights = keyboard.nextInt();
 		keyboard.nextLine();
 		if (hotelSystem.addReservation(user, rm, occupants, month, day, year, numberOfNights) != null)
-			System.out.println("You have successfully added a reservation under " + user.getFullName() + "'s account");
+			print("You have successfully added a reservation under " + user.getFullName() + "'s account");
 		else
-			System.out.println("Unfortunately, this date and room is already taken. Please try a different room or date.");
+			print("Unfortunately, this date and room is already taken. Please try a different room or date.");
+	}
+
+	public static void print(Object o)
+	{
+		System.out.println(o);
 	}
 }
