@@ -8,24 +8,29 @@
  * This is the where checking in of customer happens.
  */
 
-public final class CheckIn {
-	private static Reservation rsvp;
-	public static boolean checkInUser(Reservation reservation) {
-		rsvp = reservation;
-		
+public class CheckIn {
+	private Reservation rsvp;
+
+	public CheckIn(Reservation rsvp)
+	{
+		this.rsvp = rsvp;
+	}
+
+	public CheckIn checkIn() {
 		if (!rsvp.isCheckedIn() && !rsvp.isBookingCompleted())
 		{
 			// Charge the remaining balance of the reservation, if payment doesn't go through then checking-in of user
 			// is not successful. Credit Card is invalid. Otherwise, complete checking-in of user
-			if (ProcessPayment.processPayment(rsvp.getReservedTo().getCreditCard(),rsvp.getBalance()))
+			if (rsvp.validatePayment(rsvp.getBalance()))
 			{
 				rsvp.setBalance(0);
 				rsvp.setCheckedIn(true);
+				return this;
 			}
 		}
-		return false;
+		return null;
 	}
-	
+
 	public String toString()
 	{
 		StringBuilder str = new StringBuilder();
@@ -33,7 +38,7 @@ public final class CheckIn {
 		str.append("Reservation ID: " + rsvp.getRsvpID() + "\n");
 		str.append("Customer Name: " + rsvp.getReservedTo().getFullName() + "\n");
 		str.append("Credit Card Used:\n");
-		str.append(rsvp.getReservedTo().getCreditCard().toString() + "\n");
+		str.append(rsvp.getReservedTo().getDefaultCard().toString() + "\n");
 		str.append("==============\n");
 		return str.toString();
 	}

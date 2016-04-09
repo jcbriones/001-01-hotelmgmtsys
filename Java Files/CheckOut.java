@@ -8,21 +8,25 @@
  * This is the where checking out of customer happens.
  */
 
-public final class CheckOut {
-	private static Reservation rsvp;
-	public static boolean checkOutUser(Reservation reservation) {
-		rsvp = reservation;
-		
+public class CheckOut {
+	private Reservation rsvp;
+
+	public CheckOut(Reservation rsvp)
+	{
+		this.rsvp = rsvp;
+	}
+
+	public CheckOut checkOut() {
 		if (rsvp.isCheckedIn())
 		{
 			// Check-out the user and finish the booking
 			rsvp.setCheckedIn(false);
 			rsvp.setBookingCompleted(true);
-			return true;
+			return this;
 		}
-		return false;
+		return null;
 	}
-	
+
 	public String toString()
 	{
 		StringBuilder str = new StringBuilder();

@@ -26,8 +26,12 @@ public class CreditCard {
 	private int billingZip;
 	private double amount=0.00;
 
-	public CreditCard(String nameOnCard, int CCV, int expDateM, int expDateY, String billingAddress1, String billingAddress2, String billingCity, String billingState, int billingZip, double amount) {
+	public CreditCard(String nameOnCard, String type, String cardNumber, int CCV, int expDateM, int expDateY, String billingAddress1, String billingAddress2, String billingCity, String billingState, int billingZip) {
+		// TODO: Insert here check for cardNumber. Should not have a duplicate card in the system.
+		
 		this.nameOnCard = nameOnCard;
+		this.type = type;
+		this.cardNumber = cardNumber;
 		this.CCV = CCV;
 		this.expDateM = expDateM;
 		this.expDateY = expDateY;
@@ -36,7 +40,7 @@ public class CreditCard {
 		this.billingCity = billingCity;
 		this.billingState = billingState;
 		this.billingZip = billingZip;
-		this.amount = amount;
+		this.amount = 0;
 	}
 	
 	public String toString()
@@ -44,10 +48,12 @@ public class CreditCard {
 		StringBuilder str = new StringBuilder();
 		str.append("== Credit Card ==\n");
 		str.append("Name on Card: " + nameOnCard + "\n");
+		str.append("Card Type: " + type + "\n");
+		str.append("Card Number: " + cardNumber + "\n");
 		str.append("CCV: " + CCV + "\n");
 		str.append("Exp Date: " + expDateM + "/" + expDateY + "\n");
 		str.append("Billing Address: " + billingAddress1 + ", " + billingAddress2 + ", " + billingCity + ", " + billingState + ", " + billingZip + "\n");
-		str.append("Amount Charged: " + amount + "\n");
+		str.append("Total Amount Charged: " + amount + "\n");
 		str.append("=================\n");
 		return str.toString();
 	}
