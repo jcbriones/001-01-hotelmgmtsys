@@ -37,11 +37,11 @@ public class Calendar {
 		
 		// Range of Dates
 		ArrayList<Date> dates = new ArrayList<Date>();
-		int diff = day2.getDifferenceFrom(day1);
+		int diff = day1.getDifferenceFrom(day2);
 		for (int i = 0; i <= diff; i++)
 			dates.add(new Date(day1.getMonth(), day1.getDay() + i, day1.getYear()));
 
-		// List will be holding all the reservations within the range given
+		// list will be holding all the reservations within the range given
 		ArrayList<Reservation> list = new ArrayList<Reservation>();
 
 		for (int i = 0; i < listOfReservations.size(); i++)

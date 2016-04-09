@@ -32,6 +32,19 @@ public class User {
 		cc = null;
 	}
 	
+	public String toString()
+	{
+		StringBuilder str = new StringBuilder();
+		str.append("== Account Details ==\n");
+		str.append("User ID:\t" + userID + "\n");
+		str.append("Username:\t" + username + "\n");
+		str.append("Password:\t" + password + "\n");
+		str.append("Full Name:\t" + fullName + "\n");
+		str.append("Account Type:\t" + (accountType > 0 ? (accountType > 1 ? "Admin" : "Staff") : "Customer") + "\n");
+		str.append("=====================\n");
+		return str.toString();
+	}
+	
 	/* =======================================
 	 * Setters and Getters
 	 * =======================================
