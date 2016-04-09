@@ -13,6 +13,13 @@ public class Date {
 
 	public Date(int month, int day, int year)
 	{
+		if (month < 1 || month > 12)
+			throw new IndexOutOfBoundsException("Invalid month");
+		if (day < 1 || day > maxDayInMonth(month,year))
+			throw new IndexOutOfBoundsException("Invalid day for month " + month + " with the given year");
+		if (year < 1970)
+			throw new IndexOutOfBoundsException("Can't go below year 1970");
+
 		this.month = month;
 		this.day = day;
 		this.year = year;
@@ -124,13 +131,13 @@ public class Date {
 
 
 	public boolean isBefore(Date that) {
-		return this.getMonth() - that.getMonth() >= 0 && this.getDay() - that.getDay() >= 0 || this.getYear() - that.getYear() >= 0;
+		return that.getMonth() - this.getMonth() >= 0 && that.getDay() - this.getDay() > 0 && that.getYear() - this.getYear() >= 0;
 	}
 
 
 	public static void main(String[] args) {
 		Date date1 = new Date(12, 11, 2012);
-		Date date2 = new Date(12, 10, 2012);
+		Date date2 = new Date(2, 29, 2015);
 
 		int max = date1.maxDayInMonth(2, 2016);
 
