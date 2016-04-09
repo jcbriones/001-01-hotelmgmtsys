@@ -29,7 +29,7 @@ public class User {
 		fullName = name;
 		accountType = type;
 		isBanned = false;
-		cc = null;
+		creditCard = null;
 	}
 	
 	public String toString()
