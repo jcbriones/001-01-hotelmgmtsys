@@ -66,14 +66,14 @@ public class HotelSystem {
 	}
 
 	// Reservations
-	public Reservation addReservation(User reservedTo, Room rm, int numberOfOccupants, int month, int day, int year, int numberOfNights)
+	public Reservation addReservation(User reservedTo, Room rm, int numberOfOccupants, boolean guaranteed, int month, int day, int year, int numberOfNights)
 	{
 		ArrayList<Date> dates = new ArrayList<Date>();
 		for (int i = 0; i <= numberOfNights; i++)
 			dates.add(new Date(month, day + i, year));
 		if (cal.checkDate(rm,dates))
 		{
-			Reservation rsvp = new Reservation(reservedTo, rm, numberOfOccupants, month, day, year, numberOfNights, rm.getPrice()*numberOfNights, rm.getPrice());
+			Reservation rsvp = new Reservation(reservedTo, rm, numberOfOccupants, guaranteed, month, day, year, numberOfNights, rm.getPrice()*numberOfNights, rm.getPrice());
 			db.getListOfReservations().add(rsvp);
 
 			return rsvp;

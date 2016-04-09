@@ -25,7 +25,7 @@ public class Reservation
 	private boolean bookingCompleted;
 	private boolean checkedIn;
 
-	public Reservation(User user, Room room, int occupants, int m, int d, int y, int numberOfNights, double bal, double cost)
+	public Reservation(User user, Room room, int occupants, boolean guaranteed, int m, int d, int y, int numberOfNights, double bal, double cost)
 	{
 		this.rsvpID = UNIQUE_ID++;
 		this.reservedTo = user;
