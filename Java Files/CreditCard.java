@@ -36,6 +36,19 @@ public class CreditCard {
 		this.billingZip = billingZip;
 		this.amount = amount;
 	}
+	
+	public String toString()
+	{
+		StringBuilder str = new StringBuilder();
+		str.append("== Credit Card ==\n");
+		str.append("Name on Card: " + nameOnCard + "\n");
+		str.append("CCV: " + CCV + "\n");
+		str.append("Exp Date: " + expDateM + "/" + expDateY + "\n");
+		str.append("Billing Address: " + billingAddress1 + ", " + billingAddress2 + ", " + billingCity + ", " + billingState + ", " + billingZip + "\n");
+		str.append("Amount Charged: " + amount + "\n");
+		str.append("=================\n");
+		return str.toString();
+	}
 
 	/* =======================================
 	 * Setters and Getters
