@@ -10,10 +10,18 @@ public class TestClass {
 	 * using.
 	 * ============ Begin of Settings ============
 	 */
+	
+	// Hotel Name
+	protected static String hotelName = "NotYourOrdinary Hotel";
+	
 	// Initial Admin User
 	protected static String username = "admin";
 	protected static String password = "cs321";
-	protected static String hotelName = "NotYourOrdinary Hotel";
+	
+	// Initial Customer User
+	protected static String cusername = "user";
+	protected static String cpassword = "pass";
+
 	/*
 	 * ============ End of Settings ============
 	 */
@@ -40,8 +48,10 @@ public class TestClass {
 		// Set the hotel name;
 		hotelSystem.setHotelName(hotelName);
 
-		// Add an initial admin to manage the hotelSystem and loggedIn to that User
+		// Add an initial admin user to manage the hotelSystem and customer 
 		loggedInUser = hotelSystem.addUser(username, password, "MyName IsAdmin", 2);
+		currentUser = hotelSystem.addUser(cusername, cpassword, "Customer Name", 0);
+
 
 		// Show the menu to the appropriate user.
 		while(true) {

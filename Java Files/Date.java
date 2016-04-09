@@ -60,18 +60,15 @@ public class Date {
 	}
 
 	public int getDifferenceFrom(Date that) {
-		if (this.year == that.year && this.month == that.month && this.day == that.day) {
+		if (this.year == that.year && this.month == that.month && this.day == that.day)
 			return 0;
-		}
 
 		Date day1 = this;
 		Date day2 = that;
 		boolean reversed = false;
-		if (
-				(this.year > that.year) || 
-				(this.year == that.year && this.month > that.month) || 
-				(this.year == that.year && this.month == that.month && this.day > that.day)
-				) {
+		if ((this.year > that.year) || (this.year == that.year && this.month > that.month) || 
+				(this.year == that.year && this.month == that.month && this.day > that.day))
+		{
 			day1 = that;
 			day2 = this;
 			reversed = true;
@@ -91,14 +88,13 @@ public class Date {
 					month++;
 					day = 1;
 				}
-			} else {
-				day++;
 			}
+			else
+				day++;
 			count++;
 		}
-		if (reversed) {
+		if (reversed)
 			return -count;
-		}
 		return count;
 	}
 
@@ -129,22 +125,8 @@ public class Date {
 		}
 	}
 
-
 	public boolean isBefore(Date that) {
 		return that.getMonth() - this.getMonth() >= 0 && that.getDay() - this.getDay() > 0 && that.getYear() - this.getYear() >= 0;
 	}
 
-
-	public static void main(String[] args) {
-		Date date1 = new Date(12, 11, 2012);
-		Date date2 = new Date(2, 29, 2015);
-
-		int max = date1.maxDayInMonth(2, 2016);
-
-		int diff = date1.getDifferenceFrom(date2);
-
-		System.out.println("Range: " + diff);
-		System.out.println("Max: " + max);
-		System.out.println("isBefore: " + date1.isBefore(date2));
-	}
 }
