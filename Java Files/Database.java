@@ -7,7 +7,6 @@
  * 
  * This is the HotelSystem's database where all the data is stored.
  */
-
 import java.util.ArrayList;
 
 public class Database {
