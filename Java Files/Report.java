@@ -17,16 +17,7 @@ public class Report {
 	private double occupancyRate;
 	private double totalRevenue;
 
-	public Report(int reservations, int singles, int doubles, int occupancy, double revenue)
-	{
-		this.numberOfReservations = reservations;
-		this.numberOfSinglesReserved = singles;
-		this.numberOfDoublesReserved = doubles;
-		this.occupancyRate = occupancy;
-		this.totalRevenue = revenue;
-	}
-
-	public void generateReportRange(Date first, Date second)
+	public Report generateReportRange(Date first, Date second)
 	{
 		// Reservation Lists on the given two dates
 		ArrayList<Reservation> rsvps = new Calendar().ReservationByDateRange(first, second);
@@ -42,15 +33,18 @@ public class Report {
 			else
 				numberOfSinglesReserved++;
 		}
-<<<<<<< Updated upstream
-=======
-		occupancy = (occupancy/10)*100;
-		Report report = new Report(numReservations, numSingles, numDoubles, occupancy, revenue);
-		return report;
->>>>>>> Stashed changes
+
+		int counter = 0;
+		ArrayList<Room> rms = HotelSystem.getDB().getListOfRooms();
+		for (int i = 0; i < rms.size(); i++)
+			if (rms.get(i).isOccupied())
+				counter++;
+
+		occupancyRate = (counter / rms.size())*100;
+		return this;
 	}
 
-	public void generateReportAll()
+	public Report generateReportAll()
 	{
 		ArrayList<Reservation> rsvps = HotelSystem.getDB().getListOfReservations();
 		for (int i = 0; i < rsvps.size(); i++)
@@ -72,6 +66,7 @@ public class Report {
 				counter++;
 
 		occupancyRate = (counter / rms.size())*100;
+		return this;
 	}
 
 	/* =======================================
