@@ -4,8 +4,9 @@ import java.util.Scanner;
 
 public class TestClass {
 
-	// RENAME THIS MAIN CLASS TO main2 IF YOU WANT TO USE THE OTHER ONE
+	// RENAME THIS MAIN CLASS TO main2 IF YOU WANT TO USE THE OTHER ONE. THIS IS THE SYSTEM GENERATED TEST CLASS
 	public static void main(String[] args) {
+		try {
 		Date date1 = new Date(3, 12, 2016);
 		Date date2 = new Date(3, 13, 2016);
 
@@ -22,9 +23,19 @@ public class TestClass {
 
 		print(hs.generateReportAll().toString());
 		print(hs.generateReportRange(date1, date2).toString());
+		}
+		catch(Exception e)
+		{
+			print("You have something that is returned a null because it's either the item you are adding is already in the system.");
+			print("Please check the following:");
+			print("- Users cannot have the same username");
+			print("- Reservation dates should not conflict to the dates that are already in the database.");
+			print("- Rooms can't have the same room number");
+			print("- Check your dates");
+		}
 	}
 
-	// NOTE: RENAME MAIN CLASS BELOW IF YOU WANT TO USE THE MANUAL ADDITION
+	// NOTE: RENAME THE MAIN CLASS BELOW IF YOU WANT TO USE THE MANUAL ADDITION
 	/* ===========================================
 	 * SETTINGS:
 	 * Change the following info below for the
@@ -251,18 +262,7 @@ public class TestClass {
 		while(itr.hasNext())
 		{
 			rsvp = itr.next();
-			print("Reservation ID:\t\t" + rsvp.getRsvpID());
-			print("Reserved to:\t\t" + rsvp.getReservedTo().getFullName());
-			print("Room:\t\t\t" + rsvp.getRoom().getRoomNumber());
-			print("Number of Occupants:\t" + rsvp.getNumberOfOccupants());
-			print("Booked on the following dates:");
-			for (int i = 0; i < rsvp.getDates().size(); i++)
-				print("\t" + rsvp.getDates().get(i).toString());
-			print("# of Nights of Stay:\t" + rsvp.getNumberOfNights());
-			print("Balance:\t\t" + rsvp.getBalance());
-			print("Room Cost Per Night:\t" + rsvp.getRoomCost());
-			print("Total Room Cost:\t" + rsvp.getRoomCost()*rsvp.getNumberOfNights());
-			print("");
+			print(rsvp.toString());
 		}
 		print("Select the Reservation ID of the following reservations you would like to modify or delete? (m or d)");
 		// Menu for modify or delete user here
@@ -310,16 +310,7 @@ public class TestClass {
 		if (usr == null)
 			print("Cannot find user with that username.");
 		else
-		{
-			print("Found user " + usr.getFullName());
-			print("== Account Details ==");
-			print("User ID: " + usr.getUserID());
-			print("Username: " + usr.getUsername());
-			print("Password: " + usr.getPassword());
-			print("Full Name: " + usr.getFullName());
-			print("Account Type: " + usr.getAccountType());
-			print("=====================");
-		}
+			print(usr.toString());
 
 		// Menu for modify or delete user here
 		print("Select one of the following you would like to do with this user?");
