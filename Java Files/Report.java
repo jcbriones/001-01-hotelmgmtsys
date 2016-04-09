@@ -82,6 +82,19 @@ public class Report {
 		occupancyRate = (occupancyCount / HotelSystem.getDB().getListOfRooms().size())*100;
 		return this;
 	}
+	
+	public String toString()
+	{
+		StringBuilder str = new StringBuilder();
+		str.append("== Management Report ==\n");
+		str.append("Number of Reservations: " + numberOfReservations + "\n");
+		str.append("Single Rooms Reserved: " + numberOfSinglesReserved + "\n");
+		str.append("Double Rooms Reserved: " + numberOfDoublesReserved + "\n");
+		str.append("Occupancy Rate: " + occupancyRate + "%\n");
+		str.append("Total Revenue: " + totalRevenue + "\n");
+		str.append("=======================\n");
+		return str.toString();
+	}
 
 	/* =======================================
 	 * Setters and Getters
