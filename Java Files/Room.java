@@ -21,7 +21,17 @@ public class Room {
 		this.isDouble = isDouble;
 		this.price = price;
 	}
-
+	public String toString()
+	{
+		StringBuilder str = new StringBuilder();
+		str.append("== Room Details ==\n");
+		str.append("Room Number:\t" + roomNumber + "\n");
+		str.append("Is Occupied?:\t" + isOccupied + "\n");
+		str.append("Is Double?:\t" + isDouble + "\n");
+		str.append("Price/Night:\t" + price + "\n");
+		str.append("==================\n");
+		return str.toString();
+	}
 	/* =======================================
 	 * Setters and Getters
 	 * =======================================

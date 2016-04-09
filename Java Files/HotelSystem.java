@@ -137,6 +137,7 @@ public class HotelSystem {
 		while (itr.hasNext())
 		{
 			tmp = itr.next();
+			// If found return that user
 			if (tmp.getUsername().equals(username))
 				return tmp;
 		}
@@ -163,8 +164,21 @@ public class HotelSystem {
 	}
 
 	// Minimum rank to check for priviledge
-	public boolean checkPriviledge(User usr, int accountType) {
+	public boolean checkPriviledge(User usr, int accountType)
+	{
 		return usr.getAccountType() >= accountType;
+	}
+	
+	// Generate Report All
+	public Report generateReportAll()
+	{
+		return new Report().generateReportAll();
+	}
+	
+	// Generate Report Range
+	public Report generateReportRange(Date from, Date to)
+	{
+		return new Report().generateReportRange(from,to);
 	}
 
 	/* =======================================
