@@ -42,11 +42,32 @@ public class Reservation
 		this.checkedIn = false;
 	}
 
-	//Should call ProcessPayment's validate Payment and send it
-	//This reservation's CreditCard
+	// Should call ProcessPayment's validate Payment and send it
+	// This reservation's CreditCard
 	public boolean validatePayment(double amount)
 	{
 		return ProcessPayment.processPayment(reservedTo.getCreditCard(), amount);
+	}
+
+	public String toString()
+	{
+		StringBuilder str = new StringBuilder();
+		str.append("== Reservation ID: " + rsvpID + " ==\n");
+		str.append("Reserved to:\t\t" + reservedTo.getFullName() + "\n");
+		str.append("Room:\t\t\t" + room.getRoomNumber() + "\n");
+		str.append("Number of Occupants:\t" + numberOfOccupants + "\n");
+		str.append("Guaranteed?:\t\t" + guaranteed + "\n");
+		str.append("Completed?:\t\t" + bookingCompleted + "\n");
+		str.append("Checked-In?:\t\t" + checkedIn + "\n");
+		str.append("Booked on the following dates:\n");
+		for (int i = 0; i < dates.size(); i++)
+			str.append("\t" + dates.get(i).toString() + "\n");
+		str.append("Number of Nights:\t" + numberOfNights + "\n");
+		str.append("Balance:\t\t" + balance + "\n");
+		str.append("Room Cost/Night:\t" + roomCost + "\n");
+		str.append("Total Room Cost:\t" + roomCost * numberOfNights + "\n");
+		str.append("====================================\n");
+		return str.toString();
 	}
 
 	/* =======================================

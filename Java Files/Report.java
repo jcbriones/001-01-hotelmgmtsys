@@ -9,41 +9,116 @@
  * This is the Report class which generate reports of the hotel system.
  */
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class Report {
 	private int numberOfReservations;
 	private int numberOfSinglesReserved;
 	private int numberOfDoublesReserved;
-	private int occupancyRate;
+	private double occupancyRate;
 	private double totalRevenue;
-	
-	public Report(int reservations, int singles, int doubles, int occupancy, double revenue) {
-		this.numberOfReservations = reservations;
-		this.numberOfSinglesReserved = singles;
-		this.numberOfDoublesReserved = doubles;
-		this.occupancyRate = occupancy;
-		this.totalRevenue = revenue;
-	}
-	
-	public void generateReport(Date first, Date second) {
-		Calendar cal = new Calendar();
-		double revenue = cal.RevenueRange(first, second);
-		int occupancy = cal.TotalOcucpancy();
-		int numReservations = HotelSystem.getDB().getListOfReservations().size();
-		ArrayList<Room> list = HotelSystem.getDB().getListOfRooms();
-		Iterator<Room> iter = list.iterator();
-		int numDoubles = 0;
-		int numSingles = 0;
-		Room room;
-		while (iter.hasNext()) {
-			room = iter.next();
-			if (room.isDouble()) {
-				numDoubles++;
-			} else {
-				numSingles++;
+
+	public Report generateReportRange(Date first, Date second)
+	{
+		// Reservation Lists on the given two dates
+		ArrayList<Reservation> rsvps = new Calendar().ReservationByDateRange(first, second);
+		ArrayList<Room> rms = new ArrayList<Room>();
+		double occupancyCount = 0;
+		for (int i = 0; i < rsvps.size(); i++)
+		{
+			// Number of Reservations
+			numberOfReservations++;
+
+			// Single Or Double
+			if (rsvps.get(i).getRoom().isDouble())
+				numberOfDoublesReserved++;
+			else
+				numberOfSinglesReserved++;
+
+			// Occupancy Counter
+			if (!rms.contains(rsvps.get(i).getRoom()))
+			{
+				rms.add(rsvps.get(i).getRoom());
+				occupancyCount++;
 			}
+
+			// Revenue
+			totalRevenue += rsvps.get(i).getRoomCost() * rsvps.get(i).getNumberOfNights();
 		}
-		occupancy = (occupancy/10)*100;
+
+		// Occupancy Rate
+		occupancyRate = (occupancyCount / HotelSystem.getDB().getListOfRooms().size())*100;
+		return this;
 	}
+
+	public Report generateReportAll()
+	{
+		// Get all Reservations from the database
+		ArrayList<Reservation> rsvps = HotelSystem.getDB().getListOfReservations();
+		ArrayList<Room> rms = new ArrayList<Room>();
+		double occupancyCount = 0;
+		for (int i = 0; i < rsvps.size(); i++)
+		{
+			// Number of Reservations
+			numberOfReservations++;
+
+			// Single Or Double
+			if (rsvps.get(i).getRoom().isDouble())
+				numberOfDoublesReserved++;
+			else
+				numberOfSinglesReserved++;
+
+			// Occupancy Counter
+			if (!rms.contains(rsvps.get(i).getRoom()))
+			{
+				rms.add(rsvps.get(i).getRoom());
+				occupancyCount++;
+			}
+
+			// Revenue
+			totalRevenue += rsvps.get(i).getRoomCost() * rsvps.get(i).getNumberOfNights();
+		}
+
+		// Occupancy Rate
+		occupancyRate = (occupancyCount / HotelSystem.getDB().getListOfRooms().size())*100;
+		return this;
+	}
+	
+	public String toString()
+	{
+		StringBuilder str = new StringBuilder();
+		str.append("== Management Report ==\n");
+		str.append("Number of Reservations:\t" + numberOfReservations + "\n");
+		str.append("Single Rooms Reserved:\t" + numberOfSinglesReserved + "\n");
+		str.append("Double Rooms Reserved:\t" + numberOfDoublesReserved + "\n");
+		str.append("Occupancy Rate:\t\t" + occupancyRate + "%\n");
+		str.append("Total Revenue:\t\t" + totalRevenue + "\n");
+		str.append("=======================\n");
+		return str.toString();
+	}
+
+	/* =======================================
+	 * Setters and Getters
+	 * =======================================
+	 */
+
+	public int getNumberOfReservations() {
+		return numberOfReservations;
+	}
+
+	public int getNumberOfSinglesReserved() {
+		return numberOfSinglesReserved;
+	}
+
+	public int getNumberOfDoublesReserved() {
+		return numberOfDoublesReserved;
+	}
+
+	public double getOccupancyRate() {
+		return occupancyRate;
+	}
+
+	public double getTotalRevenue() {
+		return totalRevenue;
+	}
+
 }
