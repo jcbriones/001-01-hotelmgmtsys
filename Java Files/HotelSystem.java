@@ -15,7 +15,7 @@ public class HotelSystem {
 	private int hotelID;
 	private String hotelName;
 	private Calendar cal;
-	private static Database db;
+	private Database db;
 
 	public HotelSystem()
 	{
@@ -25,7 +25,7 @@ public class HotelSystem {
 
 		hotelName = null;
 		db = new Database();
-		cal = new Calendar();
+		cal = new Calendar(this);
 	}
 
 	/* =======================================
@@ -82,10 +82,19 @@ public class HotelSystem {
 			return null;
 	}
 
-	public Reservation getReservation(int reservationID)
+	public Reservation getReservationByID(int reservationID)
 	{
 		for (int i = 0; i < db.getListOfReservations().size(); i++)
 			if (db.getListOfReservations().get(i).getRsvpID() == reservationID)
+				return db.getListOfReservations().get(i);
+
+		return null;
+	}
+	
+	public Reservation getReservationByCID(int customerID)
+	{
+		for (int i = 0; i < db.getListOfReservations().size(); i++)
+			if (db.getListOfReservations().get(i).getReservedTo().getUserID() == customerID)
 				return db.getListOfReservations().get(i);
 
 		return null;
@@ -127,15 +136,26 @@ public class HotelSystem {
 
 	public User getUser(String username) {
 		// Check if a User with username does exist
-		Iterator<User> itr = db.getListOfUsers().iterator();
-		User tmp;
-		while (itr.hasNext())
-		{
-			tmp = itr.next();
-			// If found return that user
-			if (tmp.getUsername().equals(username))
-				return tmp;
-		}
+		for (int i = 0; i < db.getListOfUsers().size(); i++)
+			if(db.getListOfUsers().get(i).getUsername().equals(username))
+				return db.getListOfUsers().get(i);
+		return null;
+	}
+
+
+	public User getUserByID(int customerID) {
+		// Check if a User with username does exist
+		for (int i = 0; i < db.getListOfUsers().size(); i++)
+			if(db.getListOfUsers().get(i).getUserID() == customerID)
+				return db.getListOfUsers().get(i);
+		return null;
+	}
+
+	public User getUserByName(String name) {
+		// Check if a User with username does exist
+		for (int i = 0; i < db.getListOfUsers().size(); i++)
+			if(db.getListOfUsers().get(i).getFullName().equals(name))
+				return db.getListOfUsers().get(i);
 		return null;
 	}
 
@@ -166,8 +186,37 @@ public class HotelSystem {
 		return cc;
 	}
 
-	// Minimum rank to check for priviledge
-	public boolean checkPriviledge(User usr, int accountType)
+	public void updateCreditCard(CreditCard card, String nameOnCard, String type, String cardNumber, int CCV, int expDateM, int expDateY, String billingAddress1, String billingAddress2, String billingCity, String billingState, int billingZip)
+	{
+		card.setNameOnCard(nameOnCard);
+		card.setType(type);
+		card.setCardNumber(cardNumber);
+		card.setCCV(CCV);
+		card.setExpDateM(expDateM);
+		card.setExpDateY(expDateY);
+		card.setBillingAddress1(billingAddress1);
+		card.setBillingAddress2(billingAddress2);
+		card.setBillingCity(billingCity);
+		card.setBillingState(billingState);
+		card.setBillingZip(billingZip);
+	}
+
+	public boolean deleteCreditCard(User usr, CreditCard card)
+	{
+		if (usr.getCreditCards().indexOf(card) >= 0)
+		{
+			usr.getCreditCards().remove(usr.getCreditCards().indexOf(card));
+			if(usr.getDefaultCard() == card && usr.getCreditCards().size() != 0)
+				usr.setDefaultCard(usr.getCreditCards().get(0));
+			else
+				usr.setDefaultCard(null);
+			return true;
+		}
+		return false;
+	}
+
+	// Minimum rank to check for privilege
+	public boolean checkPrivilege(User usr, int accountType)
 	{
 		return usr.getAccountType() >= accountType;
 	}
@@ -175,13 +224,13 @@ public class HotelSystem {
 	// Generate Report All
 	public Report generateReportAll()
 	{
-		return new Report().generateReportAll();
+		return new Report().generateReportAll(this);
 	}
 
 	// Generate Report Range
 	public Report generateReportRange(Date from, Date to)
 	{
-		return new Report().generateReportRange(from,to);
+		return new Report().generateReportRange(this, from,to);
 	}
 
 	// Check-In Reservation
@@ -214,7 +263,7 @@ public class HotelSystem {
 		this.hotelName = hotelName;
 	}
 
-	public static Database getDB() {
+	public Database getDB() {
 		return db;
 	}
 }

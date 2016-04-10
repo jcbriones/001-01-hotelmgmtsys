@@ -16,10 +16,10 @@ public class Report {
 	private double occupancyRate;
 	private double totalRevenue;
 
-	public Report generateReportRange(Date first, Date second)
+	public Report generateReportRange(HotelSystem hs, Date first, Date second)
 	{
 		// Reservation Lists on the given two dates
-		ArrayList<Reservation> rsvps = new Calendar().ReservationByDateRange(first, second);
+		ArrayList<Reservation> rsvps = new Calendar(hs).ReservationByDateRange(first, second);
 		ArrayList<Room> rms = new ArrayList<Room>();
 		double occupancyCount = 0;
 		for (int i = 0; i < rsvps.size(); i++)
@@ -46,14 +46,14 @@ public class Report {
 		}
 
 		// Occupancy Rate
-		occupancyRate = (occupancyCount / HotelSystem.getDB().getListOfRooms().size())*100;
+		occupancyRate = (occupancyCount / hs.getDB().getListOfRooms().size())*100;
 		return this;
 	}
 
-	public Report generateReportAll()
+	public Report generateReportAll(HotelSystem hs)
 	{
 		// Get all Reservations from the database
-		ArrayList<Reservation> rsvps = HotelSystem.getDB().getListOfReservations();
+		ArrayList<Reservation> rsvps = hs.getDB().getListOfReservations();
 		ArrayList<Room> rms = new ArrayList<Room>();
 		double occupancyCount = 0;
 		for (int i = 0; i < rsvps.size(); i++)
@@ -80,7 +80,7 @@ public class Report {
 		}
 
 		// Occupancy Rate
-		occupancyRate = (occupancyCount / HotelSystem.getDB().getListOfRooms().size())*100;
+		occupancyRate = (occupancyCount / hs.getDB().getListOfRooms().size())*100;
 		return this;
 	}
 
