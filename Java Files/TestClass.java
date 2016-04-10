@@ -7,22 +7,33 @@ public class TestClass {
 	// RENAME THIS MAIN CLASS TO main2 IF YOU WANT TO USE THE OTHER ONE. THIS IS THE SYSTEM GENERATED TEST CLASS
 	public static void main(String[] args) {
 		try {
-		Date date1 = new Date(3, 12, 2016);
-		Date date2 = new Date(3, 13, 2016);
+			Date date1 = new Date(3, 12, 2016);
+			Date date2 = new Date(3, 13, 2016);
 
-		HotelSystem hs = new HotelSystem();
-		print(hs.addRoom(101, false, 100.50).toString());
-		print(hs.addRoom(102, false, 213.20).toString());
-		print(hs.addRoom(103, true, 163.50).toString());
-		print(hs.addUser("user1", "pass", "Full Name User 1", 0).toString());
-		print(hs.addUser("user2", "pass", "Full Name User 2", 0).toString());
-		print(hs.addReservation(HotelSystem.getDB().getListOfUsers().get(0), HotelSystem.getDB().getListOfRooms().get(0), 2, 3, 13, 2016, 3).toString());
-		print(hs.addReservation(HotelSystem.getDB().getListOfUsers().get(0), HotelSystem.getDB().getListOfRooms().get(2), 2, 3, 13, 2016, 3).toString());
-		print(hs.addReservation(HotelSystem.getDB().getListOfUsers().get(1), HotelSystem.getDB().getListOfRooms().get(0), 2, 3, 17, 2016, 3).toString());
-		print(hs.addReservation(HotelSystem.getDB().getListOfUsers().get(1), HotelSystem.getDB().getListOfRooms().get(1), 2, 3, 17, 2016, 3).toString());
+			HotelSystem hs = new HotelSystem();
+			print(hs.addRoom(101, false, 100.50).toString());
+			print(hs.addRoom(102, false, 213.20).toString());
+			print(hs.addRoom(103, true, 163.50).toString());
+			print(hs.addUser("user1", "pass", "Full Name User 1", 0).toString());
+			print(hs.addUser("user2", "pass", "Full Name User 2", 0).toString());
+			print(hs.addReservation(HotelSystem.getDB().getListOfUsers().get(0), HotelSystem.getDB().getListOfRooms().get(0), 2, true, 3, 13, 2016, 3).toString());
+			print(hs.addReservation(HotelSystem.getDB().getListOfUsers().get(0), HotelSystem.getDB().getListOfRooms().get(2), 2, false, 3, 13, 2016, 3).toString());
+			print(hs.addReservation(HotelSystem.getDB().getListOfUsers().get(1), HotelSystem.getDB().getListOfRooms().get(0), 2, true, 3, 17, 2016, 3).toString());
+			print(hs.addReservation(HotelSystem.getDB().getListOfUsers().get(1), HotelSystem.getDB().getListOfRooms().get(1), 2, false, 3, 17, 2016, 3).toString());
 
-		print(hs.generateReportAll().toString());
-		print(hs.generateReportRange(date1, date2).toString());
+			// Current User "user1"
+			User usr = hs.getUser("user1");
+			// Add Credit Card
+			print(hs.addCreditCard(usr, usr.getFullName(), "Visa", "12341234123412", 123, 10, 2016, "4400 University Dr", "", "Fairfax", "VA", 22030).toString());
+			// Check-In
+			print(hs.checkInReservation(hs.getReservation(0)).toString());
+			print(hs.checkOutReservation(hs.getReservation(0)).toString());
+			// Get the reservation again to view the changes made like balance and such.
+			print(hs.getReservation(0).toString());
+
+			// Reports
+			print(hs.generateReportAll().toString());
+			print(hs.generateReportRange(date1, date2).toString());
 		}
 		catch(Exception e)
 		{
@@ -365,7 +376,7 @@ public class TestClass {
 		print("How many nights?:");
 		int numberOfNights = keyboard.nextInt();
 		keyboard.nextLine();
-		if (hotelSystem.addReservation(user, rm, occupants, month, day, year, numberOfNights) != null)
+		if (hotelSystem.addReservation(user, rm, occupants, false, month, day, year, numberOfNights) != null)
 			print("You have successfully added a reservation under " + user.getFullName() + "'s account");
 		else
 			print("Unfortunately, this date and room is already taken. Please try a different room or date.");

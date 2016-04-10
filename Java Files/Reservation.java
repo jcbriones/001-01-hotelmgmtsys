@@ -25,19 +25,19 @@ public class Reservation
 	private boolean bookingCompleted;
 	private boolean checkedIn;
 
-	public Reservation(User user, Room room, int occupants, int m, int d, int y, int numberOfNights, double bal, double cost)
+	public Reservation(User user, Room room, int occupants, boolean guaranteed, int m, int d, int y, int numberOfNights, double bal, double cost)
 	{
 		this.rsvpID = UNIQUE_ID++;
 		this.reservedTo = user;
 		this.room = room;
 		this.numberOfOccupants = occupants;
 		this.dates = new ArrayList<Date>();
+		this.guaranteed = guaranteed;
 		for(int i = 0; i <= numberOfNights; i++)
 			dates.add(new Date(m, d + i, y));
 		this.numberOfNights = numberOfNights;
 		this.balance = bal;
 		this.roomCost = cost;
-		this.guaranteed = false;
 		this.bookingCompleted = false;
 		this.checkedIn = false;
 	}
@@ -46,7 +46,7 @@ public class Reservation
 	// This reservation's CreditCard
 	public boolean validatePayment(double amount)
 	{
-		return ProcessPayment.processPayment(reservedTo.getCreditCard(), amount);
+		return ProcessPayment.processPayment(reservedTo.getDefaultCard(), amount);
 	}
 
 	public String toString()

@@ -13,6 +13,10 @@ public final class ProcessPayment {
 		if (amount < 0 || card == null)
 			return false;
 		else
+		{
+			// Charge the card with the specified amount
+			card.setAmount(amount);
 			return true;
+		}
 	}
 }

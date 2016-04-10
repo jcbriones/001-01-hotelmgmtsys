@@ -66,14 +66,14 @@ public class HotelSystem {
 	}
 
 	// Reservations
-	public Reservation addReservation(User reservedTo, Room rm, int numberOfOccupants, int month, int day, int year, int numberOfNights)
+	public Reservation addReservation(User reservedTo, Room rm, int numberOfOccupants, boolean guaranteed, int month, int day, int year, int numberOfNights)
 	{
 		ArrayList<Date> dates = new ArrayList<Date>();
 		for (int i = 0; i <= numberOfNights; i++)
 			dates.add(new Date(month, day + i, year));
 		if (cal.checkDate(rm,dates))
 		{
-			Reservation rsvp = new Reservation(reservedTo, rm, numberOfOccupants, month, day, year, numberOfNights, rm.getPrice()*numberOfNights, rm.getPrice());
+			Reservation rsvp = new Reservation(reservedTo, rm, numberOfOccupants, guaranteed, month, day, year, numberOfNights, rm.getPrice()*numberOfNights, rm.getPrice());
 			db.getListOfReservations().add(rsvp);
 
 			return rsvp;
@@ -82,17 +82,12 @@ public class HotelSystem {
 			return null;
 	}
 
-	public Reservation getReservation(User usr)
+	public Reservation getReservation(int reservationID)
 	{
-		// Search the list
-		Iterator<Reservation> itr = db.getListOfReservations().iterator();
-		Reservation rsvp;
-		while(itr.hasNext())
-		{
-			rsvp = itr.next();
-			if (rsvp.getReservedTo() == usr)
-				return rsvp;
-		}
+		for (int i = 0; i < db.getListOfReservations().size(); i++)
+			if (db.getListOfReservations().get(i).getRsvpID() == reservationID)
+				return db.getListOfReservations().get(i);
+
 		return null;
 	}
 
@@ -155,7 +150,6 @@ public class HotelSystem {
 		return false;
 	}
 
-
 	// Used for verifying logins and returning the User that matches the given user and pass
 	public User loginUser(String username, String password)
 	{
@@ -163,22 +157,43 @@ public class HotelSystem {
 		return usr.getPassword().equals(password) ? usr : null;
 	}
 
+	// Credit Cards
+	public CreditCard addCreditCard(User usr, String nameOnCard, String type, String cardNumber, int CCV, int expDateM, int expDateY, String billingAddress1, String billingAddress2, String billingCity, String billingState, int billingZip)
+	{
+		CreditCard cc = new CreditCard(nameOnCard,type,cardNumber,CCV,expDateM,expDateY,billingAddress1,billingAddress2,billingCity,billingState,billingZip);
+		usr.getCreditCards().add(cc);
+		usr.setDefaultCard(cc);
+		return cc;
+	}
+
 	// Minimum rank to check for priviledge
 	public boolean checkPriviledge(User usr, int accountType)
 	{
 		return usr.getAccountType() >= accountType;
 	}
-	
+
 	// Generate Report All
 	public Report generateReportAll()
 	{
 		return new Report().generateReportAll();
 	}
-	
+
 	// Generate Report Range
 	public Report generateReportRange(Date from, Date to)
 	{
 		return new Report().generateReportRange(from,to);
+	}
+
+	// Check-In Reservation
+	public CheckIn checkInReservation(Reservation rsvp)
+	{
+		return new CheckIn(rsvp).checkIn();
+	}
+
+	// Check-Out Reservation
+	public CheckOut checkOutReservation(Reservation rsvp)
+	{
+		return new CheckOut(rsvp).checkOut();
 	}
 
 	/* =======================================
