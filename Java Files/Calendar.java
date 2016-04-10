@@ -13,9 +13,9 @@ public class Calendar {
 	private ArrayList<Reservation> listOfReservations;
 
 	// Constructor
-	public Calendar()
+	public Calendar(HotelSystem hs)
 	{
-		listOfReservations = HotelSystem.getDB().getListOfReservations();
+		listOfReservations = hs.getDB().getListOfReservations();
 	}
 
 	public boolean checkDate(Room rm, ArrayList<Date> dates)
