@@ -25,6 +25,7 @@ public class CheckIn {
 			{
 				rsvp.setBalance(0);
 				rsvp.setCheckedIn(true);
+				rsvp.getRoom().setOccupied(true);
 				return this;
 			}
 		}
@@ -37,7 +38,7 @@ public class CheckIn {
 		str.append("== Check-In ==\n");
 		str.append("Reservation ID: " + rsvp.getRsvpID() + "\n");
 		str.append("Customer Name: " + rsvp.getReservedTo().getFullName() + "\n");
-		str.append("Credit Card Used:\n");
+		str.append("Credit Card Used:\n\n");
 		str.append(rsvp.getReservedTo().getDefaultCard().toString() + "\n");
 		str.append("==============\n");
 		return str.toString();

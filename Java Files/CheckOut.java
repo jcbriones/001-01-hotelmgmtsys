@@ -22,6 +22,7 @@ public class CheckOut {
 			// Check-out the user and finish the booking
 			rsvp.setCheckedIn(false);
 			rsvp.setBookingCompleted(true);
+			rsvp.getRoom().setOccupied(false);
 			return this;
 		}
 		return null;

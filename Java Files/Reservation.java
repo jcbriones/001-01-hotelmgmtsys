@@ -52,7 +52,7 @@ public class Reservation
 	public String toString()
 	{
 		StringBuilder str = new StringBuilder();
-		str.append("== Reservation ID: " + rsvpID + " ==\n");
+		str.append("======== Reservation ID: " + rsvpID + " ========\n");
 		str.append("Reserved to:\t\t" + reservedTo.getFullName() + "\n");
 		str.append("Room:\t\t\t" + room.getRoomNumber() + "\n");
 		str.append("Number of Occupants:\t" + numberOfOccupants + "\n");

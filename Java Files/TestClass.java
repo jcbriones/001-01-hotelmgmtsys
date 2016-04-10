@@ -13,7 +13,9 @@ public class TestClass {
 			Date date1 = new Date(3, 12, 2016);
 			Date date2 = new Date(3, 13, 2016);
 
-
+			print("=========================================================================");
+			print(" Add the following info");
+			print("=========================================================================");
 			print(hs.addRoom(101, false, 100.50).toString());
 			print(hs.addRoom(102, false, 213.20).toString());
 			print(hs.addRoom(103, true, 163.50).toString());
@@ -24,19 +26,41 @@ public class TestClass {
 			print(hs.addReservation(hs.getDB().getListOfUsers().get(1), hs.getDB().getListOfRooms().get(0), 2, true, 3, 17, 2016, 3).toString());
 			print(hs.addReservation(hs.getDB().getListOfUsers().get(1), hs.getDB().getListOfRooms().get(1), 2, false, 3, 17, 2016, 3).toString());
 
-			// Current User "user1" and reservationID = 0
 			User usr = hs.getUser("user1");
 			Reservation rsvp = hs.getReservationByID(0);
-			// Add Credit Card
+			print("=========================================================================");
+			print(" Set Current User: " + usr.getFullName() + " and reservationID: " + rsvp.getRsvpID());
+			print("=========================================================================");
+			
+			print("=========================================================================");
+			print(" Add Credit Card");
+			print("=========================================================================");
 			print(hs.addCreditCard(usr, usr.getFullName(), "Visa", "12341234123412", 123, 10, 2016, "4400 University Dr", "", "Fairfax", "VA", 22030).toString());
-			// Check-In
+			print("=========================================================================");
+			print(" Check-In");
+			print("=========================================================================");
 			print(hs.checkInReservation(rsvp).toString());
-			// Check-Out
-			print(hs.checkOutReservation(rsvp).toString());
-			// Get the reservation again to view the changes made like balance and such.
+			print("=========================================================================");
+			print(" View the current reservation");
+			print("=========================================================================");
 			print(rsvp.toString());
+			print("=========================================================================");
+			print(" View the current room under that reservation that is being checked-in");
+			print("=========================================================================");
+			print(rsvp.getRoom().toString());
+			print("=========================================================================");
+			print(" Check-Out");
+			print("=========================================================================");
+			print(hs.checkOutReservation(rsvp).toString());
+			print("=========================================================================");
+			print(" View the Reservation again and the Room that is being checked-out");
+			print("=========================================================================");
+			print(rsvp.toString());
+			print(rsvp.getRoom().toString());
 
-			// Reports
+			print("=========================================================================");
+			print(" Generate Reports (Revenue is only calculated for completed reservations)");
+			print("=========================================================================");
 			print(hs.generateReportAll().toString());
 			print(hs.generateReportRange(date1, date2).toString());
 		}
