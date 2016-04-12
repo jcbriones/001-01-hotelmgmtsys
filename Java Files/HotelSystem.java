@@ -244,6 +244,22 @@ public class HotelSystem {
 	{
 		return new CheckOut(rsvp).checkOut();
 	}
+	
+	// Charge the User
+	public boolean chargeUser(Reservation rsvp)
+	{
+		// Charge the remaining balance of the reservation, if payment doesn't go through then checking-in of user
+		// is not successful. Credit Card is invalid. Otherwise, complete checking-in of user
+		if (rsvp.validatePayment(rsvp.getBalance()))
+		{
+			rsvp.setBalance(0);
+			rsvp.setCheckedIn(true);
+			rsvp.getRoom().setOccupied(true);
+			return true;
+		}
+		else
+			return false;
+	}
 
 	/* =======================================
 	 * Setters and Getters
