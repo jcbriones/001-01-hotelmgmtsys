@@ -56,15 +56,18 @@ public class RSVPCoordinator {
 
 			// Is it Guaranteed?
 			boolean guaranteed = instr[7].equals("1") ? true : false;
-			// Room to be used for Reservation
-			print(hs.addReservation(usr, instr[5].equals("2") ? doubleRoom : singleRoom, Integer.parseInt(instr[6]), guaranteed, date.getMonth(), Integer.parseInt(instr[3]), date.getYear(), Integer.parseInt(instr[4]) - Integer.parseInt(instr[3])));
+			// New Reservation generated
+			rsvp = hs.addReservation(usr, instr[5].equals("2") ? doubleRoom : singleRoom, Integer.parseInt(instr[6]), guaranteed, date.getMonth(), Integer.parseInt(instr[3]), date.getYear(), Integer.parseInt(instr[4]) - Integer.parseInt(instr[3]));
+			print(rsvp.toString());
 
 			if (guaranteed)
 			{
 				// Credit Card to be added under the User
-				print(hs.addCreditCard(usr, usr.getFullName(), instr[8], instr[10], CCV, Integer.parseInt(instr[9].substring(0, instr[9].indexOf('/'))), Integer.parseInt(instr[9].substring(instr[9].indexOf('/')+1, instr[9].length())), instr[2], instr[2], instr[2], instr[2], Integer.parseInt(instr[2].substring(instr[2].length()-5,instr[2].length()-1))));
+				CreditCard cc = hs.addCreditCard(usr, usr.getFullName(), instr[8], instr[10], CCV, Integer.parseInt(instr[9].substring(0, instr[9].indexOf('/'))), Integer.parseInt(instr[9].substring(instr[9].indexOf('/')+1, instr[9].length())), instr[2], instr[2], instr[2], instr[2], Integer.parseInt(instr[2].substring(instr[2].length()-5,instr[2].length()-1)));
+
 				// Charge User the total balance of the reservation using the credit card provided above
-				//print(hs.)
+				print(hs.chargeUser(rsvp) ? "Successfully charged the customer for a new reservation":"Charge failed. Could be an invalid card");
+				print(cc.toString());
 			}
 			break;
 
