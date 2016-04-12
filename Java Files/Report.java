@@ -41,7 +41,7 @@ public class Report {
 			}
 
 			// Revenue
-			if(rsvps.get(i).isBookingCompleted())
+			if(rsvps.get(i).isStayFinished())
 				totalRevenue += rsvps.get(i).getRoomCost() * rsvps.get(i).getNumberOfNights();
 		}
 
@@ -75,7 +75,7 @@ public class Report {
 			}
 
 			// Revenue
-			if(rsvps.get(i).isBookingCompleted())
+			if(rsvps.get(i).isStayFinished())
 				totalRevenue += rsvps.get(i).getRoomCost() * rsvps.get(i).getNumberOfNights();
 		}
 

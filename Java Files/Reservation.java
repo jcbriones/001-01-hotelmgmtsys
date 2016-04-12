@@ -22,7 +22,7 @@ public class Reservation
 	private double balance;
 	private double roomCost;
 	private boolean guaranteed;
-	private boolean bookingCompleted;
+	private boolean stayFinished;
 	private boolean checkedIn;
 
 	public Reservation(User user, Room room, int occupants, boolean guaranteed, int m, int d, int y, int numberOfNights, double bal, double cost)
@@ -38,7 +38,7 @@ public class Reservation
 		this.numberOfNights = numberOfNights;
 		this.balance = bal;
 		this.roomCost = cost;
-		this.bookingCompleted = false;
+		this.stayFinished = false;
 		this.checkedIn = false;
 	}
 
@@ -57,7 +57,7 @@ public class Reservation
 		str.append("Room:\t\t\t" + room.getRoomNumber() + "\n");
 		str.append("Number of Occupants:\t" + numberOfOccupants + "\n");
 		str.append("Guaranteed?:\t\t" + guaranteed + "\n");
-		str.append("Completed?:\t\t" + bookingCompleted + "\n");
+		str.append("Completed?:\t\t" + stayFinished + "\n");
 		str.append("Checked-In?:\t\t" + checkedIn + "\n");
 		str.append("Booked on the following dates:\n");
 		for (int i = 0; i < dates.size(); i++)
@@ -147,12 +147,12 @@ public class Reservation
 		this.guaranteed = guaranteed;
 	}
 
-	public boolean isBookingCompleted() {
-		return bookingCompleted;
+	public boolean isStayFinished() {
+		return stayFinished;
 	}
 
-	public void setBookingCompleted(boolean bookingCompleted) {
-		this.bookingCompleted = bookingCompleted;
+	public void setStayFinished(boolean stayFinished) {
+		this.stayFinished = stayFinished;
 	}
 
 	public boolean isCheckedIn() {
