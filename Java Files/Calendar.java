@@ -10,6 +10,7 @@
 import java.util.ArrayList;
 
 public class Calendar {
+	//this will hold all the reservations in our system.
 	private ArrayList<Reservation> listOfReservations;
 
 	// Constructor
