@@ -39,7 +39,7 @@ public class RSVPCoordinator {
 		while (Framework.hasNextInstruction())
 		{
 			print("---------------------------- Date ------------------------------");
-			printDate();
+			print(("CURRENT DATE: " + date.toString()));
 			print("----------------------------------------------------------------");
 			String [] instructions = Framework.nextInstruction();
 			executeInstructions(instructions);
@@ -167,11 +167,6 @@ public class RSVPCoordinator {
 	public static void print(Object o)
 	{
 		System.out.println(o.toString());
-	}
-	
-	public static void printDate()
-	{
-		System.out.println("CURRENT DATE: " + date.toString());
 	}
 
 }
