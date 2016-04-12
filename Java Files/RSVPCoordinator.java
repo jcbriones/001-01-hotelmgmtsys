@@ -23,11 +23,11 @@ public class RSVPCoordinator {
 		// Create rooms
 		for (int i = 0; i < 5; i++)
 			singleRooms.add(hs.addRoom(100 + i, false, 150));
-		
+
 		for (int i = 5; i < 10; i++)
 			doubleRooms.add(hs.addRoom(100 + i, true, 180));
-		
-		
+
+
 		try
 		{
 			Framework.init(args[0]);
@@ -77,15 +77,25 @@ public class RSVPCoordinator {
 
 			// Is it Guaranteed?
 			boolean guaranteed = instr[7].equals("1") ? true : false;
-			
-			// Select room
-			if (instr[5].equals("2"))
-				//rm = double
-			else
-				//rm = single
+
 			// New Reservation generated
-			rsvp = hs.addReservation(usr, rm, Integer.parseInt(instr[6]), guaranteed, date.getMonth(), Integer.parseInt(instr[3]), date.getYear(), Integer.parseInt(instr[4]) - Integer.parseInt(instr[3]));
-			print(rsvp.toString());
+			int idx = 0;
+			do {
+				// Select room
+				if (instr[5].equals("2"))
+					rm = doubleRooms.get(idx);
+				else
+					rm = singleRooms.get(idx);
+				rsvp = hs.addReservation(usr, rm, Integer.parseInt(instr[6]), guaranteed, date.getMonth(), Integer.parseInt(instr[3]), date.getYear(), Integer.parseInt(instr[4]) - Integer.parseInt(instr[3]));
+				idx++;
+			} while (rsvp == null && (idx <= singleRooms.size() && idx <= doubleRooms.size()));
+			if(rsvp == null)	// If it still null it means then there is no room left.
+			{
+				print("All " + (instr[5].equals("2") ? "double" : "single") + " rooms are already full. We can't proceed with the making of reservation.");
+				break;
+			}
+			else
+				print(rsvp);
 
 			if (guaranteed)
 			{
@@ -147,6 +157,8 @@ public class RSVPCoordinator {
 			}
 			else
 				date.setDay(date.getDay()+1);
+			
+			// Check all those reservations who are booked but didn't show up
 			break;
 
 		case 6: // 6 PM alarm
