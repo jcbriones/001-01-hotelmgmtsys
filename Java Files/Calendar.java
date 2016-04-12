@@ -21,6 +21,9 @@ public class Calendar {
 	//given a room and a list of dates, checks to see if the room is available
 	public boolean checkDate(Room rm, ArrayList<Date> dates)
 	{
+		//goes through the list of reservations
+		//then checks that reservation's date range
+		//then checks to see if the given dates are equal to any of the dates in the date range
 		for (int i = 0; i < listOfReservations.size(); i++)
 			for (int j = 0; j < listOfReservations.get(i).getDates().size(); j++)
 				for (int k = 0; k < dates.size(); k++)
