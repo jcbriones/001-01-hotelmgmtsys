@@ -118,11 +118,11 @@ public class Report {
 	{
 		StringBuilder str = new StringBuilder();
 		str.append("Management Report for " + date1.getMonth() + "/" + date1.getDay() + "/" + date1.getYear() + "\n");
-		str.append("Number of Reservations:\t" + numberOfReservations + "\n");
-		str.append("Single Rooms Reserved:\t" + numberOfSinglesReserved + "\n");
-		str.append("Double Rooms Reserved:\t" + numberOfDoublesReserved + "\n");
-		str.append("Occupancy Rate:\t\t" + occupancyRate + "%\n");
-		str.append("Total Revenue:\t\t" + totalRevenue + "\n");
+		str.append("Number of Reservations: " + numberOfReservations + "\n");
+		str.append("Single Rooms Reserved: " + numberOfSinglesReserved + "\n");
+		str.append("Double Rooms Reserved: " + numberOfDoublesReserved + "\n");
+		str.append("Occupancy Rate: " + occupancyRate + "%\n");
+		str.append("Total Revenue: " + totalRevenue + "\n");
 		return str.toString();
 	}
 
