@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class RSVPCoordinator {
@@ -10,14 +11,23 @@ public class RSVPCoordinator {
 	private static int year = 2016;
 	private static Date date = new Date(month, day, year);
 
-	// Generate rooms for now since we don't know how the rooms will be used when making a reservation and what room is to give to them.
-	private static Room doubleRoom = hs.addRoom(101,true,100);
-	private static Room singleRoom = hs.addRoom(102, false, 100);
+	// Generate 5 single rooms and 5 double rooms
+	private static List<Room> singleRooms = new ArrayList<Room>();
+	private static List<Room> doubleRooms = new ArrayList<Room>();
 
-	// Also for credit cards, CCV is not including under input. So we set a temporary CCV as well.
+
+	// Credit Cards doesn't have CCV in their inputs so we generated one.
 	private static int CCV = 123;
 
 	public static void main(String[] args) {
+		// Create rooms
+		for (int i = 0; i < 5; i++)
+			singleRooms.add(hs.addRoom(100 + i, false, 150));
+		
+		for (int i = 5; i < 10; i++)
+			doubleRooms.add(hs.addRoom(100 + i, true, 180));
+		
+		
 		try
 		{
 			Framework.init(args[0]);
@@ -28,12 +38,17 @@ public class RSVPCoordinator {
 		}
 		while (Framework.hasNextInstruction())
 		{
+			print("---------------------------- Date ------------------------------");
+			printDate();
+			print("----------------------------------------------------------------");
 			String [] instructions = Framework.nextInstruction();
 			executeInstructions(instructions);
 
 			// Displays all the instructions
+			print("------------------------- Instruction --------------------------");
 			for (int i = 0; i < instructions.length; i++)
-				System.out.println(instructions[i]);
+				print(instructions[i]);
+			print("----------------------------------------------------------------");
 		}
 	}
 
@@ -42,6 +57,7 @@ public class RSVPCoordinator {
 		int type = Integer.parseInt(instr[0]);
 		Reservation rsvp;
 		User usr;
+		Room rm;
 		switch(type)
 		{
 		case 1:	// Make a Reservation
@@ -55,12 +71,20 @@ public class RSVPCoordinator {
 			if (hs.getUserByName(instr[1]) != null)
 				usr = hs.getUser(instr[1]);
 			else
-				usr = hs.addUser(instr[1].replaceAll("\\s+",""), instr[1].replaceAll("\\s+",""), instr[1], 0);
+				usr = hs.addUser(instr[1].toLowerCase().replaceAll("[^a-z0-9]", ""), instr[1].replaceAll("\\s+",""), instr[1], 0);
+			// Print the current User info
+			print(usr.toString());
 
 			// Is it Guaranteed?
 			boolean guaranteed = instr[7].equals("1") ? true : false;
+			
+			// Select room
+			if (instr[5].equals("2"))
+				//rm = double
+			else
+				//rm = single
 			// New Reservation generated
-			rsvp = hs.addReservation(usr, instr[5].equals("2") ? doubleRoom : singleRoom, Integer.parseInt(instr[6]), guaranteed, date.getMonth(), Integer.parseInt(instr[3]), date.getYear(), Integer.parseInt(instr[4]) - Integer.parseInt(instr[3]));
+			rsvp = hs.addReservation(usr, rm, Integer.parseInt(instr[6]), guaranteed, date.getMonth(), Integer.parseInt(instr[3]), date.getYear(), Integer.parseInt(instr[4]) - Integer.parseInt(instr[3]));
 			print(rsvp.toString());
 
 			if (guaranteed)
@@ -72,6 +96,7 @@ public class RSVPCoordinator {
 
 				// Charge User the total balance of the reservation using the credit card provided above
 				print(hs.chargeUser(rsvp) ? "Successfully charged the customer for a new reservation":"Charge failed. Could be an invalid card");
+				print("");
 				print(cc.toString());
 			}
 			break;
@@ -85,7 +110,7 @@ public class RSVPCoordinator {
 
 			usr = hs.getUserByName(instr[1]);
 			rsvp = hs.getReservationByCID(usr.getUserID());
-			hs.checkInReservation(rsvp);
+			print(hs.checkInReservation(rsvp));
 			break;
 
 		case 3:	// Check Out
@@ -106,7 +131,7 @@ public class RSVPCoordinator {
 				print("Management Report needs to have atleast 2 lines of code including the instruction type");
 				break;
 			}
-			print(hs.generateReportByRange(new Date(month, Integer.parseInt(instr[1]), year), new Date(month, Integer.parseInt(instr[1])+1, year)));
+			print(hs.generateReportByRange(new Date(date.getMonth(), Integer.parseInt(instr[1]), year), new Date(date.getMonth(), Integer.parseInt(instr[1])+1, year)));
 			break;
 
 		case 5: // Day Change
@@ -130,8 +155,11 @@ public class RSVPCoordinator {
 				print("6PM Signal needs to have atleast 1 lines of code including the instruction type");
 				break;
 			}
-			
+
 			hs.trigger6PM();
+			break;
+		default:
+			print("No instruction found. Make sure you put it the correct instruction type.");
 
 		}
 	}
@@ -139,6 +167,11 @@ public class RSVPCoordinator {
 	public static void print(Object o)
 	{
 		System.out.println(o.toString());
+	}
+	
+	public static void printDate()
+	{
+		System.out.println("CURRENT DATE: " + date.toString());
 	}
 
 }
