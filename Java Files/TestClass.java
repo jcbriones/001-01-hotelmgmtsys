@@ -62,7 +62,7 @@ public class TestClass {
 			print(" Generate Reports (Revenue is only calculated for completed reservations)");
 			print("=========================================================================");
 			print(hs.generateReportAll().toString());
-			print(hs.generateReportRange(date1, date2).toString(date1,date2));
+			print(hs.generateReportByRange(date1, date2).toString(date1,date2));
 		}
 		catch(Exception e)
 		{

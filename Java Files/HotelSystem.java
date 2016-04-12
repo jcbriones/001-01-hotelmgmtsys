@@ -228,7 +228,7 @@ public class HotelSystem {
 	}
 
 	// Generate Report Range
-	public Report generateReportRange(Date from, Date to)
+	public Report generateReportByRange(Date from, Date to)
 	{
 		return new Report().generateReportRange(this, from,to);
 	}
