@@ -17,7 +17,7 @@ public class CheckIn {
 	}
 
 	public CheckIn checkIn() {
-		if (!rsvp.isCheckedIn() && !rsvp.isBookingCompleted())
+		if (!rsvp.isCheckedIn() && !rsvp.isStayFinished())
 		{
 			// Charge the remaining balance of the reservation, if payment doesn't go through then checking-in of user
 			// is not successful. Credit Card is invalid. Otherwise, complete checking-in of user
