@@ -18,6 +18,7 @@ public class Calendar {
 		listOfReservations = hs.getDB().getListOfReservations();
 	}
 
+	//given a room and a list of dates, checks to see if the room is available
 	public boolean checkDate(Room rm, ArrayList<Date> dates)
 	{
 		for (int i = 0; i < listOfReservations.size(); i++)
