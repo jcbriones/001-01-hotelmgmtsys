@@ -159,6 +159,12 @@ public class RSVPCoordinator {
 				date.setDay(date.getDay()+1);
 			
 			// Check all those reservations who are booked but didn't show up
+			for (int i = 0; i < hs.getDB().getListOfReservations().size(); i++)
+				if (hs.getDB().getListOfReservations().get(i).getDates().get(0).isBefore(date))
+				{
+					hs.getDB().getListOfReservations().get(i).setNoShow(true);
+					print(hs.getDB().getListOfReservations().get(i).getReservedTo().getFullName() + " did not show.");
+				}
 			break;
 
 		case 6: // 6 PM alarm

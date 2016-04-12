@@ -253,8 +253,7 @@ public class HotelSystem {
 		if (rsvp.validatePayment(rsvp.getBalance()))
 		{
 			rsvp.setBalance(0);
-			rsvp.setCheckedIn(true);
-			rsvp.getRoom().setOccupied(true);
+			rsvp.setGuaranteed(true);
 			return true;
 		}
 		else

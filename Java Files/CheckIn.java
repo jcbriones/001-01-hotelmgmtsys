@@ -25,6 +25,7 @@ public class CheckIn {
 			{
 				rsvp.setBalance(0);
 				rsvp.setCheckedIn(true);
+				rsvp.setGuaranteed(true);
 				rsvp.getRoom().setOccupied(true);
 				return this;
 			}
