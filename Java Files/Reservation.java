@@ -55,8 +55,7 @@ public class Reservation
 		str.append("======== Reservation ID: " + rsvpID + " ========\n");
 		str.append("Reserved to:\t\t" + reservedTo.getFullName() + "\n");
 		str.append("Room:\t\t\t" + room.getRoomNumber() + "\n");
-		str.append("Room Info:\n");
-		str.append(room.toString());
+		str.append("Room Type:\t\t" + (room.isDouble() ? "Double" : "Single") + "\n");
 		str.append("Number of Occupants:\t" + numberOfOccupants + "\n");
 		str.append("Guaranteed?:\t\t" + guaranteed + "\n");
 		str.append("Completed?:\t\t" + stayFinished + "\n");
