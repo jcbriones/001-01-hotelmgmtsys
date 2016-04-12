@@ -24,7 +24,7 @@ public class CheckIn {
 			if (rsvp.validatePayment(rsvp.getBalance()))
 			{
 				rsvp.setBalance(0);
-				rsvp.setCheckedIn(true);//when the payment is completed the checkin is true and the room is set occupied
+				rsvp.setCheckedIn(true);
 				rsvp.getRoom().setOccupied(true);
 				return this;
 			}

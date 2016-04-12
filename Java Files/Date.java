@@ -7,23 +7,22 @@
  * 
  * This is the Date class which holds the days in our Calendar.
  */
-import java.util.Calendar;
 
 public class Date {
 	private int month, day, year;
-	private java.util.Date dateCounter = new java.util.Date();
 
-	public Date(int month, int day, int year)//grabs the current date and compares the reservation date
+	public Date(int month, int day, int year)
 	{
-		Calendar arrivalDate = Calendar.getInstance();
-		arrivalDate.set(year,month,day);
-		if(arrivalDate.getTime().before(dateCounter)) {
-			throw new IndexOutOfBoundsException("Invalid date, must be after the current time");
-		}
+		if (month < 1 || month > 12)
+			throw new IndexOutOfBoundsException("Invalid month");
+		if (day < 1 || day > maxDayInMonth(month,year))
+			throw new IndexOutOfBoundsException("Invalid day for month " + month + " with the given year");
+		if (year < 1970)
+			throw new IndexOutOfBoundsException("Can't go below year 1970");
+
 		this.month = month;
 		this.day = day;
 		this.year = year;
-
 	}
 
 	public int getDay() {
