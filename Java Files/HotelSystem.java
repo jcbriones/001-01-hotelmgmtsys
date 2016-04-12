@@ -282,4 +282,9 @@ public class HotelSystem {
 	public Database getDB() {
 		return db;
 	}
+
+	public void trigger6PM() {
+		// TODO Auto-generated method stub
+		
+	}
 }
