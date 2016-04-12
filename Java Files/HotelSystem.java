@@ -90,7 +90,7 @@ public class HotelSystem {
 
 		return null;
 	}
-	
+
 	public Reservation getReservationByCID(int customerID)
 	{
 		for (int i = 0; i < db.getListOfReservations().size(); i++)
@@ -244,7 +244,7 @@ public class HotelSystem {
 	{
 		return new CheckOut(rsvp).checkOut();
 	}
-	
+
 	// Charge the User
 	public boolean chargeUser(Reservation rsvp)
 	{
@@ -259,6 +259,13 @@ public class HotelSystem {
 		}
 		else
 			return false;
+	}
+
+	// 6PM Trigger
+	public void trigger6PM() {
+		for (int i = 0; i < db.getListOfReservations().size(); i++)
+			if (!db.getListOfReservations().get(i).isGuaranteed())
+				deleteReservation(db.getListOfReservations().get(i));
 	}
 
 	/* =======================================
@@ -283,8 +290,4 @@ public class HotelSystem {
 		return db;
 	}
 
-	public void trigger6PM() {
-		// TODO Auto-generated method stub
-		
-	}
 }
