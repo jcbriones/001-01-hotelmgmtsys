@@ -24,25 +24,27 @@ public class Report {
 		double occupancyCount = 0;
 		for (int i = 0; i < rsvps.size(); i++)
 		{
-			// Number of Reservations
-			numberOfReservations++;
-
-			// Single Or Double
-			if (rsvps.get(i).getRoom().isDouble())
-				numberOfDoublesReserved++;
-			else
-				numberOfSinglesReserved++;
-
-			// Occupancy Counter
-			if (!rms.contains(rsvps.get(i).getRoom()))
+			if(rsvps.get(i).getBalance() == 0)
 			{
-				rms.add(rsvps.get(i).getRoom());
-				occupancyCount++;
-			}
+				// Number of Reservations
+				numberOfReservations++;
 
-			// Revenue
-			if(rsvps.get(i).isStayFinished())
+				// Single Or Double
+				if (rsvps.get(i).getRoom().isDouble())
+					numberOfDoublesReserved++;
+				else
+					numberOfSinglesReserved++;
+
+				// Occupancy Counter
+				if (!rms.contains(rsvps.get(i).getRoom()))
+				{
+					rms.add(rsvps.get(i).getRoom());
+					occupancyCount++;
+				}
+
+				// Revenue
 				totalRevenue += rsvps.get(i).getRoomCost() * rsvps.get(i).getNumberOfNights();
+			}
 		}
 
 		// Occupancy Rate
@@ -58,25 +60,27 @@ public class Report {
 		double occupancyCount = 0;
 		for (int i = 0; i < rsvps.size(); i++)
 		{
-			// Number of Reservations
-			numberOfReservations++;
-
-			// Single Or Double
-			if (rsvps.get(i).getRoom().isDouble())
-				numberOfDoublesReserved++;
-			else
-				numberOfSinglesReserved++;
-
-			// Occupancy Counter
-			if (!rms.contains(rsvps.get(i).getRoom()))
+			if(rsvps.get(i).getBalance() == 0)
 			{
-				rms.add(rsvps.get(i).getRoom());
-				occupancyCount++;
-			}
+				// Number of Reservations
+				numberOfReservations++;
 
-			// Revenue
-			if(rsvps.get(i).isStayFinished())
+				// Single Or Double
+				if (rsvps.get(i).getRoom().isDouble())
+					numberOfDoublesReserved++;
+				else
+					numberOfSinglesReserved++;
+
+				// Occupancy Counter
+				if (!rms.contains(rsvps.get(i).getRoom()))
+				{
+					rms.add(rsvps.get(i).getRoom());
+					occupancyCount++;
+				}
+
+				// Revenue
 				totalRevenue += rsvps.get(i).getRoomCost() * rsvps.get(i).getNumberOfNights();
+			}
 		}
 
 		// Occupancy Rate
@@ -96,7 +100,7 @@ public class Report {
 		str.append("=============================\n");
 		return str.toString();
 	}
-	
+
 	public String toString(Date date1, Date date2)
 	{
 		StringBuilder str = new StringBuilder();
@@ -107,6 +111,18 @@ public class Report {
 		str.append("Occupancy Rate:\t\t" + occupancyRate + "%\n");
 		str.append("Total Revenue:\t\t" + totalRevenue + "\n");
 		str.append("=============================\n");
+		return str.toString();
+	}
+
+	public String toString(Date date1)
+	{
+		StringBuilder str = new StringBuilder();
+		str.append("Management Report for " + date1.getMonth() + "/" + date1.getDay() + "/" + date1.getYear() + "\n");
+		str.append("Number of Reservations:\t" + numberOfReservations + "\n");
+		str.append("Single Rooms Reserved:\t" + numberOfSinglesReserved + "\n");
+		str.append("Double Rooms Reserved:\t" + numberOfDoublesReserved + "\n");
+		str.append("Occupancy Rate:\t\t" + occupancyRate + "%\n");
+		str.append("Total Revenue:\t\t" + totalRevenue + "\n");
 		return str.toString();
 	}
 

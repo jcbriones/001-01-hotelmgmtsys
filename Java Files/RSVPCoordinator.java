@@ -19,6 +19,9 @@ public class RSVPCoordinator {
 	// Credit Cards doesn't have CCV in their inputs so we generated one.
 	private static int CCV = 123;
 
+	// Print date
+	private static boolean printDate = true;
+
 	public static void main(String[] args) {
 		// Create rooms
 		for (int i = 0; i < 5; i++)
@@ -38,22 +41,25 @@ public class RSVPCoordinator {
 		}
 		while (Framework.hasNextInstruction())
 		{
-			print("---------------------------- Date ------------------------------");
-			print(("CURRENT DATE: " + date.toString()));
-			print("----------------------------------------------------------------");
 			String [] instructions = Framework.nextInstruction();
 			executeInstructions(instructions);
 
 			// Displays all the instructions
-			print("------------------------- Instruction --------------------------");
-			for (int i = 0; i < instructions.length; i++)
-				print(instructions[i]);
-			print("----------------------------------------------------------------");
+			//for (int i = 0; i < instructions.length; i++)
+			//	print(instructions[i]);
 		}
 	}
 
 	public static void executeInstructions(String[] instr)
 	{
+		if(printDate)
+		{
+			print(("==================" + date.toString()) + "==================");
+			print("");
+			printDate = false;
+		}
+		
+		// Type of instruction
 		int type = Integer.parseInt(instr[0]);
 		Reservation rsvp;
 		User usr;
@@ -72,8 +78,6 @@ public class RSVPCoordinator {
 				usr = hs.getUser(instr[1]);
 			else
 				usr = hs.addUser(instr[1].toLowerCase().replaceAll("[^a-z0-9]", ""), instr[1].replaceAll("\\s+",""), instr[1], 0);
-			// Print the current User info
-			print(usr.toString());
 
 			// Is it Guaranteed?
 			boolean guaranteed = instr[7].equals("1") ? true : false;
@@ -91,24 +95,27 @@ public class RSVPCoordinator {
 			} while (rsvp == null && (idx <= singleRooms.size() && idx <= doubleRooms.size()));
 			if(rsvp == null)	// If it still null it means then there is no room left.
 			{
-				print("All " + (instr[5].equals("2") ? "double" : "single") + " rooms are already full. We can't proceed with the making of reservation.");
+				print("All " + (instr[5].equals("2") ? "double" : "single") + " rooms are already full. We can't proceed with the making of reservation using that room.");
 				break;
 			}
-			else
-				print(rsvp);
 
 			if (guaranteed)
 			{
 				// Parse the Address
 				List<String> addr = Arrays.asList(instr[2].split(", "));
 				// Credit Card to be added under the User
-				CreditCard cc = hs.addCreditCard(usr, usr.getFullName(), instr[8], instr[10], CCV, Integer.parseInt(instr[9].substring(0, instr[9].indexOf('/'))), Integer.parseInt(instr[9].substring(instr[9].indexOf('/')+1, instr[9].length())), addr.get(0), "", addr.get(1), addr.get(2).substring(0, 2), Integer.parseInt(addr.get(2).substring(3, 8)));
+				hs.addCreditCard(usr, usr.getFullName(), instr[8], instr[10], CCV, Integer.parseInt(instr[9].substring(0, instr[9].indexOf('/'))), Integer.parseInt(instr[9].substring(instr[9].indexOf('/')+1, instr[9].length())), addr.get(0), "", addr.get(1), addr.get(2).substring(0, 2), Integer.parseInt(addr.get(2).substring(3, 8)));
 
 				// Charge User the total balance of the reservation using the credit card provided above
-				print(hs.chargeUser(rsvp) ? "Successfully charged the customer for a new reservation":"Charge failed. Could be an invalid card");
-				print("");
-				print(cc.toString());
+				hs.chargeUser(rsvp);
 			}
+
+			print("Make Reservation request for " + rsvp.getReservedTo().getFullName());
+			print("Reservation: " + rsvp != null ? "Success" : "Failed");
+			print("Guaranteed: " + (rsvp.isGuaranteed() ? "True" : "False"));
+			print("CheckIn: " + rsvp.getDates().get(0));
+			print("CheckOut: " + rsvp.getDates().get(rsvp.getDates().size()-1));
+
 			break;
 
 		case 2:	// Check In
@@ -141,7 +148,7 @@ public class RSVPCoordinator {
 				print("Management Report needs to have atleast 2 lines of code including the instruction type");
 				break;
 			}
-			print(hs.generateReportByRange(new Date(date.getMonth(), Integer.parseInt(instr[1]), year), new Date(date.getMonth(), Integer.parseInt(instr[1])+1, year)));
+			print(hs.generateReportByRange(new Date(date.getMonth(), Integer.parseInt(instr[1]), year), new Date(date.getMonth(), Integer.parseInt(instr[1])+1, year)).toString(new Date(date.getMonth(), Integer.parseInt(instr[1]), year)));
 			break;
 
 		case 5: // Day Change
@@ -157,14 +164,15 @@ public class RSVPCoordinator {
 			}
 			else
 				date.setDay(date.getDay()+1);
-			
+
 			// Check all those reservations who are booked but didn't show up
 			for (int i = 0; i < hs.getDB().getListOfReservations().size(); i++)
-				if (hs.getDB().getListOfReservations().get(i).getDates().get(0).isBefore(date))
+				if (hs.getDB().getListOfReservations().get(i).getDates().get(0).isBefore(date) && !hs.getDB().getListOfReservations().get(i).isNoShow())
 				{
 					hs.getDB().getListOfReservations().get(i).setNoShow(true);
 					print(hs.getDB().getListOfReservations().get(i).getReservedTo().getFullName() + " did not show.");
 				}
+			printDate = true;
 			break;
 
 		case 6: // 6 PM alarm
@@ -178,8 +186,9 @@ public class RSVPCoordinator {
 			break;
 		default:
 			print("No instruction found. Make sure you put it the correct instruction type.");
-
+			break;
 		}
+		print("");
 	}
 
 	public static void print(Object o)
