@@ -1,3 +1,6 @@
+import java.util.List;
+import java.util.Arrays;
+
 public class RSVPCoordinator {
 	// Instantiation of HotelSystem
 	private static HotelSystem hs = new HotelSystem();
@@ -60,10 +63,14 @@ public class RSVPCoordinator {
 			rsvp = hs.addReservation(usr, instr[5].equals("2") ? doubleRoom : singleRoom, Integer.parseInt(instr[6]), guaranteed, date.getMonth(), Integer.parseInt(instr[3]), date.getYear(), Integer.parseInt(instr[4]) - Integer.parseInt(instr[3]));
 			print(rsvp.toString());
 
+			// Parse the Address
+			List<String> addr = Arrays.asList(instr[2].split(", "));
+			for(int i = 0; i < addr.size(); i++)
+				print(addr.get(i));
 			if (guaranteed)
 			{
 				// Credit Card to be added under the User
-				CreditCard cc = hs.addCreditCard(usr, usr.getFullName(), instr[8], instr[10], CCV, Integer.parseInt(instr[9].substring(0, instr[9].indexOf('/'))), Integer.parseInt(instr[9].substring(instr[9].indexOf('/')+1, instr[9].length())), instr[2], instr[2], instr[2], instr[2], Integer.parseInt(instr[2].substring(instr[2].length()-5,instr[2].length()-1)));
+				CreditCard cc = hs.addCreditCard(usr, usr.getFullName(), instr[8], instr[10], CCV, Integer.parseInt(instr[9].substring(0, instr[9].indexOf('/'))), Integer.parseInt(instr[9].substring(instr[9].indexOf('/')+1, instr[9].length())), addr.get(0), "", addr.get(1), addr.get(2).substring(0, 2), Integer.parseInt(addr.get(2).substring(3, 8)));
 
 				// Charge User the total balance of the reservation using the credit card provided above
 				print(hs.chargeUser(rsvp) ? "Successfully charged the customer for a new reservation":"Charge failed. Could be an invalid card");
