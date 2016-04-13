@@ -8,19 +8,17 @@
  * This is the where all the payments are being processed through the use of functions.
  */
 
-//Class meant to "process" the credit card information provided by the User at check-in
 public final class ProcessPayment {
 	
 	/**
-	 * Description: This is where the credit card is getting charged.
+	 * Description: Takes a CreditCard and an amount as input and returns to the user whether or not
+	 * that amount is a valid amount and whether or not it was properly processed
 	 * 
 	 * @param card
 	 * @param amount
 	 * @return boolean
 	 * @author Ken Matsuda
 	 */
-	//Takes a CreditCard and an amount as input and returns to the user whether or not
-	//that amount is a valid amount and whether or not it was properly processed
 	public static boolean processPayment(CreditCard card, double amount) {
 		// if the card balance is less than 0 or isn't found then it returns false
 		if (amount < 0 || card == null)
