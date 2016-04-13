@@ -8,7 +8,7 @@ Section 001 | Group 01
 - Run the Terminal(Unix) or Command Prompt(Windows).
 - Go to the 'Java Files' directory.
 - And then type `javac *.java` to compile the java files.
-- And run RSVPCoordinator by running the command `java RSVPCoordinator input-file.txt`.
+- And run RSVPCoordinator by running the command `java RSVPCoordinator sample-inputs/sampleN.txt`.
 
 
 ## Run down of the requirements of making reservation, checking-in, checking-out, and generating a report.
