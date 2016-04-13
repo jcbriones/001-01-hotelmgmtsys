@@ -1,3 +1,12 @@
+/*
+ * RSVPCoordinator.java
+ * 
+ * CS321-001 - George Mason University
+ * Group 01
+ * @author: Jc Briones, Pavan Vittala, Ken Matsuda, Matt Edwards
+ * 
+ * This is the Coordinator class that responds an output to an input from a file.
+ */
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
