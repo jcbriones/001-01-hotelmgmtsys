@@ -2,13 +2,18 @@
 Project for CS321 - George Mason University
 Section 001 | Group 01
 
-#### Updated on: April 10, 2016
+#### Updated on: April 13, 2016
 
 ## Compiling:
 - Run the Terminal(Unix) or Command Prompt(Windows).
 - Go to the 'Java Files' directory.
 - And then type `javac *.java` to compile the java files.
-- And run RSVPCoordinator by running the command `java RSVPCoordinator sample-inputs/sampleN.txt`.
+## Running the Program:
+- Run RSVPCoordinator by running the following commands:
+- - `java RSVPCoordinator sample-inputs/sample1.txt`.
+- - `java RSVPCoordinator sample-inputs/sample2.txt`.
+- - `java RSVPCoordinator sample-inputs/sample3.txt`.
+- - `java RSVPCoordinator sample-inputs/sample4.txt`.
 
 
 ## Run down of the requirements of making reservation, checking-in, checking-out, and generating a report.
