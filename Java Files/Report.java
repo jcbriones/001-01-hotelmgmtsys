@@ -1,4 +1,4 @@
-/*
+/**
  * Report.java
  * 
  * CS321-001 - George Mason University
@@ -10,16 +10,30 @@
 import java.util.ArrayList;
 
 public class Report {
+	/**
+	 * Class Variables
+	 */
 	private int numberOfReservations;
 	private int numberOfSinglesReserved;
 	private int numberOfDoublesReserved;
 	private double occupancyRate;
 	private double totalRevenue;
 
-	public Report generateReportRange(HotelSystem hs, Date first, Date second)
+	/**
+	 * Description: This generates a report for the given dates from '@param from' to '@param to'
+	 * Only reservations that have a balance of 0 will be included in the report.
+	 * Any reservation dates that fall in the given date will still be included in the Report.
+	 * 
+	 * @param hs
+	 * @param from
+	 * @param to
+	 * @return Report
+	 * @author Jc Briones
+	 */
+	public Report generateReportRange(HotelSystem hs, Date from, Date to)
 	{
 		// Reservation Lists between the given two dates
-		ArrayList<Reservation> rsvps = new Calendar(hs).ReservationByDateRange(first, second);
+		ArrayList<Reservation> rsvps = new Calendar(hs).ReservationByDateRange(from, to);
 		ArrayList<Room> rms = new ArrayList<Room>();
 		double occupancyCount = 0;
 		for (int i = 0; i < rsvps.size(); i++)
@@ -52,6 +66,14 @@ public class Report {
 		return this;
 	}
 
+	/**
+	 * Description: This generates a report for all reservations done on the system.
+	 * Only reservations that have a balance of 0 will be included in the report.
+	 * 
+	 * @param hs
+	 * @return Report
+	 * @author Jc Briones
+	 */
 	public Report generateReportAll(HotelSystem hs)
 	{
 		// Get all Reservations from the database
@@ -88,6 +110,13 @@ public class Report {
 		return this;
 	}
 
+	/**
+	 * Description: This creates a String of the given values inside this class in
+	 * a readable format.
+	 * 
+	 * @return String
+	 * @author Pavan Vittala
+	 */
 	public String toString()
 	{
 		StringBuilder str = new StringBuilder();
@@ -101,10 +130,19 @@ public class Report {
 		return str.toString();
 	}
 
-	public String toString(Date date1, Date date2)
+	/**
+	 * Description: This creates a String of the given values inside this class in
+	 * a readable format. Used for generatingReportByRange()
+	 * 
+	 * @param from
+	 * @param to
+	 * @return String
+	 * @author Pavan Vittala
+	 */
+	public String toString(Date from, Date to)
 	{
 		StringBuilder str = new StringBuilder();
-		str.append("Management Report (" + date1.toString() + " to " + date2.toString() +") ==\n");
+		str.append("Management Report (" + from.toString() + " to " + to.toString() +") ==\n");
 		str.append("Number of Reservations:\t" + numberOfReservations + "\n");
 		str.append("Single Rooms Reserved:\t" + numberOfSinglesReserved + "\n");
 		str.append("Double Rooms Reserved:\t" + numberOfDoublesReserved + "\n");
