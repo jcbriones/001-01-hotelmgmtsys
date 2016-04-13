@@ -16,19 +16,13 @@ public class CheckIn {
 		this.rsvp = rsvp;
 	}
 
-	public CheckIn checkIn() {
-		if (!rsvp.isCheckedIn() && !rsvp.isStayFinished())
+	public CheckIn checkIn(Date date) {
+		if (!rsvp.isCheckedIn() && rsvp.getDates().get(0).equals(date) && rsvp.getBalance() == 0)
 		{
-			// Charge the remaining balance of the reservation, if payment doesn't go through then checking-in of user
-			// is not successful. Credit Card is invalid. Otherwise, complete checking-in of user
-			if (rsvp.validatePayment(rsvp.getBalance()))
-			{
-				rsvp.setBalance(0);
 				rsvp.setCheckedIn(true);
 				rsvp.setGuaranteed(true);
 				rsvp.getRoom().setOccupied(true);
 				return this;
-			}
 		}
 		return null;
 	}
