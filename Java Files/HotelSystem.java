@@ -234,15 +234,15 @@ public class HotelSystem {
 	}
 
 	// Check-In Reservation
-	public CheckIn checkInReservation(Reservation rsvp)
+	public CheckIn checkInReservation(Reservation rsvp, Date date)
 	{
-		return new CheckIn(rsvp).checkIn();
+		return new CheckIn(rsvp).checkIn(date);
 	}
 
 	// Check-Out Reservation
-	public CheckOut checkOutReservation(Reservation rsvp)
+	public CheckOut checkOutReservation(Reservation rsvp, Date date)
 	{
-		return new CheckOut(rsvp).checkOut();
+		return new CheckOut(rsvp).checkOut(date);
 	}
 
 	// Charge the User
@@ -261,10 +261,15 @@ public class HotelSystem {
 	}
 
 	// 6PM Trigger
-	public void trigger6PM() {
+	public ArrayList<Reservation> trigger6PM() {
+		ArrayList<Reservation> tmp = new ArrayList<Reservation>();
 		for (int i = 0; i < db.getListOfReservations().size(); i++)
 			if (!db.getListOfReservations().get(i).isGuaranteed())
+			{
+				tmp.add(db.getListOfReservations().get(i));
 				deleteReservation(db.getListOfReservations().get(i));
+			}
+		return tmp;
 	}
 
 	/* =======================================
