@@ -240,5 +240,61 @@ public class Date {
 	public boolean isBefore(Date that) {
 		return that.month - this.month >= 0 && that.day - this.day > 0 && that.year - this.year >= 0;
 	}
+	
+	public static void main(String[] args) {
+		//Test Cases for getDifferenceFrom()
+		//Test1
+		Date test11 = new Date(10,11,1994);
+		Date test12 = new Date(10,12,1994);
+		System.out.println("Test1: " + test11.getDifferenceFrom(test12));
+		
+		//Test2
+		Date test21 = new Date(10,11,1994);
+		Date test22 = new Date(10,12,1995);
+		System.out.println("Test2: " + test21.getDifferenceFrom(test22));
+		
+		//Test3
+		Date test31 = new Date(10,11,1994);
+		Date test32 = new Date(10,12,2000);
+		System.out.println("Test3: " + test31.getDifferenceFrom(test32));
+		
+		//Test4
+		Date test41 = new Date(10,11,2000);
+		Date test42 = new Date(10,12,1994);
+		System.out.println("Test4: " + test41.getDifferenceFrom(test42));
+		
+		//Test5
+		Date test51 = new Date(10,11,3000);
+		Date test52 = new Date(10,12,4000);
+		System.out.println("Test5: " + test51.getDifferenceFrom(test52));
+		
+		//Test Cases for maxDayInMonth()
+		//Test1
+		System.out.println("Test1: " + test11.maxDayInMonth(1, 2016));
+		//Test2
+		System.out.println("Test2: " + test11.maxDayInMonth(2, 2016));
+		//Test3
+		System.out.println("Test3: " + test11.maxDayInMonth(3, 2016));
+		//Test4
+		System.out.println("Test4: " + test11.maxDayInMonth(4, 2016));
+		//Test5
+		System.out.println("Test5: " + test11.maxDayInMonth(5, 2016));
+		//Test6
+		System.out.println("Test6: " + test11.maxDayInMonth(6, 2016));
+		//Test7
+		System.out.println("Test7: " + test11.maxDayInMonth(7, 2016));
+		//Test8
+		System.out.println("Test8: " + test11.maxDayInMonth(8, 2016));
+		//Test9
+		System.out.println("Test9: " + test11.maxDayInMonth(9, 2016));
+		//Test10
+		System.out.println("Test10: " + test11.maxDayInMonth(10, 2016));
+		//Test11
+		System.out.println("Test11: " + test11.maxDayInMonth(11, 2016));
+		//Test12
+		System.out.println("Test12: " + test11.maxDayInMonth(12, 2016));
+		//Test13
+		System.out.println("Test13: " + test11.maxDayInMonth(2, 2015));
+	}
 
 }
