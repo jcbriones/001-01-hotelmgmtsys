@@ -4,6 +4,11 @@ Section 001 | Group 01
 
 #### Updated on: April 13, 2016
 
+## Getting the Source Code:
+- Click the `Download ZIP` on the top right corner of this page.
+- Extract the zip file.
+- The source codes should be inside the 'Java Files' directory.
+
 ## Compiling:
 - Run the Terminal(Unix) or Command Prompt(Windows).
 - Go to the 'Java Files' directory.
