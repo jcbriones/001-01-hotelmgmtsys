@@ -73,11 +73,14 @@ public class RSVPCoordinator {
 				break;
 			}
 
+			// Parse the Address
+			List<String> addr = Arrays.asList(instr[2].split(", "));
+			
 			// Check if the user is already in the database or not.
 			if (hs.getUserByName(instr[1]) != null)
 				usr = hs.getUser(instr[1]);
 			else
-				usr = hs.addUser(instr[1].toLowerCase().replaceAll("[^a-z0-9]", ""), instr[1].replaceAll("\\s+",""), instr[1], 0);
+				usr = hs.addUser(instr[1].toLowerCase().replaceAll("[^a-z0-9]", ""), instr[1].replaceAll("\\s+",""), instr[1], 0, addr.get(0), "", addr.get(1), addr.get(2).substring(0, 2), Integer.parseInt(addr.get(2).substring(3, 8)));
 
 			// Is it Guaranteed?
 			boolean guaranteed = instr[7].equals("1") ? true : false;
@@ -101,10 +104,8 @@ public class RSVPCoordinator {
 
 			if (guaranteed)
 			{
-				// Parse the Address
-				List<String> addr = Arrays.asList(instr[2].split(", "));
 				// Credit Card to be added under the User
-				hs.addCreditCard(usr, usr.getFullName(), instr[8], instr[10], CCV, Integer.parseInt(instr[9].substring(0, instr[9].indexOf('/'))), Integer.parseInt(instr[9].substring(instr[9].indexOf('/')+1, instr[9].length())), addr.get(0), "", addr.get(1), addr.get(2).substring(0, 2), Integer.parseInt(addr.get(2).substring(3, 8)));
+				hs.addCreditCard(usr, usr.getFullName(), instr[8], instr[10], CCV, Integer.parseInt(instr[9].substring(0, instr[9].indexOf('/'))), Integer.parseInt(instr[9].substring(instr[9].indexOf('/')+1, instr[9].length())), usr.getAddress1(), usr.getAddress2(), usr.getCity(), usr.getState(), usr.getZip());
 
 				// Charge User the total balance of the reservation using the credit card provided above
 				hs.chargeUser(rsvp);
@@ -133,7 +134,7 @@ public class RSVPCoordinator {
 			else
 			{
 				// Credit Card to be added under the User
-				//hs.addCreditCard(usr, usr.getFullName(), instr[2], instr[4], CCV, Integer.parseInt(instr[3].substring(0, instr[3].indexOf('/'))), Integer.parseInt(instr[3].substring(instr[3].indexOf('/')+1, instr[9].length())), addr.get(0), "", addr.get(1), addr.get(2).substring(0, 2), Integer.parseInt(addr.get(2).substring(3, 8)));
+				hs.addCreditCard(usr, usr.getFullName(), instr[2], instr[4], CCV, Integer.parseInt(instr[3].substring(0, instr[3].indexOf('/'))), Integer.parseInt(instr[3].substring(instr[3].indexOf('/')+1, instr[3].length())), usr.getAddress1(), usr.getAddress2(), usr.getCity(), usr.getState(), usr.getZip());
 				checkedIn = hs.checkInReservation(rsvp);
 			}
 			print(checkedIn != null ? checkedIn.toString() : "Failed checking in.");

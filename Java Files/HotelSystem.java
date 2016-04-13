@@ -121,15 +121,15 @@ public class HotelSystem {
 	}
 
 	// Users
-	public User addUser(String username, String password, String name, int accountType) {
+	public User addUser(String user, String pass, String name, int type, String address1, String address2, String city, String state, int zip) {
 		// Check first if a username exist
 		Iterator<User> itr = db.getListOfUsers().iterator();
 		while (itr.hasNext())
-			if (itr.next().getUsername().equals(username))
+			if (itr.next().getUsername().equals(user))
 				return null;
 
 		// Create the user if not found
-		User usr = new User(username,password,name,accountType);
+		User usr = new User(user,pass,name,type,address1,address2,city,state,zip);
 		db.getListOfUsers().add(usr);
 		return usr;
 	}
