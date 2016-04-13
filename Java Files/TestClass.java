@@ -19,8 +19,8 @@ public class TestClass {
 			print(hs.addRoom(101, false, 100.50).toString());
 			print(hs.addRoom(102, false, 213.20).toString());
 			print(hs.addRoom(103, true, 163.50).toString());
-			print(hs.addUser("user1", "pass", "Full Name User 1", 0).toString());
-			print(hs.addUser("user2", "pass", "Full Name User 2", 0).toString());
+			print(hs.addUser("user1", "pass", "Full Name User 1", 0,"","","","",12345).toString());
+			print(hs.addUser("user2", "pass", "Full Name User 2", 0,"","","","",12345).toString());
 			print(hs.addReservation(hs.getDB().getListOfUsers().get(0), hs.getDB().getListOfRooms().get(0), 2, true, 3, 13, 2016, 3).toString());
 			print(hs.addReservation(hs.getDB().getListOfUsers().get(0), hs.getDB().getListOfRooms().get(2), 2, false, 3, 13, 2016, 3).toString());
 			print(hs.addReservation(hs.getDB().getListOfUsers().get(1), hs.getDB().getListOfRooms().get(0), 2, true, 3, 17, 2016, 3).toString());
@@ -119,8 +119,8 @@ public class TestClass {
 		hs.setHotelName(hotelName);
 
 		// Add an initial admin user to manage the hs and customer 
-		loggedInUser = hs.addUser(username, password, "MyName IsAdmin", 2);
-		currentUser = hs.addUser(cusername, cpassword, "Customer Name", 0);
+		loggedInUser = hs.addUser(username, password, "MyName IsAdmin", 2,"","","","",12345);
+		currentUser = hs.addUser(cusername, cpassword, "Customer Name", 0,"","","","",12345);
 
 
 		// Show the menu to the appropriate user.
@@ -333,7 +333,7 @@ public class TestClass {
 		print("Enter full name of user: ");
 		String fullName = keyboard.nextLine();
 
-		if (hs.addUser(user, pass, fullName, rank) != null)
+		if (hs.addUser(user, pass, fullName, rank,"","","","",12345) != null)
 			print("Successfully added a new user");
 		else
 			print("A username " + user + " is already in the system. Please look for that user or use a different username");

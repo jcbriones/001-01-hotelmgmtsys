@@ -95,10 +95,10 @@ public class RSVPCoordinator {
 					rm = singleRooms.get(idx);
 				rsvp = hs.addReservation(usr, rm, Integer.parseInt(instr[6]), guaranteed, date.getMonth(), Integer.parseInt(instr[3]), date.getYear(), Integer.parseInt(instr[4]) - Integer.parseInt(instr[3]));
 				idx++;
-			} while (rsvp == null && (idx <= singleRooms.size() && idx <= doubleRooms.size()));
+			} while (rsvp == null && (idx < singleRooms.size() && idx < doubleRooms.size()));
 			if(rsvp == null)	// If it still null it means then there is no room left.
 			{
-				print("All " + (instr[5].equals("2") ? "double" : "single") + " rooms are already full. We can't proceed with the making of reservation using that room.");
+				print("All " + (instr[5].equals("2") ? "double" : "single") + " rooms are fully booked. We can't proceed with the making of reservation using a " + (instr[5].equals("2") ? "double" : "single") + " room.");
 				break;
 			}
 
@@ -127,17 +127,27 @@ public class RSVPCoordinator {
 			}
 
 			usr = hs.getUserByName(instr[1]);
+			if (usr == null)
+			{
+				print("User is not found in the database. Can't check in " + instr[1]);
+				break;
+			}
 			rsvp = hs.getReservationByCID(usr.getUserID());
-			CheckIn checkedIn;
-			if (rsvp.isGuaranteed())
+			if (rsvp == null)
+			{
+				print("Reservation is not found in the database. Can't check in " + instr[1]);
+				break;
+			}
+			CheckIn checkedIn = null;
+			if (rsvp.isGuaranteed() && rsvp.getBalance() == 0 && date.isBefore(rsvp.getDates().get(0)))
 				checkedIn = hs.checkInReservation(rsvp);
-			else
+			else if (!rsvp.isGuaranteed() && date.isBefore(rsvp.getDates().get(0)))
 			{
 				// Credit Card to be added under the User
 				hs.addCreditCard(usr, usr.getFullName(), instr[2], instr[4], CCV, Integer.parseInt(instr[3].substring(0, instr[3].indexOf('/'))), Integer.parseInt(instr[3].substring(instr[3].indexOf('/')+1, instr[3].length())), usr.getAddress1(), usr.getAddress2(), usr.getCity(), usr.getState(), usr.getZip());
 				checkedIn = hs.checkInReservation(rsvp);
 			}
-			print(checkedIn != null ? checkedIn.toString() : "Failed checking in.");
+			print(checkedIn != null ? checkedIn.toString() : ("Failed checking in " + instr[1] + ". Check-in date supposed to be " + rsvp.getDates().get(0) + "."));
 			break;
 
 		case 3:	// Check Out

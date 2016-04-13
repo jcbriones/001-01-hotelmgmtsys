@@ -18,7 +18,7 @@ public class Report {
 
 	public Report generateReportRange(HotelSystem hs, Date first, Date second)
 	{
-		// Reservation Lists on the given two dates
+		// Reservation Lists between the given two dates
 		ArrayList<Reservation> rsvps = new Calendar(hs).ReservationByDateRange(first, second);
 		ArrayList<Room> rms = new ArrayList<Room>();
 		double occupancyCount = 0;
