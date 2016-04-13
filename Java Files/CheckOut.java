@@ -16,8 +16,8 @@ public class CheckOut {
 		this.rsvp = rsvp;
 	}
 
-	public CheckOut checkOut() {//When the customer is finished with the stay sets the room to unoccupied and checked in to false
-		if (rsvp.isCheckedIn())
+	public CheckOut checkOut(Date date) {//When the customer is finished with the stay sets the room to unoccupied and checked in to false
+		if (rsvp.isCheckedIn() && rsvp.getDates().get(rsvp.getDates().size()-1).equals(date))
 		{
 			// Check-out the user and finish the booking
 			rsvp.setCheckedIn(false);
