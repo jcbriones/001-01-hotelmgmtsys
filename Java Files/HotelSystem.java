@@ -1,11 +1,12 @@
-/*
+/**
  * HotelSystem.java
  * 
  * CS321-001 - George Mason University
  * Group 01
  * @author: Jc Briones, Pavan Vittala, Ken Matsuda, Matt Edwards
  * 
- * This is the HotelSystem class which acts as the main class of the program.
+ * This is the HotelSystem class which acts as the central class of the program that controls all of the
+ * Hotel's functionalities/
  */
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -34,7 +35,15 @@ public class HotelSystem {
 	 * =======================================
 	 */
 
-	// Creates a room in the database
+	/**
+	 * Description: Creates a room inside the database.
+	 * 
+	 * @param roomNumber
+	 * @param isDouble
+	 * @param price
+	 * @return Room
+	 * @author Matt Edwards
+	 */
 	public Room addRoom(int roomNumber, boolean isDouble, double price)
 	{
 		if(getRoom(roomNumber) != null)		
@@ -49,6 +58,13 @@ public class HotelSystem {
 		}
 	}
 
+	/**
+	 * Description: Returns the room with the room number equals to '@param roomNumber'.
+	 * 
+	 * @param roomNumber
+	 * @return Room
+	 * @author Matt Edwards
+	 */
 	public Room getRoom(int roomNumber)
 	{
 		// Search the list using an Iterator
@@ -64,14 +80,36 @@ public class HotelSystem {
 		return null;
 	}
 
-	//Deletes a room from the database
+	/**
+	 * Description: It returns a boolean if a room was successfully deleted or not.
+	 * 
+	 * @param rm
+	 * @return boolean
+	 * @author Matt Edwards
+	 */
 	public boolean deleteRoom(Room rm)
 	{
 		//Directly call the ArrayList's remove function
 		return db.getListOfRooms().remove(rm);
 	}
 
-	//Adding a reservation to the list of reservations in the datebase
+	/**
+	 * Description: This adds a reservation to the database and returns the Reservation instance.
+	 * Before adding a new reservation, it will check if that reservation doesn't have any
+	 * conflicts on dates and room that is used. If successful, then it returns the generated
+	 * reservation back.
+	 * 
+	 * @param reservedTo
+	 * @param rm
+	 * @param numberOfOccupants
+	 * @param guaranteed
+	 * @param month
+	 * @param day
+	 * @param year
+	 * @param numberOfNights
+	 * @return Reservation
+	 * @author Jc Briones
+	 */
 	public Reservation addReservation(User reservedTo, Room rm, int numberOfOccupants, boolean guaranteed, int month, int day, int year, int numberOfNights)
 	{
 		ArrayList<Date> dates = new ArrayList<Date>();
@@ -91,7 +129,13 @@ public class HotelSystem {
 			return null;
 	}
 
-	//Get a reservation from the database based on the reservation ID
+	/**
+	 * Description: Get a reservation from the database based on the reservation ID.
+	 * 
+	 * @param reservationID
+	 * @return Reservation
+	 * @author Jc Briones
+	 */
 	public Reservation getReservationByID(int reservationID)
 	{
 		for (int i = 0; i < db.getListOfReservations().size(); i++)
@@ -102,7 +146,13 @@ public class HotelSystem {
 		return null;
 	}
 
-	//Get the reservation from the database based on customer ID
+	/**
+	 * Description: Get the reservation from the database based on customer ID.
+	 * 
+	 * @param customerID
+	 * @return Reservation
+	 * @author Jc Briones
+	 */
 	public Reservation getReservationByCID(int customerID)
 	{
 		for (int i = 0; i < db.getListOfReservations().size(); i++)
@@ -113,8 +163,12 @@ public class HotelSystem {
 		return null;
 	}
 
-	//Get the reservation from the database
-	//Getting all the reservations of a given user
+	/**
+	 * Description: Get the reservations from the database under a specific user
+	 * @param usr
+	 * @return ArrayList<Reservation>
+	 * @author Jc Briones
+	 */
 	public ArrayList<Reservation> getReservations(User usr)
 	{
 		// Search the list
@@ -131,13 +185,34 @@ public class HotelSystem {
 		return rsvps;
 	}
 
-	//Deletes a given reservation from the database
+	/**
+	 * Description: Deletes a given reservation from the database
+	 * 
+	 * @param rsvp
+	 * @return boolean
+	 * @author Jc Briones
+	 */
 	public boolean deleteReservation(Reservation rsvp)
 	{
 		return db.getListOfReservations().remove(rsvp);
 	}
 
-	//Add a user to the database
+	/**
+	 * Description: Add a user to the database. It does check the database first if the user does not
+	 * exist on the system. Otherwise, continue adding and return the User object.
+	 * 
+	 * @param user
+	 * @param pass
+	 * @param name
+	 * @param type
+	 * @param address1
+	 * @param address2
+	 * @param city
+	 * @param state
+	 * @param zip
+	 * @return User
+	 * @author Ken Matsuda
+	 */
 	public User addUser(String user, String pass, String name, int type, String address1, String address2, String city, String state, int zip) {
 		// Check first if a username exist
 		Iterator<User> itr = db.getListOfUsers().iterator();
@@ -152,7 +227,13 @@ public class HotelSystem {
 		return usr;
 	}
 
-	//Get a user from the database
+	/**
+	 * Description: Get a user from the database.
+	 * 
+	 * @param username
+	 * @return User
+	 * @author Ken Matsuda
+	 */
 	public User getUser(String username) {
 		// Check if a User with username does exist
 		for (int i = 0; i < db.getListOfUsers().size(); i++)
@@ -162,7 +243,13 @@ public class HotelSystem {
 		return null;
 	}
 
-	//Get the user based on the user's ID
+	/**
+	 * Description: Get the user based on the user's ID.
+	 * 
+	 * @param customerID
+	 * @return User
+	 * @author Ken Matsuda
+	 */
 	public User getUserByID(int customerID) {
 		// Check if a User with username does exist
 		for (int i = 0; i < db.getListOfUsers().size(); i++)
@@ -172,7 +259,13 @@ public class HotelSystem {
 		return null;
 	}
 
-	//Get a user from the database based on his/ her name
+	/**
+	 * Description: Get a user from the database based on his/ her name.
+	 * 
+	 * @param name
+	 * @return User
+	 * @author Ken Matsuda
+	 */
 	public User getUserByName(String name) {
 		// Check if a User with username does exist
 		for (int i = 0; i < db.getListOfUsers().size(); i++)
@@ -182,7 +275,13 @@ public class HotelSystem {
 		return null;
 	}
 
-	// Delete the specified User in the database.
+	/**
+	 * Description: Delete the specified User in the database.
+	 * 
+	 * @param usr
+	 * @return boolean
+	 * @author Ken Matsuda
+	 */
 	public boolean deleteUser(User usr)
 	{
 		if (db.getListOfUsers().remove(usr))
@@ -193,14 +292,24 @@ public class HotelSystem {
 		return false;
 	}
 
-	// Used for verifying logins and returning the User that matches the given user and pass
-	public User loginUser(String username, String password)
-	{
-		User usr = getUser(username);
-		return usr.getPassword().equals(password) ? usr : null;
-	}
-
-	//Add a credit card associated with a user to the database
+	/**
+	 * Description: Add a credit card associated with a user to the database.
+	 * 
+	 * @param usr
+	 * @param nameOnCard
+	 * @param type
+	 * @param cardNumber
+	 * @param CCV
+	 * @param expDateM
+	 * @param expDateY
+	 * @param billingAddress1
+	 * @param billingAddress2
+	 * @param billingCity
+	 * @param billingState
+	 * @param billingZip
+	 * @return CreditCard
+	 * @author Pavan Vittala
+	 */
 	public CreditCard addCreditCard(User usr, String nameOnCard, String type, String cardNumber, int CCV, int expDateM, int expDateY, String billingAddress1, String billingAddress2, String billingCity, String billingState, int billingZip)
 	{
 		CreditCard cc = new CreditCard(nameOnCard,type,cardNumber,CCV,expDateM,expDateY,billingAddress1,billingAddress2,billingCity,billingState,billingZip);
@@ -209,7 +318,23 @@ public class HotelSystem {
 		return cc;
 	}
 
-	//Update credit card info with new information.
+	/**
+	 * Description: Update credit card info with new information.
+	 * 
+	 * @param card
+	 * @param nameOnCard
+	 * @param type
+	 * @param cardNumber
+	 * @param CCV
+	 * @param expDateM
+	 * @param expDateY
+	 * @param billingAddress1
+	 * @param billingAddress2
+	 * @param billingCity
+	 * @param billingState
+	 * @param billingZip
+	 * @author Pavan Vittala
+	 */
 	public void updateCreditCard(CreditCard card, String nameOnCard, String type, String cardNumber, int CCV, int expDateM, int expDateY, String billingAddress1, String billingAddress2, String billingCity, String billingState, int billingZip)
 	{
 		card.setNameOnCard(nameOnCard);
@@ -225,7 +350,14 @@ public class HotelSystem {
 		card.setBillingZip(billingZip);
 	}
 
-	//Delete a user's credit card from the database
+	/**
+	 * Description: Delete a user's credit card from the database.
+	 * 
+	 * @param usr
+	 * @param card
+	 * @return boolean
+	 * @author Pavan Vittala
+	 */
 	public boolean deleteCreditCard(User usr, CreditCard card)
 	{
 		if (usr.getCreditCards().indexOf(card) >= 0)
@@ -240,37 +372,91 @@ public class HotelSystem {
 		return false;
 	}
 
-	// Minimum rank to check for privilege
-	public boolean checkPrivilege(User usr, int accountType)
-	{
-		return usr.getAccountType() >= accountType;
-	}
-
-	// Generate Report All
+	/**
+	 * Description: Generate a report for all reservations with no balance left or fully paid
+	 * 
+	 * @return Report
+	 * @author Pavan Vittala
+	 */
 	public Report generateReportAll()
 	{
 		return new Report().generateReportAll(this);
 	}
 
-	// Generate Report Range
+	/**
+	 * Description: Generate a report for a given range of dates for all reservations with no
+	 * balance left or fully paid.
+	 * 
+	 * @param from
+	 * @param to
+	 * @return Report
+	 * @author Pavan Vittala
+	 */
 	public Report generateReportByRange(Date from, Date to)
 	{
 		return new Report().generateReportRange(this, from,to);
 	}
 
-	// Check-In Reservation
+	/**
+	 * Description: Checking in a reservation.
+	 * 
+	 * @param rsvp
+	 * @param date
+	 * @return CheckIn
+	 * @author Pavan Vitalla
+	 */
 	public CheckIn checkInReservation(Reservation rsvp, Date date)
 	{
 		return new CheckIn(rsvp).checkIn(date);
 	}
 
-	// Check-Out Reservation
+	/**
+	 * Description: Checking out a reservation.
+	 * 
+	 * @param rsvp
+	 * @param date
+	 * @return CheckOut
+	 * @author Matt Edwards
+	 */
 	public CheckOut checkOutReservation(Reservation rsvp, Date date)
 	{
 		return new CheckOut(rsvp).checkOut(date);
 	}
 
-	// Charge the User
+	/**
+	 * Description: Used for verifying logins and returning the User that matches the given user and pass.
+	 * 
+	 * @param username
+	 * @param password
+	 * @return User
+	 * @author Jc Briones
+	 */
+	public User loginUser(String username, String password)
+	{
+		User usr = getUser(username);
+		return usr.getPassword().equals(password) ? usr : null;
+	}
+
+	/**
+	 * Description: Minimum rank to check for privilege
+	 * 
+	 * @param usr
+	 * @param accountType
+	 * @return boolean
+	 * @author Jc Briones
+	 */
+	public boolean checkPrivilege(User usr, int accountType)
+	{
+		return usr.getAccountType() >= accountType;
+	}
+
+	/**
+	 * Description: Charge the User. It returns whether if the user was successfully charged or not
+	 * 
+	 * @param rsvp
+	 * @return booelan
+	 * @author Jc Briones
+	 */
 	public boolean chargeUser(Reservation rsvp)
 	{
 		// Charge the remaining balance of the reservation, if payment doesn't go through then checking-in of user
@@ -285,7 +471,13 @@ public class HotelSystem {
 			return false;
 	}
 
-	//6 PM trigger code
+	/**
+	 * Description: This will trigger the 6PM time which will get all the list of users that
+	 * are not guaranteed.
+	 * 
+	 * @return ArrayList<Reservation>
+	 * @author Jc Briones
+	 */
 	public ArrayList<Reservation> trigger6PM() {
 		ArrayList<Reservation> tmp = new ArrayList<Reservation>();
 		for (int i = 0; i < db.getListOfReservations().size(); i++)
