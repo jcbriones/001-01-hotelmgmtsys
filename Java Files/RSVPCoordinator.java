@@ -24,10 +24,10 @@ public class RSVPCoordinator {
 	public static void main(String[] args) {
 		// Create rooms of 5 each
 		for (int i = 0; i < 5; i++)
-			singleRooms.add(hs.addRoom(100 + i, false, 150));
+			singleRooms.add(hs.addRoom(100 + i, false, 80));
 
 		for (int i = 5; i < 10; i++)
-			doubleRooms.add(hs.addRoom(100 + i, true, 180));
+			doubleRooms.add(hs.addRoom(100 + i, true, 160));
 
 
 		try
@@ -43,7 +43,7 @@ public class RSVPCoordinator {
 			String [] instructions = Framework.nextInstruction();
 			try
 			{
-			executeInstructions(instructions);
+				executeInstructions(instructions);
 			}
 			catch(Exception e)
 			{
@@ -118,8 +118,8 @@ public class RSVPCoordinator {
 			print("Make Reservation request for " + instr[1]);
 			print("Reservation: " + (rsvp != null ? "Success" : "Failed"));
 			print("Guaranteed: " + (instr[7].equals("1") ? "True" : "False"));
-			print("CheckIn: " + new Date(date.getMonth(), Integer.parseInt(instr[3]), date.getYear()));
-			print("CheckOut: " + new Date(date.getMonth(), Integer.parseInt(instr[4]), date.getYear()));
+			print("Check In: " + new Date(date.getMonth(), Integer.parseInt(instr[3]), date.getYear()));
+			print("Check Out: " + new Date(date.getMonth(), Integer.parseInt(instr[4]), date.getYear()));
 
 			break;
 
@@ -133,25 +133,40 @@ public class RSVPCoordinator {
 			usr = hs.getUserByName(instr[1]);
 			if (usr == null)
 			{
-				print("User is not found in the database. Can't check in " + instr[1]);
+				print("User is not found in the database. " + instr[1] + " was not successfully checked in.");
 				break;
 			}
 			rsvp = hs.getReservationByCID(usr.getUserID());
 			if (rsvp == null)
 			{
-				print("Reservation is not found in the database. Can't check in " + instr[1]);
+				print("Reservation is not found in the database. " + instr[1] + " was not successfully checked in.");
 				break;
 			}
 			CheckIn checkedIn = null;
-			if (rsvp.isGuaranteed() && rsvp.getBalance() == 0 && date.isBefore(rsvp.getDates().get(0)))
-				checkedIn = hs.checkInReservation(rsvp);
-			else if (!rsvp.isGuaranteed() && date.isBefore(rsvp.getDates().get(0)))
+			if (rsvp.isGuaranteed())
+				checkedIn = hs.checkInReservation(rsvp,date);
+			else if (!rsvp.isGuaranteed() && date.equals(rsvp.getDates().get(0)))
 			{
 				// Credit Card to be added under the User
 				hs.addCreditCard(usr, usr.getFullName(), instr[2], instr[4], CCV, Integer.parseInt(instr[3].substring(0, instr[3].indexOf('/'))), Integer.parseInt(instr[3].substring(instr[3].indexOf('/')+1, instr[3].length())), usr.getAddress1(), usr.getAddress2(), usr.getCity(), usr.getState(), usr.getZip());
-				checkedIn = hs.checkInReservation(rsvp);
+				
+				// Charge User the total balance of the reservation using the credit card provided above
+				hs.chargeUser(rsvp);
+				checkedIn = hs.checkInReservation(rsvp,date);
 			}
-			print(checkedIn != null ? checkedIn.toString() : ("Failed checking in " + instr[1] + ". Check-in date supposed to be " + rsvp.getDates().get(0) + "."));
+			if (checkedIn != null)
+			{
+				print(instr[1] + " was successfully checked in.");
+				print("");
+				print("Check In Statement:");
+				print("Customer Name: " + rsvp.getReservedTo().getFullName());
+				print("Nights reserved: " + rsvp.getNumberOfNights());
+				System.out.printf("Nightly rate: $%.2f\n", rsvp.getRoomCost());
+				print("Check In: " + rsvp.getDates().get(0).toString());
+				print("Check Out: " + rsvp.getDates().get(rsvp.getDates().size()-1).toString());
+			}
+			else
+				print(instr[1] + " was not successfully checked in.");
 			break;
 
 		case 3:	// Check Out
@@ -162,8 +177,31 @@ public class RSVPCoordinator {
 			}
 
 			usr = hs.getUserByName(instr[1]);
+			if (usr == null)
+			{
+				print("User is not found in the database. " + instr[1] + " was not successfully checked out.");
+				break;
+			}
 			rsvp = hs.getReservationByCID(usr.getUserID());
-			hs.checkOutReservation(rsvp);
+			if (rsvp == null)
+			{
+				print("Reservation is not found in the database. " + instr[1] + " was not successfully checked out.");
+				break;
+			}
+			if (hs.checkOutReservation(rsvp,date) != null)
+			{
+				print(instr[1] + " was successfully checked out.");
+				print("");
+				print("Check Out Statement:");
+				print("Customer Name: " + rsvp.getReservedTo().getFullName());
+				print("Customer Address: " + rsvp.getReservedTo().printAddress());
+				print("Room Type: " + (rsvp.getRoom().isDouble() ? "Double" : "Single"));
+				print("Nights reserved: " + rsvp.getNumberOfNights());
+				System.out.printf("Charge per night: $%.2f\n", rsvp.getRoomCost());
+				System.out.printf("Amount payable: $%.2f\n", rsvp.getNumberOfNights()*rsvp.getRoomCost());
+			}
+			else
+				print(instr[1] + " was not successfully checkedout");
 			break;
 
 		case 4:	// Print Management Report
@@ -172,10 +210,24 @@ public class RSVPCoordinator {
 				print("Management Report needs to have atleast 2 lines of code including the instruction type");
 				break;
 			}
+			Report rpt;
+			// Report for all
 			if (instr.length == 1)
-				print(hs.generateReportAll());
+			{
+				rpt = hs.generateReportAll();
+				print("Management Report for All");
+			}
+			// For just a given date
 			else
-				print(hs.generateReportByRange(new Date(date.getMonth(), Integer.parseInt(instr[1]), year), new Date(date.getMonth(), Integer.parseInt(instr[1])+1, year)).toString(new Date(date.getMonth(), Integer.parseInt(instr[1]), year)));
+			{
+				rpt = hs.generateReportByRange(new Date(date.getMonth(), Integer.parseInt(instr[1]), year), new Date(date.getMonth(), Integer.parseInt(instr[1])+1, year));
+				print("Management Report for " + date.getMonth() + "/" + instr[1] + "/" + date.getYear());
+			}
+			print("Number of Reservations: " + rpt.getNumberOfReservations());
+			print("Single Rooms Reserved: " + rpt.getNumberOfSinglesReserved());
+			print("Double Rooms Reserved: " + rpt.getNumberOfDoublesReserved());
+			System.out.printf("Occupancy Rate: %.2f%%\n", rpt.getOccupancyRate());
+			System.out.printf("Total Revenue: $%.2f\n", rpt.getTotalRevenue());
 			break;
 
 		case 5: // Day Change
@@ -209,7 +261,9 @@ public class RSVPCoordinator {
 				break;
 			}
 
-			hs.trigger6PM();
+			ArrayList<Reservation> rsvps = hs.trigger6PM();
+			for (int i = 0; i < rsvps.size(); i++)
+				print("Cancelled Reservation for " + rsvps.get(i).getReservedTo().getFullName());
 			break;
 		default:
 			print("No instruction found. Make sure you put it the correct instruction type.");
