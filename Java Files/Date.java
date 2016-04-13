@@ -230,7 +230,6 @@ public class Date {
 		}
 	}
 
-
 	/*
 	 * Pseudocode for isBefore()
 	 * 
@@ -239,7 +238,7 @@ public class Date {
 	 * }
 	 */
 	public boolean isBefore(Date that) {
-		return that.getMonth() - this.getMonth() >= 0 && that.getDay() - this.getDay() > 0 && that.getYear() - this.getYear() >= 0;
+		return that.month - this.month >= 0 && that.day - this.day > 0 && that.year - this.year >= 0;
 	}
 
 }
