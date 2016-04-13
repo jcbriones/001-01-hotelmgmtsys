@@ -1,4 +1,4 @@
-/*
+/**
  * User.java
  * 
  * CS321-001 - George Mason University
@@ -28,7 +28,20 @@ public class User {
 	private ArrayList<CreditCard> creditCards;
 	private CreditCard defaultCard;
 	
-
+	/**
+	 * Description: Constructor for a creating a User.
+	 * 
+	 * @param user
+	 * @param pass
+	 * @param name
+	 * @param type
+	 * @param address1
+	 * @param address2
+	 * @param city
+	 * @param state
+	 * @param zip
+	 * @author Matt Edwards
+	 */
 	public User(String user, String pass, String name, int type, String address1, String address2, String city, String state, int zip)
 	{
 		this.userID = UNIQUE_ID++;
