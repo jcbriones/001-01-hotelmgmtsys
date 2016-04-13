@@ -19,20 +19,31 @@ public class User {
 	private String username;
 	private String password;
 	private String fullName;
+	private String address1;
+	private String address2;
+	private String city;
+	private String state;
+	private int zip;
 	private boolean isBanned;
 	private ArrayList<CreditCard> creditCards;
 	private CreditCard defaultCard;
+	
 
-	public User(String user, String pass, String name, int type)
+	public User(String user, String pass, String name, int type, String address1, String address2, String city, String state, int zip)
 	{
-		userID = UNIQUE_ID++;
-		username = user;
-		password = pass;
-		fullName = name;
-		accountType = type;
-		isBanned = false;
-		creditCards = new ArrayList<CreditCard>();
-		defaultCard = null;
+		this.userID = UNIQUE_ID++;
+		this.username = user;
+		this.password = pass;
+		this.fullName = name;
+		this.accountType = type;
+		this.isBanned = false;
+		this.creditCards = new ArrayList<CreditCard>();
+		this.defaultCard = null;
+		this.address1 = address1;
+		this.address2 = address2;
+		this.city = city;
+		this.state = state;
+		this.zip = zip;
 	}
 
 	public String toString()
@@ -105,6 +116,46 @@ public class User {
 
 	public void setDefaultCard(CreditCard defaultCard) {
 		this.defaultCard = defaultCard;
+	}
+
+	public String getAddress1() {
+		return address1;
+	}
+
+	public void setAddress1(String address1) {
+		this.address1 = address1;
+	}
+
+	public String getAddress2() {
+		return address2;
+	}
+
+	public void setAddress2(String address2) {
+		this.address2 = address2;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public int getZip() {
+		return zip;
+	}
+
+	public void setZip(int zip) {
+		this.zip = zip;
 	}
 
 }

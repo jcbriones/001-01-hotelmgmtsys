@@ -90,7 +90,7 @@ public class HotelSystem {
 
 		return null;
 	}
-	
+
 	public Reservation getReservationByCID(int customerID)
 	{
 		for (int i = 0; i < db.getListOfReservations().size(); i++)
@@ -121,15 +121,15 @@ public class HotelSystem {
 	}
 
 	// Users
-	public User addUser(String username, String password, String name, int accountType) {
+	public User addUser(String user, String pass, String name, int type, String address1, String address2, String city, String state, int zip) {
 		// Check first if a username exist
 		Iterator<User> itr = db.getListOfUsers().iterator();
 		while (itr.hasNext())
-			if (itr.next().getUsername().equals(username))
+			if (itr.next().getUsername().equals(user))
 				return null;
 
 		// Create the user if not found
-		User usr = new User(username,password,name,accountType);
+		User usr = new User(user,pass,name,type,address1,address2,city,state,zip);
 		db.getListOfUsers().add(usr);
 		return usr;
 	}
@@ -228,7 +228,7 @@ public class HotelSystem {
 	}
 
 	// Generate Report Range
-	public Report generateReportRange(Date from, Date to)
+	public Report generateReportByRange(Date from, Date to)
 	{
 		return new Report().generateReportRange(this, from,to);
 	}
@@ -243,6 +243,28 @@ public class HotelSystem {
 	public CheckOut checkOutReservation(Reservation rsvp)
 	{
 		return new CheckOut(rsvp).checkOut();
+	}
+
+	// Charge the User
+	public boolean chargeUser(Reservation rsvp)
+	{
+		// Charge the remaining balance of the reservation, if payment doesn't go through then checking-in of user
+		// is not successful. Credit Card is invalid. Otherwise, complete checking-in of user
+		if (rsvp.validatePayment(rsvp.getBalance()))
+		{
+			rsvp.setBalance(0);
+			rsvp.setGuaranteed(true);
+			return true;
+		}
+		else
+			return false;
+	}
+
+	// 6PM Trigger
+	public void trigger6PM() {
+		for (int i = 0; i < db.getListOfReservations().size(); i++)
+			if (!db.getListOfReservations().get(i).isGuaranteed())
+				deleteReservation(db.getListOfReservations().get(i));
 	}
 
 	/* =======================================
@@ -266,4 +288,5 @@ public class HotelSystem {
 	public Database getDB() {
 		return db;
 	}
+
 }
