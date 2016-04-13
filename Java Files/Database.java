@@ -9,6 +9,10 @@
  */
 import java.util.ArrayList;
 
+//This class acts as a storage class for all of the information in the HotelSystem.
+//This class holds 3 lists:
+//listOfRooms, listOfReservations, and a listOfUsers.
+//This class updates and maintains new information about the HotelSystem as customers arrive, book-in, check-out, and leave.
 public class Database {
 	private ArrayList<Room> listOfRooms;
 	private ArrayList<Reservation> listOfReservations;
