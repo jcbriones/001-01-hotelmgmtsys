@@ -11,10 +11,9 @@ public class RSVPCoordinator {
 	private static int year = 2016;
 	private static Date date = new Date(month, day, year);
 
-	// Generate 5 single rooms and 5 double rooms
+	// List for singleRooms and doubleRooms
 	private static List<Room> singleRooms = new ArrayList<Room>();
 	private static List<Room> doubleRooms = new ArrayList<Room>();
-
 
 	// Credit Cards doesn't have CCV in their inputs so we generated one.
 	private static int CCV = 123;
@@ -23,7 +22,7 @@ public class RSVPCoordinator {
 	private static boolean printDate = true;
 
 	public static void main(String[] args) {
-		// Create rooms
+		// Create rooms of 5 each
 		for (int i = 0; i < 5; i++)
 			singleRooms.add(hs.addRoom(100 + i, false, 150));
 
@@ -97,12 +96,10 @@ public class RSVPCoordinator {
 				idx++;
 			} while (rsvp == null && (idx < singleRooms.size() && idx < doubleRooms.size()));
 			if(rsvp == null)	// If it still null it means then there is no room left.
-			{
 				print("All " + (instr[5].equals("2") ? "double" : "single") + " rooms are fully booked. We can't proceed with the making of reservation using a " + (instr[5].equals("2") ? "double" : "single") + " room.");
-				break;
-			}
 
-			if (guaranteed)
+
+			if (guaranteed && rsvp != null)
 			{
 				// Credit Card to be added under the User
 				hs.addCreditCard(usr, usr.getFullName(), instr[8], instr[10], CCV, Integer.parseInt(instr[9].substring(0, instr[9].indexOf('/'))), Integer.parseInt(instr[9].substring(instr[9].indexOf('/')+1, instr[9].length())), usr.getAddress1(), usr.getAddress2(), usr.getCity(), usr.getState(), usr.getZip());
@@ -111,11 +108,11 @@ public class RSVPCoordinator {
 				hs.chargeUser(rsvp);
 			}
 
-			print("Make Reservation request for " + rsvp.getReservedTo().getFullName());
+			print("Make Reservation request for " + instr[1]);
 			print("Reservation: " + (rsvp != null ? "Success" : "Failed"));
-			print("Guaranteed: " + (rsvp.isGuaranteed() ? "True" : "False"));
-			print("CheckIn: " + rsvp.getDates().get(0));
-			print("CheckOut: " + rsvp.getDates().get(rsvp.getDates().size()-1));
+			print("Guaranteed: " + (instr[7].equals("1") ? "True" : "False"));
+			print("CheckIn: " + new Date(date.getMonth(), Integer.parseInt(instr[3]), date.getYear()));
+			print("CheckOut: " + new Date(date.getMonth(), Integer.parseInt(instr[4]), date.getYear()));
 
 			break;
 
