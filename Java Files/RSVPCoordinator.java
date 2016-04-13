@@ -41,7 +41,14 @@ public class RSVPCoordinator {
 		while (Framework.hasNextInstruction())
 		{
 			String [] instructions = Framework.nextInstruction();
+			try
+			{
 			executeInstructions(instructions);
+			}
+			catch(Exception e)
+			{
+				print("Something was wrong inside your text file. Please check again. Common errors are in addresses. Should be 'Address, City, ST 12345'");
+			}
 
 			// Displays all the instructions
 			//for (int i = 0; i < instructions.length; i++)
