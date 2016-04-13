@@ -75,7 +75,7 @@ public class RSVPCoordinator {
 
 			// Parse the Address
 			List<String> addr = Arrays.asList(instr[2].split(", "));
-			
+
 			// Check if the user is already in the database or not.
 			if (hs.getUserByName(instr[1]) != null)
 				usr = hs.getUser(instr[1]);
@@ -153,12 +153,15 @@ public class RSVPCoordinator {
 			break;
 
 		case 4:	// Print Management Report
-			if (instr.length != 2)
+			if (!(instr.length == 2 || instr.length == 1))
 			{
 				print("Management Report needs to have atleast 2 lines of code including the instruction type");
 				break;
 			}
-			print(hs.generateReportByRange(new Date(date.getMonth(), Integer.parseInt(instr[1]), year), new Date(date.getMonth(), Integer.parseInt(instr[1])+1, year)).toString(new Date(date.getMonth(), Integer.parseInt(instr[1]), year)));
+			if (instr.length == 1)
+				print(hs.generateReportAll());
+			else
+				print(hs.generateReportByRange(new Date(date.getMonth(), Integer.parseInt(instr[1]), year), new Date(date.getMonth(), Integer.parseInt(instr[1])+1, year)).toString(new Date(date.getMonth(), Integer.parseInt(instr[1]), year)));
 			break;
 
 		case 5: // Day Change
