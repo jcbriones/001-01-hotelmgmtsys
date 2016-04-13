@@ -1,4 +1,4 @@
-/*
+/**
  * RSVPCoordinator.java
  * 
  * CS321-001 - George Mason University
@@ -6,15 +6,15 @@
  * @author: Jc Briones, Pavan Vittala, Ken Matsuda, Matt Edwards
  * 
  * This is the Coordinator class that responds an output to an input from a file.
+ * The class from which users will be able to add themselves to the system and login to the system.
+ * You can also check in and check out users from the system using this class
+ * The management report is printed from this as well in addition to changing the day and managing
+ * the 6PM signal
  */
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-//The class from which users will be able to add themselves to the system and login to the system.
-//You can also check in and check out users from the system using this class
-//THe management report is printed from this as well in addition to changing the day and manageing
-//the 6PM signal
 public class RSVPCoordinator {
 	// Instantiation of HotelSystem
 	private static HotelSystem hs = new HotelSystem();
@@ -38,7 +38,12 @@ public class RSVPCoordinator {
 	// Print date
 	private static boolean printDate = true;
 
-	//Where the entire HotelSystem takes inputs and prints them from
+	/**
+	 * Description: Where the entire HotelSystem takes inputs and prints them from.
+	 * 
+	 * @param args
+	 * @author Jc Briones, Pavan Vittala, Ken Matsuda, Matt Edwards
+	 */
 	public static void main(String[] args) {
 		// Create rooms of 5 each
 		for (int i = 0; i < 5; i++)
@@ -50,12 +55,12 @@ public class RSVPCoordinator {
 
 		try
 		{
-			//Reading in an input file
+			// Reading in an input file
 			Framework.init(args[0]);
 		}
 		catch(Exception e)
 		{
-			//Throws an exception if the file was not found or could not be read in
+			// Throws an exception if the file was not found or could not be read in
 			print("File not found. Please make sure you typed the file name correctly.");
 		}
 		while (Framework.hasNextInstruction())
@@ -76,11 +81,16 @@ public class RSVPCoordinator {
 		}
 	}
 
-	//Main function that runs in a loop in the main method of RSVPCoordinator. This is the code that enables user input at the console
-	//screen.
+	/**
+	 * Description: Main function that runs in a loop in the main method of RSVPCoordinator. This is the code
+	 * that enables user input at the console screen.
+	 * 
+	 * @param instr
+	 * @author Jc Briones, Pavan Vittala, Ken Matsuda, Matt Edwards
+	 */
 	public static void executeInstructions(String[] instr)
 	{
-		//Prints the date out to the User
+		// Prints the date out to the User
 		if(printDate)
 		{
 			print(("==================" + date.toString()) + "==================");
@@ -89,13 +99,13 @@ public class RSVPCoordinator {
 		}
 
 		// Type of instruction
-		//Allows the user to select the type of input.
-		//Case 1 is to Make a Reservation
-		//Case 2 is to Check In
-		//Case 3 is to Check Out
-		//Case 4 is to Print Management Report
-		//Case 5 is to change the day
-		//Case 6 is the 6 PM alarm
+		// Allows the user to select the type of input.
+		// Case 1 is to Make a Reservation
+		// Case 2 is to Check In
+		// Case 3 is to Check Out
+		// Case 4 is to Print Management Report
+		// Case 5 is to change the day
+		// Case 6 is the 6 PM alarm
 		int type = Integer.parseInt(instr[0]);
 		Reservation rsvp;
 		User usr;
@@ -302,6 +312,11 @@ public class RSVPCoordinator {
 		print("");
 	}
 
+	/**
+	 * Description: Just an alias for System.out.println();
+	 * 
+	 * @param o
+	 */
 	public static void print(Object o)
 	{
 		System.out.println(o.toString());
