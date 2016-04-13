@@ -49,8 +49,6 @@ public class Calendar {
 		// list will be holding all the reservations within the range given
 		ArrayList<Reservation> list = new ArrayList<Reservation>();
 
-		//checks the list of reservations and if that reservation in within the given dates,
-		//adds that reservations to the above list to return.
 		for (int i = 0; i < listOfReservations.size(); i++)
 			for (int j = 0; j < listOfReservations.get(i).getDates().size(); j++)
 				for (int k = 0; k < dates.size(); k++)
