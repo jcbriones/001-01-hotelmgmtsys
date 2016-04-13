@@ -1,4 +1,4 @@
-/*
+/**
  * ProcessPayment.java
  * 
  * CS321-001 - George Mason University
@@ -9,6 +9,15 @@
  */
 
 public final class ProcessPayment {
+	
+	/**
+	 * Description: This is where the credit card is getting charged.
+	 * 
+	 * @param card
+	 * @param amount
+	 * @return boolean
+	 * @author Ken Matsuda
+	 */
 	public static boolean processPayment(CreditCard card, double amount) {
 		if (amount < 0 || card == null)//if the card balanec is 0 or isnt found then it returns false
 			return false;
