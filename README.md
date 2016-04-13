@@ -8,6 +8,7 @@ Section 001 | Group 01
 - Run the Terminal(Unix) or Command Prompt(Windows).
 - Go to the 'Java Files' directory.
 - And then type `javac *.java` to compile the java files.
+
 ## Running the Program:
 - Run RSVPCoordinator by running the following commands:
 - - `java RSVPCoordinator sample-inputs/sample1.txt`.
