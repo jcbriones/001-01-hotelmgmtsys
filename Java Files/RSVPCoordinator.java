@@ -72,8 +72,11 @@ public class RSVPCoordinator {
 		}
 	}
 
+	//Main function that runs in a loop in the main method of RSVPCoordinator. This is the code that enables user input at the console
+	//screen.
 	public static void executeInstructions(String[] instr)
 	{
+		//Prints the date out to the User
 		if(printDate)
 		{
 			print(("==================" + date.toString()) + "==================");
@@ -82,6 +85,13 @@ public class RSVPCoordinator {
 		}
 
 		// Type of instruction
+		//Allows the user to select the type of input.
+		//Case 1 is to Make a Reservation
+		//Case 2 is to Check In
+		//Case 3 is to Check Out
+		//Case 4 is to Print Management Report
+		//Case 5 is to change the day
+		//Case 6 is the 6 PM alarm
 		int type = Integer.parseInt(instr[0]);
 		Reservation rsvp;
 		User usr;
