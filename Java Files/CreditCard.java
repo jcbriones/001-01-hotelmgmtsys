@@ -1,4 +1,4 @@
-/*
+/**
  * Staff.java
  * 
  * CS321-001 - George Mason University
@@ -9,9 +9,6 @@
  * credit card number, exp date, etc...
  */
 
-/**
- * Created by Ken on 4/5/2016.
- */
 public class CreditCard {
 	private String nameOnCard;
 	private String type;
@@ -26,9 +23,23 @@ public class CreditCard {
 	private int billingZip;
 	private double amount=0.00;
 
+	/**
+	 * Description: Constructor for CreditCard
+	 * 
+	 * @param nameOnCard
+	 * @param type
+	 * @param cardNumber
+	 * @param CCV
+	 * @param expDateM
+	 * @param expDateY
+	 * @param billingAddress1
+	 * @param billingAddress2
+	 * @param billingCity
+	 * @param billingState
+	 * @param billingZip
+	 * @author Ken Matsuda
+	 */
 	public CreditCard(String nameOnCard, String type, String cardNumber, int CCV, int expDateM, int expDateY, String billingAddress1, String billingAddress2, String billingCity, String billingState, int billingZip) {
-		// TODO: Insert here check for cardNumber. Should not have a duplicate card in the system.
-		
 		this.nameOnCard = nameOnCard;
 		this.type = type;
 		this.cardNumber = cardNumber;

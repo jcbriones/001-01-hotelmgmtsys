@@ -312,6 +312,7 @@ public class HotelSystem {
 	 */
 	public CreditCard addCreditCard(User usr, String nameOnCard, String type, String cardNumber, int CCV, int expDateM, int expDateY, String billingAddress1, String billingAddress2, String billingCity, String billingState, int billingZip)
 	{
+		// TODO: CREDITCARD STUFF
 		CreditCard cc = new CreditCard(nameOnCard,type,cardNumber,CCV,expDateM,expDateY,billingAddress1,billingAddress2,billingCity,billingState,billingZip);
 		usr.getCreditCards().add(cc);
 		usr.setDefaultCard(cc);
@@ -403,7 +404,7 @@ public class HotelSystem {
 	 * @param rsvp
 	 * @param date
 	 * @return CheckIn
-	 * @author Pavan Vitalla
+	 * @author Matt Edwards
 	 */
 	public CheckIn checkInReservation(Reservation rsvp, Date date)
 	{
