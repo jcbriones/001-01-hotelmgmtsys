@@ -15,9 +15,13 @@ public class RSVPCoordinator {
 	// Instantiation of HotelSystem
 	private static HotelSystem hs = new HotelSystem();
 
+	//Starting month is 1 (January)
 	private static int month = 1;
+	//Starting day is 1
 	private static int day = 1;
+	//Starting year is 2016
 	private static int year = 2016;
+	//Create a Date class based off the dates above
 	private static Date date = new Date(month, day, year);
 
 	// List for singleRooms and doubleRooms
@@ -30,6 +34,7 @@ public class RSVPCoordinator {
 	// Print date
 	private static boolean printDate = true;
 
+	//Where the entire HotelSystem takes inputs and prints them from
 	public static void main(String[] args) {
 		// Create rooms of 5 each
 		for (int i = 0; i < 5; i++)
@@ -41,10 +46,12 @@ public class RSVPCoordinator {
 
 		try
 		{
+			//Reading in an input file
 			Framework.init(args[0]);
 		}
 		catch(Exception e)
 		{
+			//Throws an exception if the file was not found or could not be read in
 			print("File not found. Please make sure you typed the file name correctly.");
 		}
 		while (Framework.hasNextInstruction())
