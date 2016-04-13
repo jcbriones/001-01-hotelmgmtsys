@@ -1,4 +1,4 @@
-/*
+/**
  * RSVPCoordinator.java
  * 
  * CS321-001 - George Mason University
@@ -34,7 +34,13 @@ public class RSVPCoordinator {
 	// Print date
 	private static boolean printDate = true;
 
-	//Where the entire HotelSystem takes inputs and prints them from
+	/**
+	 * Description: Where the entire HotelSystem takes an input file and parse the inputs
+	 * according to the instruction type and prints an output.
+	 * 
+	 * @param args
+	 * @author Jc Briones
+	 */
 	public static void main(String[] args) {
 		// Create rooms of 5 each
 		for (int i = 0; i < 5; i++)
@@ -72,6 +78,12 @@ public class RSVPCoordinator {
 		}
 	}
 
+	/**
+	 * Description: This is where a single instruction is parsed into the type of instruction being called.
+	 * 
+	 * @param instr
+	 * @author Jc Briones, Pavan Vittala, Ken Matsuda, Matt Edwards
+	 */
 	public static void executeInstructions(String[] instr)
 	{
 		if(printDate)
@@ -288,6 +300,11 @@ public class RSVPCoordinator {
 		print("");
 	}
 
+	/**
+	 * Description: This is just an alias for System.out.println();
+	 * 
+	 * @param o
+	 */
 	public static void print(Object o)
 	{
 		System.out.println(o.toString());
