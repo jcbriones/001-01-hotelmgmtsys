@@ -158,4 +158,7 @@ public class User {
 		this.zip = zip;
 	}
 
+	public String printAddress() {
+		return address1 + ", " + address2 + ", " + city + ", " + state + ", " + zip;
+	}
 }
