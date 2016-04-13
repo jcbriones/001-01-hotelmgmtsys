@@ -19,6 +19,8 @@ public final class ProcessPayment {
 	 * @return boolean
 	 * @author Ken Matsuda
 	 */
+	//Takes a CreditCard and an amount as input and returns to the user whether or not
+	//that amount is a valid amount and whether or not it was properly processed
 	public static boolean processPayment(CreditCard card, double amount) {
 		// if the card balance is less than 0 or isn't found then it returns false
 		if (amount < 0 || card == null)
