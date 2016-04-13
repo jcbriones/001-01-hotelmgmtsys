@@ -19,7 +19,8 @@ public final class ProcessPayment {
 	 * @author Ken Matsuda
 	 */
 	public static boolean processPayment(CreditCard card, double amount) {
-		if (amount < 0 || card == null)//if the card balanec is 0 or isnt found then it returns false
+		// if the card balance is less than 0 or isn't found then it returns false
+		if (amount < 0 || card == null)
 			return false;
 		else
 		{
