@@ -16,6 +16,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class RSVPCoordinator {
+	/**
+	 * Class Variables
+	 */
 	// Instantiation of HotelSystem
 	private static HotelSystem hs = new HotelSystem();
 

@@ -10,6 +10,9 @@
  */
 
 public class CreditCard {
+	/**
+	 * Class Variables
+	 */
 	private String nameOnCard;
 	private String type;
 	private String cardNumber;

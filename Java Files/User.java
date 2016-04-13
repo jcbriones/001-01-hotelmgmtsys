@@ -13,7 +13,9 @@ public class User {
 	// UNIQUE ID (Increments by 1)
 	private static int UNIQUE_ID = 0;
 
-	// Instance variables
+	/**
+	 * Class Variables
+	 */
 	private int userID;
 	private int accountType;	// 0 = User, 1 = Staff, 2 = Admin
 	private String username;

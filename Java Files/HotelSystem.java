@@ -13,6 +13,9 @@ import java.util.Iterator;
 
 //The central HotelSystem class that controls all of the Hotel's functionalities
 public class HotelSystem {
+	/**
+	 * Class Variables
+	 */
 	private static int UNIQUE_ID = 0;
 	private int hotelID;
 	private String hotelName;
