@@ -10,6 +10,7 @@
 import java.util.ArrayList;
 import java.util.Iterator;
 
+//The central HotelSystem class that controls all of the Hotel's functionalities
 public class HotelSystem {
 	private static int UNIQUE_ID = 0;
 	private int hotelID;
@@ -33,14 +34,16 @@ public class HotelSystem {
 	 * =======================================
 	 */
 
-	// Rooms
+	// Creates a room in the database
 	public Room addRoom(int roomNumber, boolean isDouble, double price)
 	{
-		if(getRoom(roomNumber) != null)
+		if(getRoom(roomNumber) != null)		
 			return null;
 		else
 		{
+			//Create a room with the desired specs
 			Room rm = new Room(roomNumber, isDouble, price);
+			//Add the instantiated room to the database
 			db.getListOfRooms().add(rm);
 			return rm;
 		}
@@ -48,31 +51,37 @@ public class HotelSystem {
 
 	public Room getRoom(int roomNumber)
 	{
-		// Search the list
+		// Search the list using an Iterator
 		Iterator<Room> itr = db.getListOfRooms().iterator();
 		Room rm;
 		while(itr.hasNext())
 		{
 			rm = itr.next();
+			//You've found the room you're looking for
 			if (rm.getRoomNumber() == roomNumber)
 				return rm;
 		}
 		return null;
 	}
 
+	//Deletes a room from the database
 	public boolean deleteRoom(Room rm)
 	{
+		//Directly call the ArrayList's remove function
 		return db.getListOfRooms().remove(rm);
 	}
 
-	// Reservations
+	//Adding a reservation to the list of reservations in the datebase
 	public Reservation addReservation(User reservedTo, Room rm, int numberOfOccupants, boolean guaranteed, int month, int day, int year, int numberOfNights)
 	{
 		ArrayList<Date> dates = new ArrayList<Date>();
+		//Adding a list of dates that the customer will be using a given room
 		for (int i = 0; i <= numberOfNights; i++)
 			dates.add(new Date(month, day + i, year));
+		//If the room is free on the given date
 		if (cal.checkDate(rm,dates))
 		{
+			//Add the reservation to the list of reservations in the database
 			Reservation rsvp = new Reservation(reservedTo, rm, numberOfOccupants, guaranteed, month, day, year, numberOfNights, rm.getPrice()*numberOfNights, rm.getPrice());
 			db.getListOfReservations().add(rsvp);
 
@@ -82,24 +91,30 @@ public class HotelSystem {
 			return null;
 	}
 
+	//Get a reservation from the database based on the reservation ID
 	public Reservation getReservationByID(int reservationID)
 	{
 		for (int i = 0; i < db.getListOfReservations().size(); i++)
+			//Only return the reservation if the IDs match
 			if (db.getListOfReservations().get(i).getRsvpID() == reservationID)
 				return db.getListOfReservations().get(i);
 
 		return null;
 	}
 
+	//Get the reservation from the database based on customer ID
 	public Reservation getReservationByCID(int customerID)
 	{
 		for (int i = 0; i < db.getListOfReservations().size(); i++)
+			//Only return the reservation if the customer's ID matches with the one in the database
 			if (db.getListOfReservations().get(i).getReservedTo().getUserID() == customerID)
 				return db.getListOfReservations().get(i);
 
 		return null;
 	}
 
+	//Get the reservation from the database
+	//Getting all the reservations of a given user
 	public ArrayList<Reservation> getReservations(User usr)
 	{
 		// Search the list
@@ -109,51 +124,59 @@ public class HotelSystem {
 		while(itr.hasNext())
 		{
 			rsvp = itr.next();
+			//If the given user has reserved that reservation, then add it to the rsvps list
 			if (rsvp.getReservedTo() == usr)
 				rsvps.add(rsvp);
 		}
 		return rsvps;
 	}
 
+	//Deletes a given reservation from the database
 	public boolean deleteReservation(Reservation rsvp)
 	{
 		return db.getListOfReservations().remove(rsvp);
 	}
 
-	// Users
+	//Add a user to the database
 	public User addUser(String user, String pass, String name, int type, String address1, String address2, String city, String state, int zip) {
 		// Check first if a username exist
 		Iterator<User> itr = db.getListOfUsers().iterator();
 		while (itr.hasNext())
+			//Make sure the user is not already in the databse
 			if (itr.next().getUsername().equals(user))
 				return null;
 
-		// Create the user if not found
+		// Create the user if not found in the database
 		User usr = new User(user,pass,name,type,address1,address2,city,state,zip);
 		db.getListOfUsers().add(usr);
 		return usr;
 	}
 
+	//Get a user from the database
 	public User getUser(String username) {
 		// Check if a User with username does exist
 		for (int i = 0; i < db.getListOfUsers().size(); i++)
+			//if the queried user is in the database, then a reference to that user will be returned
 			if(db.getListOfUsers().get(i).getUsername().equals(username))
 				return db.getListOfUsers().get(i);
 		return null;
 	}
 
-
+	//Get the user based on the user's ID
 	public User getUserByID(int customerID) {
 		// Check if a User with username does exist
 		for (int i = 0; i < db.getListOfUsers().size(); i++)
+			//If a user with the requested customer ID is in the database, then a reference to that user will be returned,
 			if(db.getListOfUsers().get(i).getUserID() == customerID)
 				return db.getListOfUsers().get(i);
 		return null;
 	}
 
+	//Get a user from the database based on his/ her name
 	public User getUserByName(String name) {
 		// Check if a User with username does exist
 		for (int i = 0; i < db.getListOfUsers().size(); i++)
+			//if the requested user's name matches a name of a user in the database, then a reference to that user will be returned
 			if(db.getListOfUsers().get(i).getFullName().equals(name))
 				return db.getListOfUsers().get(i);
 		return null;
@@ -177,7 +200,7 @@ public class HotelSystem {
 		return usr.getPassword().equals(password) ? usr : null;
 	}
 
-	// Credit Cards
+	//Add a credit card associated with a user to the database
 	public CreditCard addCreditCard(User usr, String nameOnCard, String type, String cardNumber, int CCV, int expDateM, int expDateY, String billingAddress1, String billingAddress2, String billingCity, String billingState, int billingZip)
 	{
 		CreditCard cc = new CreditCard(nameOnCard,type,cardNumber,CCV,expDateM,expDateY,billingAddress1,billingAddress2,billingCity,billingState,billingZip);
@@ -186,6 +209,7 @@ public class HotelSystem {
 		return cc;
 	}
 
+	//Update credit card info with new information.
 	public void updateCreditCard(CreditCard card, String nameOnCard, String type, String cardNumber, int CCV, int expDateM, int expDateY, String billingAddress1, String billingAddress2, String billingCity, String billingState, int billingZip)
 	{
 		card.setNameOnCard(nameOnCard);
@@ -201,6 +225,7 @@ public class HotelSystem {
 		card.setBillingZip(billingZip);
 	}
 
+	//Delete a user's credit card from the database
 	public boolean deleteCreditCard(User usr, CreditCard card)
 	{
 		if (usr.getCreditCards().indexOf(card) >= 0)
@@ -260,7 +285,7 @@ public class HotelSystem {
 			return false;
 	}
 
-	// 6PM Trigger
+	//6 PM trigger code
 	public ArrayList<Reservation> trigger6PM() {
 		ArrayList<Reservation> tmp = new ArrayList<Reservation>();
 		for (int i = 0; i < db.getListOfReservations().size(); i++)
