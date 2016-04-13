@@ -8,6 +8,7 @@
  * This is the where all the payments are being processed through the use of functions.
  */
 
+//Class meant to "process" the credit card information provided by the User at check-in
 public final class ProcessPayment {
 	
 	/**
