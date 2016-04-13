@@ -58,7 +58,7 @@ public class RSVPCoordinator {
 			print("");
 			printDate = false;
 		}
-		
+
 		// Type of instruction
 		int type = Integer.parseInt(instr[0]);
 		Reservation rsvp;
@@ -111,7 +111,7 @@ public class RSVPCoordinator {
 			}
 
 			print("Make Reservation request for " + rsvp.getReservedTo().getFullName());
-			print("Reservation: " + rsvp != null ? "Success" : "Failed");
+			print("Reservation: " + (rsvp != null ? "Success" : "Failed"));
 			print("Guaranteed: " + (rsvp.isGuaranteed() ? "True" : "False"));
 			print("CheckIn: " + rsvp.getDates().get(0));
 			print("CheckOut: " + rsvp.getDates().get(rsvp.getDates().size()-1));
@@ -119,15 +119,24 @@ public class RSVPCoordinator {
 			break;
 
 		case 2:	// Check In
-			if (instr.length != 5)
+			if (!(instr.length == 5 || instr.length == 2))
 			{
-				print("Check-in needs to have atleast 5 lines of code including the instruction type");
+				print("Check-in needs to have atleast 5 lines of code including the instruction type for non-guaranteed and 2 lines for guaranteed.");
 				break;
 			}
 
 			usr = hs.getUserByName(instr[1]);
 			rsvp = hs.getReservationByCID(usr.getUserID());
-			print(hs.checkInReservation(rsvp));
+			CheckIn checkedIn;
+			if (rsvp.isGuaranteed())
+				checkedIn = hs.checkInReservation(rsvp);
+			else
+			{
+				// Credit Card to be added under the User
+				//hs.addCreditCard(usr, usr.getFullName(), instr[2], instr[4], CCV, Integer.parseInt(instr[3].substring(0, instr[3].indexOf('/'))), Integer.parseInt(instr[3].substring(instr[3].indexOf('/')+1, instr[9].length())), addr.get(0), "", addr.get(1), addr.get(2).substring(0, 2), Integer.parseInt(addr.get(2).substring(3, 8)));
+				checkedIn = hs.checkInReservation(rsvp);
+			}
+			print(checkedIn != null ? checkedIn.toString() : "Failed checking in.");
 			break;
 
 		case 3:	// Check Out
