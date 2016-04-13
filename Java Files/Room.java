@@ -8,6 +8,8 @@
  * This is the Room class which holds the data of a Room instance.
  */
 
+//Room class that is created when a user makes a reservation. This instance is placed in the database whilst being associated with a user.
+//2 types of rooms: single and double. This is denoted by the isDouble boolean.
 public class Room {
 	// Instance Variables
 	private int roomNumber;
