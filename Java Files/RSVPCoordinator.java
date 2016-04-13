@@ -11,6 +11,10 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+//The class from which users will be able to add themselves to the system and login to the system.
+//You can also check in and check out users from the system using this class
+//THe management report is printed from this as well in addition to changing the day and manageing
+//the 6PM signal
 public class RSVPCoordinator {
 	// Instantiation of HotelSystem
 	private static HotelSystem hs = new HotelSystem();
