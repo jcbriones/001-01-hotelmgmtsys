@@ -4,6 +4,8 @@ Section 001 | Group 01
 
 #### Updated on: April 13, 2016
 
+## NOTE: TO RUN THIS SOFTWARE, YOU SHOULD HAVE ATLEAST JAVA 1.8 INSTALLED IN YOUR MACHINE.
+
 ## Getting the Source Code:
 - Click the `Download ZIP` on the top right corner of this page.
 - Extract the zip file.
