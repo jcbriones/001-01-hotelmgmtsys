@@ -47,6 +47,10 @@ public class CreditCard {
 		this.type = type;
 		this.cardNumber = cardNumber;
 		this.CCV = CCV;
+		if (expDateM < 1 || expDateM > 12)
+			throw new IllegalArgumentException("Invalid month");
+		if (expDateM < 1970)
+			throw new IllegalArgumentException("Can't go below year 1970");
 		this.expDateM = expDateM;
 		this.expDateY = expDateY;
 		this.billingAddress1 = billingAddress1;

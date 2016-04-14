@@ -19,11 +19,11 @@ public class Date {
 	public Date(int month, int day, int year)
 	{
 		if (month < 1 || month > 12)
-			throw new IndexOutOfBoundsException("Invalid month");
+			throw new IllegalArgumentException("Invalid month");
 		if (day < 1 || day > maxDayInMonth(month,year))
-			throw new IndexOutOfBoundsException("Invalid day for month " + month + " with the given year");
+			throw new IllegalArgumentException("Invalid day for month " + month + " with the given year");
 		if (year < 1970)
-			throw new IndexOutOfBoundsException("Can't go below year 1970");
+			throw new IllegalArgumentException("Can't go below year 1970");
 
 		this.month = month;
 		this.day = day;
