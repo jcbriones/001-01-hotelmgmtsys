@@ -6,6 +6,9 @@ import org.junit.*;
 
 public class UnitTesting {
 
+	/**
+	 * We have to test first for making a User, CreditCard, Date, and Room that will be used for making a reservation.
+	 */
 	@Test
 	public void Users_Constructor() {
 		String username = "user";
@@ -227,6 +230,9 @@ public class UnitTesting {
 		}
 	}
 
+	/**
+	 * The actual TestCases for MakeReservation
+	 */
 	@Test
 	public void Reservation_Constructor() {
 		// Set-up a User
