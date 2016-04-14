@@ -201,4 +201,26 @@ public class UnitTesting {
 			assertTrue(msg,thrown);
 		}
 	}
+	
+	@Test
+	public void Room_Constructor1() {
+		int roomNumber = 101;
+		boolean isDouble = false;
+		double price = 100;
+
+		// Catch any Exception caused by testing the program
+		try {
+			// Set-up a constructor
+			Room rm = new Room(roomNumber, isDouble, price);
+
+			// Assert post condition is true
+			assertEquals(roomNumber, rm.getRoomNumber());
+			assertEquals(isDouble, rm.isDouble());
+			assertEquals(price, rm.getPrice(),0);
+		}
+		catch (Exception e)
+		{
+			fail("Create an instance of Room failed. " + e.toString());
+		}
+	}
 }
