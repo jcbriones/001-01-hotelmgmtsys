@@ -12,11 +12,12 @@
 //2 types of rooms: single and double. This is denoted by the isDouble boolean.
 public class Room {
 	// Instance Variables
-	private int roomNumber;
-	private boolean isOccupied;
-	private boolean isDouble;
-	private double price;
-
+	private int roomNumber;	//Unique room number. Between 1-10
+	private boolean isOccupied;	//Boolean to keep track of whether or not a user is using the room
+	private boolean isDouble;	//Boolean to keep track of the room type
+	private double price;	//The price of the room
+	
+	//Constructor to instantiate the room
 	public Room(int roomNumber, boolean isDouble, double price){
 		this.roomNumber = roomNumber;
 		this.isOccupied = false;
@@ -67,6 +68,9 @@ public class Room {
 		return price;
 	}
 
+	//Sets the price of the room
+	//This is a bit of a special getter because the price needs to be
+	//bounded
 	public void setPrice(double price) throws Exception {
 		// Cannot be negative
 		if (price < 0)
