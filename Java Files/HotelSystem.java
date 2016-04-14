@@ -108,7 +108,7 @@ public class HotelSystem {
 		for (int i = 0; i < db.getListOfRooms().size(); i++)
 			if (roomNumber == db.getListOfRooms().get(i).getRoomNumber())
 				return db.getListOfRooms().remove(db.getListOfRooms().get(i));
-		
+
 		return false;
 	}
 

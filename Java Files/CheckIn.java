@@ -1,4 +1,4 @@
-/*
+/**
  * CheckIn.java
  * 
  * CS321-001 - George Mason University
@@ -9,6 +9,9 @@
  */
 
 public class CheckIn {
+	/**
+	 * Class Variables
+	 */
 	private Reservation rsvp;
 
 	public CheckIn(Reservation rsvp)
@@ -16,13 +19,19 @@ public class CheckIn {
 		this.rsvp = rsvp;
 	}
 
+	/**
+	 * Description: Checking in of client
+	 * @param date
+	 * @return CheckIn
+	 * @author Jc Briones
+	 */
 	public CheckIn checkIn(Date date) {
 		if (!rsvp.isCheckedIn() && rsvp.getDates().get(0).equals(date) && rsvp.getBalance() == 0)
 		{
-				rsvp.setCheckedIn(true);
-				rsvp.setGuaranteed(true);
-				rsvp.getRoom().setOccupied(true);
-				return this;
+			rsvp.setCheckedIn(true);
+			rsvp.setGuaranteed(true);
+			rsvp.getRoom().setOccupied(true);
+			return this;
 		}
 		return null;
 	}

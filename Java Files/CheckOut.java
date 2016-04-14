@@ -23,7 +23,8 @@ public class CheckOut {
 	 * Description: Checking out of user. When the customer is finished with the room, it sets the room to
 	 * unoccupied and checked in to false
 	 * @param date
-	 * @return
+	 * @return CheckOut
+	 * @author Jc Briones
 	 */
 	public CheckOut checkOut(Date date) {
 		if (rsvp.isCheckedIn() && rsvp.getDates().get(rsvp.getDates().size()-1).equals(date))
