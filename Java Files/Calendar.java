@@ -9,6 +9,7 @@
  */
 import java.util.ArrayList;
 
+//Class that keeps track of Dates and what days the Hotel Rooms are free
 public class Calendar {
 	//this will hold all the reservations in our system.
 	private ArrayList<Reservation> listOfReservations;
@@ -20,6 +21,7 @@ public class Calendar {
 	}
 
 	//given a room and a list of dates, checks to see if the room is available
+	//Author: Matt Edwards
 	public boolean checkDate(Room rm, ArrayList<Date> dates)
 	{
 		//goes through the list of reservations
@@ -34,6 +36,7 @@ public class Calendar {
 	}
 
 	// Given a range of dates, collect the list of Reservation during that given time.
+	//Author: Matt Edwards
 	public ArrayList<Reservation> ReservationByDateRange(Date day1, Date day2)
 	{
 		// Error checking for if day2 is before day1
@@ -49,6 +52,7 @@ public class Calendar {
 		// list will be holding all the reservations within the range given
 		ArrayList<Reservation> list = new ArrayList<Reservation>();
 
+		
 		for (int i = 0; i < listOfReservations.size(); i++)
 			for (int j = 0; j < listOfReservations.get(i).getDates().size(); j++)
 				for (int k = 0; k < dates.size(); k++)
