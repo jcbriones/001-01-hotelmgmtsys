@@ -333,7 +333,12 @@ public class HotelSystem {
 	 */
 	public CreditCard addCreditCard(User usr, String nameOnCard, String type, String cardNumber, int CCV, int expDateM, int expDateY, String billingAddress1, String billingAddress2, String billingCity, String billingState, int billingZip)
 	{
-		// TODO: CREDITCARD STUFF
+		// Check first if the credit card exist and return that credit card
+		for (int i = 0; i < usr.getCreditCards().size(); i++)
+			if (usr.getCreditCards().get(i).getCardNumber() == cardNumber)
+				return usr.getCreditCards().get(i);
+		
+		// If not, then continue with creating a card
 		CreditCard cc = new CreditCard(nameOnCard,type,cardNumber,CCV,expDateM,expDateY,billingAddress1,billingAddress2,billingCity,billingState,billingZip);
 		usr.getCreditCards().add(cc);
 		usr.setDefaultCard(cc);
