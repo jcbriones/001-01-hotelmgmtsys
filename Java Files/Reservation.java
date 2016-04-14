@@ -1,4 +1,4 @@
-/*
+/**
  * Reservation.java
  * 
  * CS321-001 - George Mason University
@@ -13,6 +13,9 @@ public class Reservation
 {
 	private static int UNIQUE_ID = 0;
 
+	/**
+	 * Class Variables
+	 */
 	private ArrayList<Date> dates;
 	private Room room;
 	private User reservedTo;
@@ -44,8 +47,14 @@ public class Reservation
 		this.noShow = false;
 	}
 
-	// Should call ProcessPayment's validate Payment and send it
-	// This reservation's CreditCard
+	/**
+	 * Description: Should call ProcessPayment's validate Payment and send it.
+	 * This reservation's CreditCard.
+	 * 
+	 * @param amount
+	 * @return boolean
+	 * @author Jc Briones
+	 */
 	public boolean validatePayment(double amount)
 	{
 		return ProcessPayment.processPayment(reservedTo.getDefaultCard(), amount);
