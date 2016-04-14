@@ -1,4 +1,4 @@
-/*
+/**
  * Date.java
  * 
  * CS321-001 - George Mason University

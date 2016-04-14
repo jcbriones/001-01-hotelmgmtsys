@@ -1,4 +1,4 @@
-/*
+/**
  * CheckOut.java
  * 
  * CS321-001 - George Mason University
@@ -9,6 +9,9 @@
  */
 
 public class CheckOut {
+	/**
+	 * Class Variables
+	 */
 	private Reservation rsvp;
 
 	public CheckOut(Reservation rsvp)
@@ -16,7 +19,13 @@ public class CheckOut {
 		this.rsvp = rsvp;
 	}
 
-	public CheckOut checkOut(Date date) {//When the customer is finished with the stay sets the room to unoccupied and checked in to false
+	/**
+	 * Description: Checking out of user. When the customer is finished with the room, it sets the room to
+	 * unoccupied and checked in to false
+	 * @param date
+	 * @return
+	 */
+	public CheckOut checkOut(Date date) {
 		if (rsvp.isCheckedIn() && rsvp.getDates().get(rsvp.getDates().size()-1).equals(date))
 		{
 			// Check-out the user and finish the booking

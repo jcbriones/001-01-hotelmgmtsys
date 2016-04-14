@@ -97,6 +97,22 @@ public class HotelSystem {
 	}
 
 	/**
+	 * Description: It returns a boolean if a room was successfully deleted or not.
+	 * 
+	 * @param rm
+	 * @return boolean
+	 * @author Ken Matsuda
+	 */
+	public boolean deleteRoom(int roomNumber)
+	{
+		for (int i = 0; i < db.getListOfRooms().size(); i++)
+			if (roomNumber == db.getListOfRooms().get(i).getRoomNumber())
+				return db.getListOfRooms().remove(db.getListOfRooms().get(i));
+		
+		return false;
+	}
+
+	/**
 	 * Description: This adds a reservation to the database and returns the Reservation instance.
 	 * Before adding a new reservation, it will check if that reservation doesn't have any
 	 * conflicts on dates and room that is used. If successful, then it returns the generated
