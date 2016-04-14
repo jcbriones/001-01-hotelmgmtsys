@@ -1,29 +1,37 @@
-/*
+/**
  * Room.java
  * 
  * CS321-001 - George Mason University
  * Group 01
  * @author: Jc Briones, Pavan Vittala, Ken Matsuda, Matt Edwards
  * 
- * This is the Room class which holds the data of a Room instance.
+ * Room class that is created when a user makes a reservation. This instance is placed in the database whilst being associated with a user.
+ * 2 types of rooms: single and double. This is denoted by the isDouble boolean.
  */
 
-//Room class that is created when a user makes a reservation. This instance is placed in the database whilst being associated with a user.
-//2 types of rooms: single and double. This is denoted by the isDouble boolean.
 public class Room {
-	// Instance Variables
+	/**
+	 * Class Variables
+	 */
 	private int roomNumber;	//Unique room number. Between 1-10
 	private boolean isOccupied;	//Boolean to keep track of whether or not a user is using the room
 	private boolean isDouble;	//Boolean to keep track of the room type
 	private double price;	//The price of the room
-	
-	//Constructor to instantiate the room
+
+	/**
+	 * Constructor
+	 * @param roomNumber
+	 * @param isDouble
+	 * @param price
+	 * @author Jc Briones
+	 */
 	public Room(int roomNumber, boolean isDouble, double price){
 		this.roomNumber = roomNumber;
 		this.isOccupied = false;
 		this.isDouble = isDouble;
 		this.price = price;
 	}
+
 	public String toString()
 	{
 		StringBuilder str = new StringBuilder();
@@ -35,6 +43,7 @@ public class Room {
 		str.append("==================\n");
 		return str.toString();
 	}
+	
 	/* =======================================
 	 * Setters and Getters
 	 * =======================================
@@ -43,9 +52,9 @@ public class Room {
 		return roomNumber;
 	}
 
-	public void setRoomNumber(int roomNumber) {
-		// TODO: Need to update this where the value should be unique
+	public boolean setRoomNumber(int roomNumber) {
 		this.roomNumber = roomNumber;
+		return true;
 	}
 
 	public boolean isOccupied() {
@@ -66,16 +75,6 @@ public class Room {
 
 	public double getPrice() {
 		return price;
-	}
-
-	//Sets the price of the room
-	//This is a bit of a special getter because the price needs to be
-	//bounded
-	public void setPrice(double price) throws Exception {
-		// Cannot be negative
-		if (price < 0)
-			throw new Exception("Cannot be negative");
-		this.price = price;
 	}
 
 }
