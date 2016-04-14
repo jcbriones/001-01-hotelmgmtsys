@@ -1,4 +1,7 @@
 import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+
 import org.junit.*;
 
 public class UnitTesting {
@@ -201,7 +204,7 @@ public class UnitTesting {
 			assertTrue(msg,thrown);
 		}
 	}
-	
+
 	@Test
 	public void Room_Constructor1() {
 		int roomNumber = 101;
@@ -217,6 +220,59 @@ public class UnitTesting {
 			assertEquals(roomNumber, rm.getRoomNumber());
 			assertEquals(isDouble, rm.isDouble());
 			assertEquals(price, rm.getPrice(),0);
+		}
+		catch (Exception e)
+		{
+			fail("Create an instance of Room failed. " + e.toString());
+		}
+	}
+
+	@Test
+	public void Reservation_Constructor() {
+		// Set-up a User
+		User usr = new User("user", "pass", "George Mason", 0, "4400 University Dr", "", "Fairfax", "VA", 22030);
+
+		// Set-up a Room
+		Room rm = new Room(101, false, 100);
+		
+		// Reserved Dates
+		ArrayList<Date> dates = new ArrayList<Date>();
+		dates.add(new Date(1,12,2016));
+		dates.add(new Date(1,13,2016));
+		dates.add(new Date(1,14,2016));
+		
+		// Reservation Info
+		Room room = rm;
+		User reservedTo = usr;
+		int m = 1;
+		int d = 12;
+		int y = 2016;
+		int numberOfOccupants = 4;
+		int numberOfNights = 2;
+		boolean guaranteed = false;
+		boolean checkedIn = false;
+		boolean noShow = false;
+		double balance = 100;
+		double roomCost = 300;
+
+		// Catch any Exception caused by testing the program
+		try {
+			
+			// Set-up a Reservation
+			Reservation rsvp = new Reservation(usr, rm, numberOfOccupants, guaranteed, m, d, y, numberOfNights, balance, roomCost);
+
+			// Assert post condition is true
+			assertEquals(rm, rsvp.getRoom());
+			assertEquals(reservedTo, rsvp.getReservedTo());
+			for (int i = 0; i < dates.size(); i++)
+				assertEquals(dates.get(i).toString(), rsvp.getDates().get(i).toString());
+			assertEquals(numberOfOccupants, rsvp.getNumberOfOccupants());
+			assertEquals(numberOfNights, rsvp.getNumberOfNights());
+			assertEquals(guaranteed, rsvp.isGuaranteed());
+			assertEquals(checkedIn, rsvp.isCheckedIn());
+			assertEquals(noShow, rsvp.isNoShow());
+			assertEquals(balance, rsvp.getBalance(),0);
+			assertEquals(roomCost, rsvp.getRoomCost(),0);
 		}
 		catch (Exception e)
 		{
