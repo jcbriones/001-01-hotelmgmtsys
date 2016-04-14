@@ -305,7 +305,9 @@ public class HotelSystem {
 	{
 		if (db.getListOfUsers().remove(usr))
 		{
-			// TODO: Delete all reservations under that user.
+			ArrayList<Reservation> list = getReservations(usr);
+			for (int i = 0; i < list.size(); i++)
+				deleteReservation(list.get(i));
 			return true;
 		}
 		return false;
