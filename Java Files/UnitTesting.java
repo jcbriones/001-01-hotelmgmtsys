@@ -242,7 +242,6 @@ public class UnitTesting {
 		dates.add(new Date(1,14,2016));
 		
 		// Reservation Info
-		Room room = rm;
 		User reservedTo = usr;
 		int m = 1;
 		int d = 12;
