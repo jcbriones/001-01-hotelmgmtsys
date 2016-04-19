@@ -366,14 +366,12 @@ public class UnitTesting {
 			// Add CreditCard - Should be null since the credit card is already expired. It means it can't add a card that is already expired
 			assertNull(hs.addCreditCard(usr, usr.getFullName(), "Visa", "12341234123412", 123, 12, 2010, usr.getAddress1(), usr.getAddress2(), usr.getCity(), usr.getState(), usr.getZip()));
 
-			// Process Payment
-			assertTrue(hs.chargeUser(rsvp));
+			// Process Payment - Should be false since no credit card is being charged
+			assertFalse(hs.chargeUser(rsvp));
 
 			// Check In the User with the given Reservation
-			assertNotNull(hs.checkInReservation(rsvp, checkInDate));
-			assertTrue(rsvp.isCheckedIn());
-			assertTrue(rsvp.isGuaranteed());
-			assertEquals(rsvp.getBalance(), 0, 0);
+			assertNull(hs.checkInReservation(rsvp, checkInDate));
+			assertFalse(rsvp.isCheckedIn());
 		}
 		catch (Exception e)
 		{

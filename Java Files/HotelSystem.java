@@ -338,9 +338,6 @@ public class HotelSystem {
 		Date expDate = new Date(expDateM,expDateY);
 
 		// If the added card is expired then it won't continue adding.
-		System.out.println(expDate);
-		System.out.println(currentDate);;
-		System.out.println(expDate.isBefore(currentDate));
 		if (expDate.isBefore(currentDate))
 			return null;
 
