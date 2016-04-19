@@ -361,8 +361,8 @@ public class UnitTesting {
 
 		// Catch any Exception caused by testing the program
 		try {
-			// Add CreditCard - Should fail since the credit card is already expired.
-			assertNotNull(hs.addCreditCard(usr, usr.getFullName(), "Visa", "12341234123412", 123, 12, 2010, usr.getAddress1(), usr.getAddress2(), usr.getCity(), usr.getState(), usr.getZip()));
+			// Add CreditCard - Should be null since the credit card is already expired. It means it can't add a card that is already expired
+			assertNull(hs.addCreditCard(usr, usr.getFullName(), "Visa", "12341234123412", 123, 12, 2010, usr.getAddress1(), usr.getAddress2(), usr.getCity(), usr.getState(), usr.getZip()));
 
 			// Process Payment
 			assertTrue(hs.chargeUser(rsvp));

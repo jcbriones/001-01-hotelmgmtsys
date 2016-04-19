@@ -29,6 +29,18 @@ public class Date {
 		this.day = day;
 		this.year = year;
 	}
+	
+	public Date(int month, int year)
+	{
+		if (month < 1 || month > 12)
+			throw new IllegalArgumentException("Invalid month");
+		if (year < 1970)
+			throw new IllegalArgumentException("Can't go below year 1970");
+
+		this.month = month;
+		this.day = maxDayInMonth(month,year);
+		this.year = year;
+	}
 
 	public String toString()
 	{
