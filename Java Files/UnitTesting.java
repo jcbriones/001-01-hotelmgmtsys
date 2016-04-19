@@ -618,30 +618,33 @@ public class UnitTesting {
 		Room rm2 = hs.addRoom(201, true, 150);
 		Room rm3 = hs.addRoom(202, true, 150);
 		//Create multiple Reservations
-		Reservation firstR = hs.addReservation(usr,rm, 2, false, 1, 1, 2016, 3);
-		Reservation secondR = hs.addReservation(usr2,rm2, 4, true, 1, 2, 2016, 5);
-		Reservation thirdR = hs.addReservation(usr3, rm3, 3, false, 2,14, 2016, 2);
+		hs.addReservation(usr,rm, 2, false, 1, 1, 2016, 3);
+		hs.addReservation(usr2,rm2, 4, true, 1, 2, 2016, 5);
+		hs.addReservation(usr3, rm3, 3, false, 2,14, 2016, 2);
 
-		//Two Dates
-		Date from = new Date(1,1,2016);
-		Date to = new Date(3,1,2016);
-		Report rpt= hs.generateReportByRange(from, to);
+
 
 		// Expected Result
 		int expectedReservations = 3;
 		// Catch any Exception caused by testing the program
-		try {
+		//try {
+
+			//Two Dates
+			Date from = new Date(1,1,2016);
+			Date to = new Date(3,1,2016);
+			Report rpt = hs.generateReportByRange(from, to);
+			
 			//check to see if rpt isnt empty
 			assertNotNull(rpt);
 
 			assertEquals(expectedReservations, rpt.getNumberOfReservations());
 
 
-		}
-		catch (Exception e)
-		{
-			fail("Failed to check-in the User with the given Reservation. " + e.toString());
-		}
+//		}
+//		catch (Exception e)
+//		{
+//			fail("Failed to check-in the User with the given Reservation. " + e.toString());
+//		}
 	}
 
 

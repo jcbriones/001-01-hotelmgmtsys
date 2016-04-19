@@ -21,7 +21,7 @@ public class Date {
 		if (month < 1 || month > 12)
 			throw new IllegalArgumentException("Invalid month");
 		if (day < 1 || day > maxDayInMonth(month,year))
-			throw new IllegalArgumentException("Invalid day for month " + month + " with the given year");
+			throw new IllegalArgumentException("Invalid day for month " + month + " with the given year " + year + ". Trying "+day);
 		if (year < 1970)
 			throw new IllegalArgumentException("Can't go below year 1970");
 
@@ -29,7 +29,7 @@ public class Date {
 		this.day = day;
 		this.year = year;
 	}
-	
+
 	public Date(int month, int year)
 	{
 		if (month < 1 || month > 12)
@@ -180,9 +180,12 @@ public class Date {
 	 * @author Pavan Vittala
 	 */
 	public boolean isBefore(Date that) {
-		return (that.year - this.year >= 0) ? true : (that.month - this.month >= 0) ? true : that.day - this.day > 0;
+		if (that.year - this.year > 0) return true;
+		else if (that.year - this.year == 0 && that.month - this.month > 0) return true;
+		else if (that.year - this.year == 0 && that.month - this.month == 0 && that.day - this.day > 0) return true;
+		else return false;
 	}
-	
+
 	/* =======================================
 	 * Setters and Getters
 	 * =======================================
@@ -216,5 +219,22 @@ public class Date {
 		return this.month == that.month && this.day == that.day && this.year == that.year;
 	}
 
+	public Date increase(int numberOfDays) {
+		while (this.day + numberOfDays > maxDayInMonth(this.month,this.year) && numberOfDays > 0)
+		{
+			// Difference
+			numberOfDays -= maxDayInMonth(this.month,this.year) - this.day;
+			this.day = maxDayInMonth(this.month,this.year);
+			if (this.month == 12)
+			{
+				this.month = 1;
+				this.year += 1;
+			}
+			else
+				this.month++;
+		}
+
+		return this;
+	}
 
 }
