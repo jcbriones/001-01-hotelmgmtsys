@@ -1,7 +1,5 @@
 import static org.junit.Assert.*;
-
 import java.util.ArrayList;
-
 import org.junit.*;
 
 public class UnitTesting {
@@ -234,19 +232,19 @@ public class UnitTesting {
 	 * The actual TestCases for MakeReservation
 	 */
 	@Test
-	public void Reservation_Constructor() {
+	public void Reservation_Constructor1() {
 		// Set-up a User
 		User usr = new User("user", "pass", "George Mason", 0, "4400 University Dr", "", "Fairfax", "VA", 22030);
 
 		// Set-up a Room
 		Room rm = new Room(101, false, 100);
-		
+
 		// Reserved Dates
 		ArrayList<Date> dates = new ArrayList<Date>();
 		dates.add(new Date(1,12,2016));
 		dates.add(new Date(1,13,2016));
 		dates.add(new Date(1,14,2016));
-		
+
 		// Reservation Info
 		User reservedTo = usr;
 		int m = 1;
@@ -262,7 +260,7 @@ public class UnitTesting {
 
 		// Catch any Exception caused by testing the program
 		try {
-			
+
 			// Set-up a Reservation
 			Reservation rsvp = new Reservation(usr, rm, numberOfOccupants, guaranteed, m, d, y, numberOfNights, balance, roomCost);
 
@@ -281,7 +279,103 @@ public class UnitTesting {
 		}
 		catch (Exception e)
 		{
-			fail("Create an instance of Room failed. " + e.toString());
+			fail("Create an instance of Reservation failed. " + e.toString());
+		}
+	}
+
+	@Test
+	public void CheckIn_NotGuaranteed_Success() {
+		// Create an instance of the HotelSystem
+		HotelSystem hs = new HotelSystem();
+
+		// Set-up a User
+		User usr = hs.addUser("user", "pass", "George Mason", 0, "4400 University Dr", "", "Fairfax", "VA", 22030);
+
+		// Set-up a Room
+		Room rm = hs.addRoom(101, false, 100);
+
+		// Reservation Info
+		int m = 1;
+		int d = 12;
+		int y = 2016;
+		int numberOfOccupants = 4;
+		int numberOfNights = 2;
+		boolean guaranteed = false;
+
+		// Set-up a Reservation
+		Reservation rsvp = hs.addReservation(usr, rm, numberOfOccupants, guaranteed, m, d, y, numberOfNights);
+
+		// Check-In Info
+		Date checkInDate = new Date(m, d, y);
+
+		// Set HotelSystem date to the checkInDate
+		hs.setCurrentDate(checkInDate);
+
+		// Catch any Exception caused by testing the program
+		try {
+			// Add CreditCard
+			assertNotNull(hs.addCreditCard(usr, usr.getFullName(), "Visa", "12341234123412", 123, 12, 2018, usr.getAddress1(), usr.getAddress2(), usr.getCity(), usr.getState(), usr.getZip()));
+
+			// Process Payment
+			assertTrue(hs.chargeUser(rsvp));
+
+			// Check In the User with the given Reservation
+			assertNotNull(hs.checkInReservation(rsvp, checkInDate));
+			assertTrue(rsvp.isCheckedIn());
+			assertTrue(rsvp.isGuaranteed());
+			assertEquals(rsvp.getBalance(), 0, 0);
+		}
+		catch (Exception e)
+		{
+			fail("Failed to check-in the User with the given Reservation. " + e.toString());
+		}
+	}
+
+	@Test
+	public void CheckIn_NotGuaranteed_Fail() {
+		// Create an instance of the HotelSystem
+		HotelSystem hs = new HotelSystem();
+
+		// Set-up a User
+		User usr = hs.addUser("user", "pass", "George Mason", 0, "4400 University Dr", "", "Fairfax", "VA", 22030);
+
+		// Set-up a Room
+		Room rm = hs.addRoom(101, false, 100);
+
+		// Reservation Info
+		int m = 1;
+		int d = 12;
+		int y = 2016;
+		int numberOfOccupants = 4;
+		int numberOfNights = 2;
+		boolean guaranteed = false;
+
+		// Set-up a Reservation
+		Reservation rsvp = hs.addReservation(usr, rm, numberOfOccupants, guaranteed, m, d, y, numberOfNights);
+
+		// Check-In Info
+		Date checkInDate = new Date(m, d, y);
+
+		// Set HotelSystem date to the checkInDate
+		hs.setCurrentDate(checkInDate);
+
+		// Catch any Exception caused by testing the program
+		try {
+			// Add CreditCard - Should fail since the credit card is already expired.
+			assertNotNull(hs.addCreditCard(usr, usr.getFullName(), "Visa", "12341234123412", 123, 12, 2010, usr.getAddress1(), usr.getAddress2(), usr.getCity(), usr.getState(), usr.getZip()));
+
+			// Process Payment
+			assertTrue(hs.chargeUser(rsvp));
+
+			// Check In the User with the given Reservation
+			assertNotNull(hs.checkInReservation(rsvp, checkInDate));
+			assertTrue(rsvp.isCheckedIn());
+			assertTrue(rsvp.isGuaranteed());
+			assertEquals(rsvp.getBalance(), 0, 0);
+		}
+		catch (Exception e)
+		{
+			fail("Failed to check-in the User with the given Reservation. " + e.toString());
 		}
 	}
 }

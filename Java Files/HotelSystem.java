@@ -21,6 +21,7 @@ public class HotelSystem {
 	private String hotelName;
 	private Calendar cal;
 	private Database db;
+	private Date currentDate = new Date(1,1,1970);
 
 	public HotelSystem()
 	{
@@ -338,6 +339,10 @@ public class HotelSystem {
 			if (usr.getCreditCards().get(i).getCardNumber() == cardNumber)
 				return usr.getCreditCards().get(i);
 		
+		// If the added card is expired then it won't continue adding.
+		if (currentDate.isBefore(new Date(expDateM,30,expDateY)))
+			return null;
+		
 		// If not, then continue with creating a card
 		CreditCard cc = new CreditCard(nameOnCard,type,cardNumber,CCV,expDateM,expDateY,billingAddress1,billingAddress2,billingCity,billingState,billingZip);
 		usr.getCreditCards().add(cc);
@@ -481,7 +486,7 @@ public class HotelSystem {
 	 * Description: Charge the User. It returns whether if the user was successfully charged or not
 	 * 
 	 * @param rsvp
-	 * @return booelan
+	 * @return boolean
 	 * @author Jc Briones
 	 */
 	public boolean chargeUser(Reservation rsvp)
@@ -536,6 +541,14 @@ public class HotelSystem {
 
 	public Database getDB() {
 		return db;
+	}
+
+	public Date getCurrentDate() {
+		return currentDate;
+	}
+
+	public void setCurrentDate(Date currentDate) {
+		this.currentDate = currentDate;
 	}
 
 }
