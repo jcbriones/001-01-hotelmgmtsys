@@ -334,20 +334,21 @@ public class HotelSystem {
 	 */
 	public CreditCard addCreditCard(User usr, String nameOnCard, String type, String cardNumber, int CCV, int expDateM, int expDateY, String billingAddress1, String billingAddress2, String billingCity, String billingState, int billingZip)
 	{
+		// Expiration Date
+		Date expDate = new Date(expDateM,expDateY);
+
+		// If the added card is expired then it won't continue adding.
+		System.out.println(expDate);
+		System.out.println(currentDate);;
+		System.out.println(expDate.isBefore(currentDate));
+		if (expDate.isBefore(currentDate))
+			return null;
+
 		// Check first if the credit card exist and return that credit card
 		for (int i = 0; i < usr.getCreditCards().size(); i++)
 			if (usr.getCreditCards().get(i).getCardNumber() == cardNumber)
 				return usr.getCreditCards().get(i);
-		
-		Date expDate = new Date(expDateM,expDateY);
 
-		// If the added card is expired then it won't continue adding.
-		System.out.println(expDate.toString());
-		System.out.println(currentDate.toString());
-		System.out.println("HALLO");
-		if (currentDate.isBefore(expDate))
-			System.out.println("SHOULD BE NULL");
-		
 		// If not, then continue with creating a card
 		CreditCard cc = new CreditCard(nameOnCard,type,cardNumber,CCV,expDateM,expDateY,billingAddress1,billingAddress2,billingCity,billingState,billingZip);
 		usr.getCreditCards().add(cc);

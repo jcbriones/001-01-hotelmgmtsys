@@ -180,7 +180,7 @@ public class Date {
 	 * @author Pavan Vittala
 	 */
 	public boolean isBefore(Date that) {
-		return that.month - this.month >= 0 && that.day - this.day > 0 && that.year - this.year >= 0;
+		return (that.year - this.year >= 0) ? true : (that.month - this.month >= 0) ? true : that.day - this.day > 0;
 	}
 	
 	/* =======================================
