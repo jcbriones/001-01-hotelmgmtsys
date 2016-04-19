@@ -538,4 +538,6 @@ public class HotelSystem {
 		return db;
 	}
 
+	public Calendar getCalendar() {return this.cal;}
+
 }
