@@ -649,5 +649,59 @@ public class UnitTesting {
 			fail("Failed to check-in the User with the given Reservation. " + e.toString());
 		}
 	}
+	
+	//CheckOut
+	
+	@Test
+	public void BasicCheckInCheckOut() {
+		// Create an instance of the HotelSystem
+		HotelSystem hs = new HotelSystem();
+
+		// Set-up a User
+		User usr = hs.addUser("pavan", "pass", "George Mason", 0, "4400 University Dr", "", "Fairfax", "VA", 22030);
+
+		// Set-up a Room
+		Room rm = hs.addRoom(1, false, 100);
+
+		// Reservation Info
+		int month = 10;
+		int day = 11;
+		int year = 2016;
+		int numberOfOccupants = 2;
+		int numberOfNights = 2;
+		boolean guaranteed = true;
+
+		// Set-up a Reservation
+		Reservation rsvp = hs.addReservation(usr, rm, numberOfOccupants, guaranteed, month, day, year, numberOfNights);
+
+		// Check-In Info
+		Date checkInDate = new Date(month, day, year);
+
+		// Set HotelSystem date to the checkInDate
+		hs.setCurrentDate(checkInDate);
+
+		// Catch any Exception caused by testing the program
+		try {
+			// Add CreditCard
+			assertNotNull(hs.addCreditCard(usr, usr.getFullName(), "Visa", "12341234123412", 123, 12, 2018, usr.getAddress1(), usr.getAddress2(), usr.getCity(), usr.getState(), usr.getZip()));
+
+			// Process Payment
+			assertTrue(hs.chargeUser(rsvp));
+
+			// Check In the User with the given Reservation
+			assertNotNull(hs.checkInReservation(rsvp, checkInDate));
+			assertTrue(rsvp.isCheckedIn());
+			assertTrue(rsvp.isGuaranteed());
+			assertEquals(rsvp.getBalance(), 0, 0);
+		}
+		catch (Exception e)
+		{
+			fail("Failed to check-in the User with the given Reservation. " + e.toString());
+		}
+
+		hs.checkOutReservation(rsvp, rsvp.getDates().get(rsvp.getDates().size()-1));
+		assertTrue(rsvp.isStayFinished());
+		assertFalse(rm.isOccupied());
+	}
 
 }
