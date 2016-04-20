@@ -671,4 +671,35 @@ public class UnitTesting {
 
 
 	}
+
+	@Test
+	public void Calendar_CheckDate()
+	{
+		User user1 = new User("user","Jon","Smith",0,"address","home","DC","VA",22153);
+		User user2 = new User("user","Mary","Johnson",0,"somewhere","home","DC","VA",22153);
+
+		HotelSystem hs = new HotelSystem();
+		hs.addReservation(user1,new Room(111,false,0),1,true,5,12,2016,2);
+		hs.addReservation(user2,new Room(112,true,70),3,false,5,15,2016,3);
+
+		ArrayList<Date> temp = new ArrayList<Date>();
+		temp.add(new Date(5,10,2016));
+		temp.add(new Date(5,12,2016));
+		temp.add(new Date(5,13,2016));
+		temp.add(new Date(5,15,2016));
+		temp.add(new Date(5,20,2016));
+
+		ArrayList<Date> temp1 = new ArrayList<Date>();
+		temp1.add(new Date(5,10,2016));
+
+		//these should evaluate to true
+		assertTrue(hs.getCalendar().checkDate(new Room(111,false,0),temp));
+		assertTrue(hs.getCalendar().checkDate(new Room(112,true,70),temp));
+
+		//these should evaluate to false
+		assertFalse(hs.getCalendar().checkDate(new Room(113,true,0),temp));
+		assertFalse(hs.getCalendar().checkDate(new Room(111,false,0),temp1));
+		assertFalse(hs.getCalendar().checkDate(new Room(112,true,0),temp1);
+
+	}
 }

@@ -546,6 +546,10 @@ public class HotelSystem {
 		return db;
 	}
 
+	public Calendar getCalendar() {
+		return cal;
+	}
+
 	public Date getCurrentDate() {
 		return currentDate;
 	}
