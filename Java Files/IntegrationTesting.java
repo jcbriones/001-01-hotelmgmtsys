@@ -238,7 +238,7 @@ public class IntegrationTesting {
 
 		//Create multiple Reservations
 		hs.addReservation(usr1,rm1, 2, false, 1, 1, 2016, 3);
-		hs.addReservation(usr2,rm2, 4, true, 1, 2, 2016, 5);
+		hs.addReservation(usr2,rm2, 4, false, 1, 2, 2016, 5);
 		hs.addReservation(usr3,rm3, 3, false, 2,14, 2016, 2);
 
 		// Expected Result
@@ -256,6 +256,284 @@ public class IntegrationTesting {
 			Date to = new Date(3,1,2016);
 			// Generate the Report by the Given Range
 			Report rpt = hs.generateReportByRange(from, to);
+
+			// Check to see if rpt isnt empty
+			assertNotNull(rpt);
+
+			// Check if number of reservations is equal to the expected results
+			assertEquals(expectedReservations, rpt.getNumberOfReservations());
+			assertEquals(expectedSinglesReserved,rpt.getNumberOfSinglesReserved());
+			assertEquals(expectedDoublesReserved,rpt.getNumberOfDoublesReserved());
+			assertEquals(expectedOccupancyRate,rpt.getOccupancyRate(),0);
+			assertEquals(expectedRevenue,rpt.getTotalRevenue(),0);
+		}
+		catch (Exception e)
+		{
+			fail("Failed to check-in the User with the given Reservation. " + e.toString());
+		}
+	}
+
+	@Test
+	public void Report_Test2() {
+		//Create an instance of the HotelSystem
+		HotelSystem hs = new HotelSystem();
+
+		//Create an instance of a User
+		User usr1 = hs.addUser("user", "pass", "George Mason", 0, "4400 University Dr", "", "Fairfax", "VA", 22030);
+		User usr2 = hs.addUser("user2", "pass2", "Abraham Lincoln", 0," ", "4444 Labomba st","Fairfax", "VA", 22030 );
+		User usr3 = hs.addUser("user3", "pass3", "Abraham Lincoln", 0, " ", "32394 MarioParty dr", "Mushroom", "OH", 22032);
+
+		// Create an instance of Room
+		Room rm1 = hs.addRoom(101, false, 100);
+		Room rm2 = hs.addRoom(201, true, 150);
+		Room rm3 = hs.addRoom(202, true, 150);
+
+		//Create multiple Reservations
+		hs.addReservation(usr1,rm1, 2, false, 1, 1, 2016, 3);
+		hs.addReservation(usr2,rm2, 4, false, 1, 2, 2016, 5);
+		hs.addReservation(usr3,rm3, 3, false, 2,14, 2016, 2);
+		
+		// Another list of reservations but doesn't fall under the given date
+		hs.addReservation(usr1,rm1, 2, false, 4, 1, 2016, 3);
+		hs.addReservation(usr2,rm2, 4, false, 4, 2, 2016, 5);
+		hs.addReservation(usr3,rm3, 3, false, 5,14, 2016, 2);
+		
+
+		// Expected Result
+		int expectedReservations = 3;		// There are 3 reservations
+		int expectedSinglesReserved = 1;	// 1 Singles
+		int expectedDoublesReserved = 2;	// 2 Doubles
+		double expectedOccupancyRate = 0;	// 0 Occupancy Rate since nobody got checked-in
+		double expectedRevenue = 0;			// 0 Revenue because no reservation has been paid.
+
+		// Catch any Exception caused by testing the program
+		try {
+
+			// From Date To Date
+			Date from = new Date(1,1,2016);
+			Date to = new Date(3,1,2016);
+			// Generate the Report by the Given Range
+			Report rpt = hs.generateReportByRange(from, to);
+
+			// Check to see if rpt isnt empty
+			assertNotNull(rpt);
+
+			// Check if number of reservations is equal to the expected results
+			assertEquals(expectedReservations, rpt.getNumberOfReservations());
+			assertEquals(expectedSinglesReserved,rpt.getNumberOfSinglesReserved());
+			assertEquals(expectedDoublesReserved,rpt.getNumberOfDoublesReserved());
+			assertEquals(expectedOccupancyRate,rpt.getOccupancyRate(),0);
+			assertEquals(expectedRevenue,rpt.getTotalRevenue(),0);
+		}
+		catch (Exception e)
+		{
+			fail("Failed to check-in the User with the given Reservation. " + e.toString());
+		}
+	}
+
+	@Test
+	public void Report_Test3() {
+		//Create an instance of the HotelSystem
+		HotelSystem hs = new HotelSystem();
+
+		//Create an instance of a User
+		User usr1 = hs.addUser("user", "pass", "George Mason", 0, "4400 University Dr", "", "Fairfax", "VA", 22030);
+		User usr2 = hs.addUser("user2", "pass2", "Abraham Lincoln", 0," ", "4444 Labomba st","Fairfax", "VA", 22030 );
+		User usr3 = hs.addUser("user3", "pass3", "Abraham Lincoln", 0, " ", "32394 MarioParty dr", "Mushroom", "OH", 22032);
+
+		// Create an instance of Room
+		Room rm1 = hs.addRoom(101, false, 100);
+		Room rm2 = hs.addRoom(201, true, 150);
+		Room rm3 = hs.addRoom(202, true, 150);
+
+		//Create multiple Reservations
+		hs.addReservation(usr1,rm1, 2, false, 1, 1, 2016, 3);
+		hs.addReservation(usr2,rm2, 4, false, 1, 2, 2016, 5);
+		hs.addReservation(usr3,rm3, 3, false, 2,14, 2016, 2);
+		hs.addReservation(usr1,rm1, 2, false, 4, 1, 2016, 3);
+		hs.addReservation(usr2,rm2, 4, false, 4, 2, 2016, 5);
+		hs.addReservation(usr3,rm3, 3, false, 5,14, 2016, 2);
+		
+
+		// Expected Result
+		int expectedReservations = 6;		// There are 3 reservations
+		int expectedSinglesReserved = 2;	// 1 Singles
+		int expectedDoublesReserved = 4;	// 2 Doubles
+		double expectedOccupancyRate = 0;	// 0 Occupancy Rate since nobody got checked-in
+		double expectedRevenue = 0;			// 0 Revenue because no reservation has been paid.
+
+		// Catch any Exception caused by testing the program
+		try {
+			// Generate the Report by the Given Range
+			Report rpt = hs.generateReportAll();
+
+			// Check to see if rpt isnt empty
+			assertNotNull(rpt);
+
+			// Check if number of reservations is equal to the expected results
+			assertEquals(expectedReservations, rpt.getNumberOfReservations());
+			assertEquals(expectedSinglesReserved,rpt.getNumberOfSinglesReserved());
+			assertEquals(expectedDoublesReserved,rpt.getNumberOfDoublesReserved());
+			assertEquals(expectedOccupancyRate,rpt.getOccupancyRate(),0);
+			assertEquals(expectedRevenue,rpt.getTotalRevenue(),0);
+		}
+		catch (Exception e)
+		{
+			fail("Failed to check-in the User with the given Reservation. " + e.toString());
+		}
+	}
+
+	@Test
+	public void Report_Test4() {
+		//Create an instance of the HotelSystem
+		HotelSystem hs = new HotelSystem();
+
+		//Create an instance of a User
+		User usr1 = hs.addUser("user", "pass", "George Mason", 0, "4400 University Dr", "", "Fairfax", "VA", 22030);
+		User usr2 = hs.addUser("user2", "pass2", "Abraham Lincoln", 0," ", "4444 Labomba st","Fairfax", "VA", 22030 );
+		User usr3 = hs.addUser("user3", "pass3", "Abraham Lincoln", 0, " ", "32394 MarioParty dr", "Mushroom", "OH", 22032);
+
+		// Create an instance of Room
+		Room rm1 = hs.addRoom(101, false, 100);
+		Room rm2 = hs.addRoom(201, true, 150);
+		Room rm3 = hs.addRoom(202, true, 150);
+
+		//Create multiple Reservations
+		Reservation rsvp1 = hs.addReservation(usr1,rm1, 2, false, 1, 1, 2016, 3);
+		Reservation rsvp2 = hs.addReservation(usr2,rm2, 4, false, 1, 2, 2016, 5);
+		Reservation rsvp3 = hs.addReservation(usr3,rm3, 3, false, 2,14, 2016, 2);
+
+		// Expected Result
+		int expectedReservations = 3;		// There are 3 reservations
+		int expectedSinglesReserved = 1;	// 1 Singles
+		int expectedDoublesReserved = 2;	// 2 Doubles
+		double expectedOccupancyRate = 0;	// 0 Occupancy Rate since nobody got checked-in
+		double expectedRevenue = 0;			// 0 Revenue because no reservation has been paid.
+
+		// Catch any Exception caused by testing the program
+		try {
+			// Pay all Reservations
+			
+			// CheckIn Each Reservation
+			hs.checkInReservation(rsvp1, new Date(1,1,2016));
+			hs.checkInReservation(rsvp1, new Date(1,2,2016));
+			hs.checkInReservation(rsvp1, new Date(2,14,2016));
+			
+			// From Date To Date
+			Date from = new Date(1,1,2016);
+			Date to = new Date(3,1,2016);
+			// Generate the Report by the Given Range
+			Report rpt = hs.generateReportByRange(from, to);
+			
+			// Check to see if rpt isnt empty
+			assertNotNull(rpt);
+
+			// Check if number of reservations is equal to the expected results
+			assertEquals(expectedReservations, rpt.getNumberOfReservations());
+			assertEquals(expectedSinglesReserved,rpt.getNumberOfSinglesReserved());
+			assertEquals(expectedDoublesReserved,rpt.getNumberOfDoublesReserved());
+			assertEquals(expectedOccupancyRate,rpt.getOccupancyRate(),0);
+			assertEquals(expectedRevenue,rpt.getTotalRevenue(),0);
+		}
+		catch (Exception e)
+		{
+			fail("Failed to check-in the User with the given Reservation. " + e.toString());
+		}
+	}
+
+	@Test
+	public void Report_Test5() {
+		//Create an instance of the HotelSystem
+		HotelSystem hs = new HotelSystem();
+
+		//Create an instance of a User
+		User usr1 = hs.addUser("user", "pass", "George Mason", 0, "4400 University Dr", "", "Fairfax", "VA", 22030);
+		User usr2 = hs.addUser("user2", "pass2", "Abraham Lincoln", 0," ", "4444 Labomba st","Fairfax", "VA", 22030 );
+		User usr3 = hs.addUser("user3", "pass3", "Abraham Lincoln", 0, " ", "32394 MarioParty dr", "Mushroom", "OH", 22032);
+
+		// Create an instance of Room
+		Room rm1 = hs.addRoom(101, false, 100);
+		Room rm2 = hs.addRoom(201, true, 150);
+		Room rm3 = hs.addRoom(202, true, 150);
+
+		//Create multiple Reservations
+		hs.addReservation(usr1,rm1, 2, false, 1, 1, 2016, 3);
+		hs.addReservation(usr2,rm2, 4, false, 1, 2, 2016, 5);
+		hs.addReservation(usr3,rm3, 3, false, 2,14, 2016, 2);
+		
+		// Another list of reservations but doesn't fall under the given date
+		hs.addReservation(usr1,rm1, 2, false, 4, 1, 2016, 3);
+		hs.addReservation(usr2,rm2, 4, false, 4, 2, 2016, 5);
+		hs.addReservation(usr3,rm3, 3, false, 5,14, 2016, 2);
+		
+
+		// Expected Result
+		int expectedReservations = 3;		// There are 3 reservations
+		int expectedSinglesReserved = 1;	// 1 Singles
+		int expectedDoublesReserved = 2;	// 2 Doubles
+		double expectedOccupancyRate = 0;	// 0 Occupancy Rate since nobody got checked-in
+		double expectedRevenue = 0;			// 0 Revenue because no reservation has been paid.
+
+		// Catch any Exception caused by testing the program
+		try {
+
+			// From Date To Date
+			Date from = new Date(1,1,2016);
+			Date to = new Date(3,1,2016);
+			// Generate the Report by the Given Range
+			Report rpt = hs.generateReportByRange(from, to);
+
+			// Check to see if rpt isnt empty
+			assertNotNull(rpt);
+
+			// Check if number of reservations is equal to the expected results
+			assertEquals(expectedReservations, rpt.getNumberOfReservations());
+			assertEquals(expectedSinglesReserved,rpt.getNumberOfSinglesReserved());
+			assertEquals(expectedDoublesReserved,rpt.getNumberOfDoublesReserved());
+			assertEquals(expectedOccupancyRate,rpt.getOccupancyRate(),0);
+			assertEquals(expectedRevenue,rpt.getTotalRevenue(),0);
+		}
+		catch (Exception e)
+		{
+			fail("Failed to check-in the User with the given Reservation. " + e.toString());
+		}
+	}
+
+	@Test
+	public void Report_Test6() {
+		//Create an instance of the HotelSystem
+		HotelSystem hs = new HotelSystem();
+
+		//Create an instance of a User
+		User usr1 = hs.addUser("user", "pass", "George Mason", 0, "4400 University Dr", "", "Fairfax", "VA", 22030);
+		User usr2 = hs.addUser("user2", "pass2", "Abraham Lincoln", 0," ", "4444 Labomba st","Fairfax", "VA", 22030 );
+		User usr3 = hs.addUser("user3", "pass3", "Abraham Lincoln", 0, " ", "32394 MarioParty dr", "Mushroom", "OH", 22032);
+
+		// Create an instance of Room
+		Room rm1 = hs.addRoom(101, false, 100);
+		Room rm2 = hs.addRoom(201, true, 150);
+		Room rm3 = hs.addRoom(202, true, 150);
+
+		//Create multiple Reservations
+		hs.addReservation(usr1,rm1, 2, false, 1, 1, 2016, 3);
+		hs.addReservation(usr2,rm2, 4, false, 1, 2, 2016, 5);
+		hs.addReservation(usr3,rm3, 3, false, 2,14, 2016, 2);
+		hs.addReservation(usr1,rm1, 2, false, 4, 1, 2016, 3);
+		hs.addReservation(usr2,rm2, 4, false, 4, 2, 2016, 5);
+		hs.addReservation(usr3,rm3, 3, false, 5,14, 2016, 2);
+		
+
+		// Expected Result
+		int expectedReservations = 6;		// There are 3 reservations
+		int expectedSinglesReserved = 2;	// 1 Singles
+		int expectedDoublesReserved = 4;	// 2 Doubles
+		double expectedOccupancyRate = 0;	// 0 Occupancy Rate since nobody got checked-in
+		double expectedRevenue = 0;			// 0 Revenue because no reservation has been paid.
+
+		// Catch any Exception caused by testing the program
+		try {
+			// Generate the Report by the Given Range
+			Report rpt = hs.generateReportAll();
 
 			// Check to see if rpt isnt empty
 			assertNotNull(rpt);
