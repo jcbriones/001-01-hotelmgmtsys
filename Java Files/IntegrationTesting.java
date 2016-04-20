@@ -416,8 +416,8 @@ public class IntegrationTesting {
 			
 			// CheckIn Each Reservation
 			hs.checkInReservation(rsvp1, new Date(1,1,2016));
-			hs.checkInReservation(rsvp1, new Date(1,2,2016));
-			hs.checkInReservation(rsvp1, new Date(2,14,2016));
+			hs.checkInReservation(rsvp2, new Date(1,2,2016));
+			hs.checkInReservation(rsvp3, new Date(2,14,2016));
 			
 			// From Date To Date
 			Date from = new Date(1,1,2016);
