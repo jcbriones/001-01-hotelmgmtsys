@@ -32,33 +32,27 @@ public class Report {
 	 */
 	public Report generateReportRange(HotelSystem hs, Date from, Date to)
 	{
-		// Reservation Lists between the given two dates
+		// Reservation Lists between the given two dates but not including the check-out date (Calendar.ReservationByDateRange)
 		ArrayList<Reservation> rsvps = new Calendar(hs).ReservationByDateRange(from, to);
-		ArrayList<Room> rms = new ArrayList<Room>();
 		double occupancyCount = 0;
 		for (int i = 0; i < rsvps.size(); i++)
 		{
-			if(rsvps.get(i).getBalance() == 0)
-			{
-				// Number of Reservations
-				numberOfReservations++;
+			// Number of Reservations
+			numberOfReservations++;
 
-				// Single Or Double
-				if (rsvps.get(i).getRoom().isDouble())
-					numberOfDoublesReserved++;
-				else
-					numberOfSinglesReserved++;
+			// Single Or Double
+			if (rsvps.get(i).getRoom().isDouble())
+				numberOfDoublesReserved++;
+			else
+				numberOfSinglesReserved++;
 
-				// Occupancy Counter
-				if (!rms.contains(rsvps.get(i).getRoom()))
-				{
-					rms.add(rsvps.get(i).getRoom());
+			// Occupancy
+			if (rsvps.get(i).isCheckedIn() || rsvps.get(i).isStayFinished())
 					occupancyCount++;
-				}
 
-				// Revenue
+			// Revenue
+			if (rsvps.get(i).getBalance() == 0)
 				totalRevenue += rsvps.get(i).getRoomCost() * rsvps.get(i).getNumberOfNights();
-			}
 		}
 
 		// Occupancy Rate
@@ -78,31 +72,25 @@ public class Report {
 	{
 		// Get all Reservations from the database
 		ArrayList<Reservation> rsvps = hs.getDB().getListOfReservations();
-		ArrayList<Room> rms = new ArrayList<Room>();
 		double occupancyCount = 0;
 		for (int i = 0; i < rsvps.size(); i++)
 		{
-			if(rsvps.get(i).getBalance() == 0)
-			{
-				// Number of Reservations
-				numberOfReservations++;
+			// Number of Reservations
+			numberOfReservations++;
 
-				// Single Or Double
-				if (rsvps.get(i).getRoom().isDouble())
-					numberOfDoublesReserved++;
-				else
-					numberOfSinglesReserved++;
+			// Single Or Double
+			if (rsvps.get(i).getRoom().isDouble())
+				numberOfDoublesReserved++;
+			else
+				numberOfSinglesReserved++;
 
-				// Occupancy Counter
-				if (!rms.contains(rsvps.get(i).getRoom()))
-				{
-					rms.add(rsvps.get(i).getRoom());
+			// Occupancy
+			if (rsvps.get(i).isCheckedIn() || rsvps.get(i).isStayFinished())
 					occupancyCount++;
-				}
 
-				// Revenue
+			// Revenue
+			if (rsvps.get(i).getBalance() == 0)
 				totalRevenue += rsvps.get(i).getRoomCost() * rsvps.get(i).getNumberOfNights();
-			}
 		}
 
 		// Occupancy Rate

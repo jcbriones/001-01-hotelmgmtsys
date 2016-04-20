@@ -280,7 +280,7 @@ public class RSVPCoordinator {
 				break;
 			}
 
-			if (date.getDay() == date.maxDayInMonth(date.getMonth(), date.getYear())) {
+			if (date.getDay() == Date.maxDayInMonth(date.getMonth(), date.getYear())) {
 				date.setMonth(date.getMonth()+1);
 				date.setDay(1);
 			}

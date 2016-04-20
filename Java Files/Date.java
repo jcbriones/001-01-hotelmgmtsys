@@ -12,9 +12,7 @@ public class Date {
 	/**
 	 * Class Variables
 	 */
-	private int month;
-	private int day;
-	private int year;
+	private java.util.Calendar date;	// The date itself using java Calendar
 
 	public Date(int month, int day, int year)
 	{
@@ -24,28 +22,20 @@ public class Date {
 			throw new IllegalArgumentException("Invalid day for month " + month + " with the given year " + year + ". Trying "+day);
 		if (year < 1970)
 			throw new IllegalArgumentException("Can't go below year 1970");
-
-		this.month = month;
-		this.day = day;
-		this.year = year;
+		
+		this.date = java.util.Calendar.getInstance();
+		this.date.set(year, month, day);
 	}
 
 	public Date(int month, int year)
 	{
-		if (month < 1 || month > 12)
-			throw new IllegalArgumentException("Invalid month");
-		if (year < 1970)
-			throw new IllegalArgumentException("Can't go below year 1970");
-
-		this.month = month;
-		this.day = maxDayInMonth(month,year);
-		this.year = year;
+		this(month,maxDayInMonth(month,year),year);
 	}
 
 	public String toString()
 	{
 		String month;
-		switch(this.month)
+		switch(this.getMonth())
 		{
 		case 1:
 			month = "January";
@@ -87,7 +77,7 @@ public class Date {
 			month = "Unknown";
 			break;
 		}
-		return String.format("%s %d, %d",month, this.day, this.year);
+		return String.format("%s %d, %d",month, this.getDay(), this.getYear());
 	}
 
 
@@ -99,14 +89,14 @@ public class Date {
 	 * @author Pavan Vittala
 	 */
 	public int getDifferenceFrom(Date that) {
-		if (this.year == that.year && this.month == that.month && this.day == that.day)
+		if (this.getYear() == that.getYear() && this.getMonth() == that.getMonth() && this.getDay() == that.getDay())
 			return 0;
 
 		Date day1 = this;
 		Date day2 = that;
 		boolean reversed = false;
-		if ((this.year > that.year) || (this.year == that.year && this.month > that.month) || 
-				(this.year == that.year && this.month == that.month && this.day > that.day))
+		if ((this.getYear() > that.getYear()) || (this.getYear() == that.getYear() && this.getMonth() > that.getMonth()) || 
+				(this.getYear() == that.getYear() && this.getMonth() == that.getMonth() && this.getDay() > that.getDay()))
 		{
 			day1 = that;
 			day2 = this;
@@ -114,10 +104,10 @@ public class Date {
 		}
 
 		int count = 0;
-		int month = day1.month;
-		int day = day1.day;
-		int year = day1.year;
-		while (!(year == day2.year && month == day2.month && day == day2.day)) {
+		int month = day1.getMonth();
+		int day = day1.getDay();
+		int year = day1.getYear();
+		while (!(year == day2.getYear() && month == day2.getMonth() && day == day2.getDay())) {
 			if (day == maxDayInMonth(month, year)) {
 				if (month == 12) {
 					month = 1;
@@ -145,7 +135,7 @@ public class Date {
 	 * @return int
 	 * @author Pavan Vittala
 	 */
-	public int maxDayInMonth(int month, int year) {
+	public static int maxDayInMonth(int month, int year) {
 		switch(month)
 		{
 		case 1:
@@ -180,10 +170,19 @@ public class Date {
 	 * @author Pavan Vittala
 	 */
 	public boolean isBefore(Date that) {
-		if (that.year - this.year > 0) return true;
-		else if (that.year - this.year == 0 && that.month - this.month > 0) return true;
-		else if (that.year - this.year == 0 && that.month - this.month == 0 && that.day - this.day > 0) return true;
-		else return false;
+		return this.date.before(that.date);
+	}
+	
+	/**
+	 * Description: This will increase the instance with the specified numberOfDays.
+	 * 
+	 * @param numberOfDays
+	 * @return Date
+	 * @author Jc Briones
+	 */
+	public Date increase(int numberOfDays) {
+		date.add(java.util.Calendar.DATE, numberOfDays);
+		return this;
 	}
 
 	/* =======================================
@@ -191,50 +190,32 @@ public class Date {
 	 * =======================================
 	 */
 	public int getDay() {
-		return day;
+		return date.get(java.util.Calendar.DAY_OF_MONTH);
 	}
 
 	public void setDay(int day) {
-		this.day = day;
+		this.date.set(java.util.Calendar.DAY_OF_MONTH, day);
 	}
 
 	public int getMonth() {
-		return month;
+		return date.get(java.util.Calendar.MONTH);
 	}
 
 	public void setMonth(int month) {
-		this.month = month;
+		this.date.set(java.util.Calendar.MONTH, month);
 	}
 
 	public int getYear() {
-		return year;
+		return date.get(java.util.Calendar.YEAR);
 	}
 
 	public void setYear(int year) {
-		this.year = year;
+		this.date.set(java.util.Calendar.YEAR, year);
 	}
 
 	public boolean equals(Date that)
 	{
-		return this.month == that.month && this.day == that.day && this.year == that.year;
-	}
-
-	public Date increase(int numberOfDays) {
-		while (this.day + numberOfDays > maxDayInMonth(this.month,this.year) && numberOfDays > 0)
-		{
-			// Difference
-			numberOfDays -= maxDayInMonth(this.month,this.year) - this.day;
-			this.day = maxDayInMonth(this.month,this.year);
-			if (this.month == 12)
-			{
-				this.month = 1;
-				this.year += 1;
-			}
-			else
-				this.month++;
-		}
-
-		return this;
+		return this.getMonth() == that.getMonth() && this.getDay() == that.getDay() && this.getYear() == that.getYear();
 	}
 
 }
