@@ -40,8 +40,6 @@ public class RSVPCoordinator {
 
 	// Print date
 	private static boolean printDate = true;
-	
-	private static StringBuilder str;
 
 	/**
 	 * Description: Where the entire HotelSystem takes inputs and prints them from.
@@ -61,6 +59,7 @@ public class RSVPCoordinator {
 		for (int i = 5; i < 10; i++)
 			doubleRooms.add(hs.addRoom(100 + i, true, 160));
 
+
 		try
 		{
 			// Reading in an input file
@@ -76,7 +75,10 @@ public class RSVPCoordinator {
 			String [] instructions = Framework.nextInstruction();
 			try
 			{
-				System.out.println(executeInstructions(instructions));
+				//executeInstructions(instructions);
+				for (int i = 0; i < instructions.length; i++)
+
+					print(instructions[i]);
 			}
 			catch(Exception e)
 			{
@@ -96,11 +98,8 @@ public class RSVPCoordinator {
 	 * @param instr
 	 * @author Jc Briones, Pavan Vittala, Ken Matsuda, Matt Edwards
 	 */
-	public static String executeInstructions(String[] instr)
+	public static void executeInstructions(String[] instr)
 	{
-		// Create a new instance of StringBuilder
-		str = new StringBuilder();
-		
 		// Prints the date out to the User
 		if(printDate)
 		{
@@ -320,8 +319,7 @@ public class RSVPCoordinator {
 			print("No instruction found. Make sure you put it the correct instruction type.");
 			break;
 		}
-		
-		return str.toString();
+		print("");
 	}
 
 	/**
@@ -329,23 +327,13 @@ public class RSVPCoordinator {
 	 * 
 	 * @param o
 	 */
-	public static void print(String string)
+	public static void print(Object o)
 	{
-		str.append(string + "\n");
+		System.out.println(o.toString());
 	}
 
 	public static HotelSystem getHS()
 	{
 		return hs;
-	}
-	
-	public static List<Room> getSingles()
-	{
-		return singleRooms;
-	}
-	
-	public static List<Room> getDoubles()
-	{
-		return doubleRooms;
 	}
 }
