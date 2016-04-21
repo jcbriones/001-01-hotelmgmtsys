@@ -11,10 +11,10 @@ Visa
 4716001921994146670
 
 @2
-Bernard L.Silver
+Bernard L. Silver
 
 @3
-Bernard L.Silver
+Bernard L. Silver
 
 @5
 
@@ -101,6 +101,7 @@ AmericanExpress
 039475618293475867
 
 @3
+Chester D. Morgan
 
 @1
 Christopher A. Woods
