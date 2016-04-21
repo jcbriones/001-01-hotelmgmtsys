@@ -46,7 +46,7 @@ public class IntegrationTesting {
 		assertNotNull(hs.addReservation(user1,room1,1,false,5,12,2016,2));
 		assertNotNull(hs.addReservation(user2,room2,3,false,5,15,2016,3));
 
-		// These should evaluate to null since there is a no duplicate when making a reservation. Just added it to a different date
+		// These should evaluate to not null since there is a no duplicate when making a reservation. Just added it to a different date
 		assertNotNull(hs.addReservation(user2,room1,1,true,5,15,2016,2));
 	}
 
@@ -240,12 +240,12 @@ public class IntegrationTesting {
 		hs.addReservation(usr1,rm1, 2, false, 1, 1, 2016, 3);
 		hs.addReservation(usr2,rm2, 4, false, 1, 2, 2016, 5);
 		hs.addReservation(usr3,rm3, 3, false, 2,14, 2016, 2);
-		
+
 		// Another list of reservations but doesn't fall under the given date
 		hs.addReservation(usr1,rm1, 2, false, 4, 1, 2016, 3);
 		hs.addReservation(usr2,rm2, 4, false, 4, 2, 2016, 5);
 		hs.addReservation(usr3,rm3, 3, false, 5,14, 2016, 2);
-		
+
 
 		// Expected Result
 		int expectedReservations = 3;		// There are 3 reservations
@@ -301,12 +301,12 @@ public class IntegrationTesting {
 		hs.addReservation(usr1,rm1, 2, false, 4, 1, 2016, 3);
 		hs.addReservation(usr2,rm2, 4, false, 4, 2, 2016, 5);
 		hs.addReservation(usr3,rm3, 3, false, 5,14, 2016, 2);
-		
+
 
 		// Expected Result
-		int expectedReservations = 6;		// There are 3 reservations
-		int expectedSinglesReserved = 2;	// 1 Singles
-		int expectedDoublesReserved = 4;	// 2 Doubles
+		int expectedReservations = 6;		// There are 6 reservations
+		int expectedSinglesReserved = 2;	// 2 Singles
+		int expectedDoublesReserved = 4;	// 4 Doubles
 		double expectedOccupancyRate = 0;	// 0 Occupancy Rate since nobody got checked-in
 		double expectedRevenue = 0;			// 0 Revenue because no reservation has been paid.
 
@@ -355,24 +355,32 @@ public class IntegrationTesting {
 		int expectedReservations = 3;		// There are 3 reservations
 		int expectedSinglesReserved = 1;	// 1 Singles
 		int expectedDoublesReserved = 2;	// 2 Doubles
-		double expectedOccupancyRate = 0;	// 0 Occupancy Rate since nobody got checked-in
-		double expectedRevenue = 0;			// 0 Revenue because no reservation has been paid.
+		double expectedOccupancyRate = 100;	// 100.00% Occupancy Rate since nobody got checked-in
+		double expectedRevenue = 1350;		// $1,350.00 Revenue because no reservation has been paid.
 
 		// Catch any Exception caused by testing the program
 		try {
-			// Pay all Reservations
+			// Add CreditCard
+			hs.addCreditCard(usr1, "Card1", "Visa", "12341234123412", 123, 12, 2018, "", "", "", "", 12345);
+			hs.addCreditCard(usr2, "Card2", "Visa", "12341234123412", 123, 12, 2018, "", "", "", "", 12345);
+			hs.addCreditCard(usr3, "Card3", "Visa", "12341234123412", 123, 12, 2018, "", "", "", "", 12345);
 			
+			// Pay all Reservations
+			hs.chargeUser(rsvp1);
+			hs.chargeUser(rsvp2);
+			hs.chargeUser(rsvp3);
+
 			// CheckIn Each Reservation
 			hs.checkInReservation(rsvp1, new Date(1,1,2016));
 			hs.checkInReservation(rsvp2, new Date(1,2,2016));
 			hs.checkInReservation(rsvp3, new Date(2,14,2016));
-			
+
 			// From Date To Date
 			Date from = new Date(1,1,2016);
 			Date to = new Date(3,1,2016);
 			// Generate the Report by the Given Range
 			Report rpt = hs.generateReportByRange(from, to);
-			
+
 			// Check to see if rpt isnt empty
 			assertNotNull(rpt);
 
