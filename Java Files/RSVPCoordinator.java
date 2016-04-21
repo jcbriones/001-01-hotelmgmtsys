@@ -244,7 +244,7 @@ public class RSVPCoordinator {
 				System.out.printf("Amount payable: $%.2f\n", rsvp.getNumberOfNights()*rsvp.getRoomCost());
 			}
 			else
-				print(instr[1] + " was not successfully checkedout");
+				print(instr[1] + " was not successfully checked out");
 			break;
 
 		case 4:	// Print Management Report
