@@ -133,11 +133,11 @@ public class HotelSystem {
 	public Reservation addReservation(User reservedTo, Room rm, int numberOfOccupants, boolean guaranteed, int month, int day, int year, int numberOfNights)
 	{
 		ArrayList<Date> dates = new ArrayList<Date>();
-		//Adding a list of dates that the customer will be using a given room
+		// Adding a list of dates that the customer will be using a given room
 		for (int i = 0; i <= numberOfNights; i++)
 			dates.add(new Date(month, day + i, year));
-		//If the room is free on the given date
-		if (cal.checkDate(rm,dates))
+		// If the room is free on the given date and the current date is before the booking date. Cannot book rooms in the past.
+		if (cal.checkDate(rm,dates) && currentDate.isBefore(dates.get(0)))
 		{
 			//Add the reservation to the list of reservations in the database
 			Reservation rsvp = new Reservation(reservedTo, rm, numberOfOccupants, guaranteed, month, day, year, numberOfNights, rm.getPrice()*numberOfNights, rm.getPrice());

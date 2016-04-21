@@ -204,7 +204,7 @@ public class RSVPCoordinator {
 				print("Check In Statement:");
 				print("Customer Name: " + rsvp.getReservedTo().getFullName());
 				print("Nights reserved: " + rsvp.getNumberOfNights());
-				System.out.printf("Nightly rate: $%.2f\n", rsvp.getRoomCost());
+				print(String.format("Nightly rate: $%.2f", rsvp.getRoomCost()));
 				print("Check In: " + rsvp.getDates().get(0).toString());
 				print("Check Out: " + rsvp.getDates().get(rsvp.getDates().size()-1).toString());
 			}
@@ -240,8 +240,8 @@ public class RSVPCoordinator {
 				print("Customer Address: " + rsvp.getReservedTo().printAddress());
 				print("Room Type: " + (rsvp.getRoom().isDouble() ? "Double" : "Single"));
 				print("Nights reserved: " + rsvp.getNumberOfNights());
-				System.out.printf("Charge per night: $%.2f\n", rsvp.getRoomCost());
-				System.out.printf("Amount payable: $%.2f\n", rsvp.getNumberOfNights()*rsvp.getRoomCost());
+				print(String.format("Charge per night: $%.2f", rsvp.getRoomCost()));
+				print(String.format("Amount payable: $%.2f", rsvp.getNumberOfNights()*rsvp.getRoomCost()));
 			}
 			else
 				print(instr[1] + " was not successfully checked out");
@@ -269,8 +269,8 @@ public class RSVPCoordinator {
 			print("Number of Reservations: " + rpt.getNumberOfReservations());
 			print("Single Rooms Reserved: " + rpt.getNumberOfSinglesReserved());
 			print("Double Rooms Reserved: " + rpt.getNumberOfDoublesReserved());
-			System.out.printf("Occupancy Rate: %.2f%%\n", rpt.getOccupancyRate());
-			System.out.printf("Total Revenue: $%.2f\n", rpt.getTotalRevenue());
+			print(String.format("Occupancy Rate: %.2f%%", rpt.getOccupancyRate()));
+			print(String.format("Total Revenue: $%.2f", rpt.getTotalRevenue()));
 			break;
 
 		case 5: // Day Change
