@@ -198,5 +198,3 @@ Visa
 
 @2
 Joe Joe
-
-3
