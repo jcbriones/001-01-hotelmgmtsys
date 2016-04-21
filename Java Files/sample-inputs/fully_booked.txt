@@ -125,7 +125,7 @@ Reed Richards
 Clint Barton
 2501 Waterview Lane, Albuquerque, NM 87102
 2
-6
+7
 2
 1
 1
@@ -162,11 +162,13 @@ Natasha Romanoff
 @3
 Natasha Romanoff
 
+@5
+
 @1
 Jack James
 1501 Waterview Lane, Albuquerque, NM 87102
-6
 7
+8
 2
 1
 1
@@ -180,11 +182,13 @@ Jack James
 @3
 Clint Barton
 
+@5
+
 @1
 Joe Joe
 2541 Waterview Lane, Albuquerque, NM 87102
 2
-7
+8
 2
 1
 1
