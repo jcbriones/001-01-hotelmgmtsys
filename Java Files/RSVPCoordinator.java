@@ -22,14 +22,14 @@ public class RSVPCoordinator {
 	// Instantiation of HotelSystem
 	private static HotelSystem hs = new HotelSystem();
 
-	// Starting month is 1 (January)
+	//Starting month is 1 (January)
 	private static int month = 1;
-	// Starting day is 1
+	//Starting day is 1
 	private static int day = 1;
-	// Starting year is 2016
+	//Starting year is 2016
 	private static int year = 2016;
-	// Get the date from the Date class
-	private static Date date = hs.getCurrentDate();
+	//Create a Date class based off the dates above
+	private static Date date = new Date(month, day, year);
 
 	// List for singleRooms and doubleRooms
 	private static List<Room> singleRooms = new ArrayList<Room>();
@@ -40,8 +40,6 @@ public class RSVPCoordinator {
 
 	// Print date
 	private static boolean printDate = true;
-	
-	private static StringBuilder str;
 
 	/**
 	 * Description: Where the entire HotelSystem takes inputs and prints them from.
@@ -50,16 +48,13 @@ public class RSVPCoordinator {
 	 * @author Jc Briones, Pavan Vittala, Ken Matsuda, Matt Edwards
 	 */
 	public static void main(String[] args) {
-		// Initialize the date.
-		date.setMonth(month);
-		date.setDay(day);
-		date.setYear(year);
 		// Create rooms of 5 each
 		for (int i = 0; i < 5; i++)
 			singleRooms.add(hs.addRoom(100 + i, false, 80));
 
 		for (int i = 5; i < 10; i++)
 			doubleRooms.add(hs.addRoom(100 + i, true, 160));
+
 
 		try
 		{
@@ -76,7 +71,7 @@ public class RSVPCoordinator {
 			String [] instructions = Framework.nextInstruction();
 			try
 			{
-				System.out.println(executeInstructions(instructions));
+				executeInstructions(instructions);
 			}
 			catch(Exception e)
 			{
@@ -96,11 +91,8 @@ public class RSVPCoordinator {
 	 * @param instr
 	 * @author Jc Briones, Pavan Vittala, Ken Matsuda, Matt Edwards
 	 */
-	public static String executeInstructions(String[] instr)
+	public static void executeInstructions(String[] instr)
 	{
-		// Create a new instance of StringBuilder
-		str = new StringBuilder();
-		
 		// Prints the date out to the User
 		if(printDate)
 		{
@@ -200,7 +192,7 @@ public class RSVPCoordinator {
 			{
 				// Credit Card to be added under the User
 				hs.addCreditCard(usr, usr.getFullName(), instr[2], instr[4], CCV, Integer.parseInt(instr[3].substring(0, instr[3].indexOf('/'))), Integer.parseInt(instr[3].substring(instr[3].indexOf('/')+1, instr[3].length())), usr.getAddress1(), usr.getAddress2(), usr.getCity(), usr.getState(), usr.getZip());
-
+				
 				// Charge User the total balance of the reservation using the credit card provided above
 				hs.chargeUser(rsvp);
 				checkedIn = hs.checkInReservation(rsvp,date);
@@ -297,7 +289,7 @@ public class RSVPCoordinator {
 
 			// Check all those reservations who are booked but didn't show up
 			for (int i = 0; i < hs.getDB().getListOfReservations().size(); i++)
-				if (hs.getDB().getListOfReservations().get(i).getDates().get(0).isBefore(date) && !hs.getDB().getListOfReservations().get(i).isNoShow())
+				if (hs.getDB().getListOfReservations().get(i).getDates().get(0).isBefore(date) && !hs.getDB().getListOfReservations().get(i).isNoShow() && !hs.getDB().getListOfReservations().get(i).isCheckedIn() && !hs.getDB().getListOfReservations().get(i).isStayFinished())
 				{
 					hs.getDB().getListOfReservations().get(i).setNoShow(true);
 					print(hs.getDB().getListOfReservations().get(i).getReservedTo().getFullName() + " did not show.");
@@ -320,8 +312,7 @@ public class RSVPCoordinator {
 			print("No instruction found. Make sure you put it the correct instruction type.");
 			break;
 		}
-		
-		return str.toString();
+		print("");
 	}
 
 	/**
@@ -329,23 +320,9 @@ public class RSVPCoordinator {
 	 * 
 	 * @param o
 	 */
-	public static void print(String string)
+	public static void print(Object o)
 	{
-		str.append(string + "\n");
+		System.out.println(o.toString());
 	}
 
-	public static HotelSystem getHS()
-	{
-		return hs;
-	}
-	
-	public static List<Room> getSingles()
-	{
-		return singleRooms;
-	}
-	
-	public static List<Room> getDoubles()
-	{
-		return doubleRooms;
-	}
 }
