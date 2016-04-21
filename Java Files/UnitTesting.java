@@ -6,6 +6,9 @@ import org.junit.*;
 
 public class UnitTesting {
 
+	/**
+	 * We have to test first for making a User, CreditCard, Date, and Room that will be used for making a reservation.
+	 */
 	@Test
 	public void Users_Constructor() {
 		String username = "user";
@@ -227,20 +230,219 @@ public class UnitTesting {
 		}
 	}
 
+	// Test Cases for Date Class
+	// General Field Test
 	@Test
-	public void Reservation_Constructor() {
+	public void Date_fieldTest1() {
+		int month = 1;
+		int day = 1;
+		int year = 2000;
+		Date date = new Date(month, day, year);
+
+		assertEquals(day, date.getDay());
+		assertEquals(month, date.getMonth());
+		assertEquals(year, date.getYear());
+	}
+
+	// Test for when month is < 1
+	@Test
+	public void Date_fieldTest2() {
+		boolean thrown = false;
+		int month = 0;
+		int day = 1;
+		int year = 2000;
+
+		try {
+			Date date = new Date(month, day, year);
+			assertEquals(day, date.getDay());
+			assertEquals(month, date.getMonth());
+			assertEquals(year, date.getYear());
+		} catch(Exception e) {
+			thrown = true;
+		}
+		assertTrue("IllegalArgumentException was thrown", thrown);
+	}
+
+	// Test for when month is > 12
+	@Test
+	public void Date_fieldTest3() {
+		boolean thrown = false;
+		int month = 13;
+		int day = 1;
+		int year = 2000;
+
+		try {
+			Date date = new Date(month, day, year);
+			assertEquals(day, date.getDay());
+			assertEquals(month, date.getMonth());
+			assertEquals(year, date.getYear());
+
+		} catch(Exception e) {
+			//assertTrue(e.toString().equals("java.lang.IllegalArgumentException: Invalid month"));
+			thrown = true;
+		}
+		assertTrue(thrown);
+	}
+
+	//Test for when day < 1
+	@Test
+	public void Date_fieldTest4() {
+		boolean thrown = false;
+		int month = 1;
+		int day = 0;
+		int year = 2000;
+
+		try {
+			Date date = new Date(month, day, year);
+			assertEquals(day, date.getDay());
+			assertEquals(month, date.getMonth());
+			assertEquals(year, date.getYear());
+		} catch(Exception e) {
+			thrown = true;
+		}
+		assertTrue(thrown);
+	}
+
+	//Test for when day > 31
+	@Test
+	public void Date_fieldTest5() {
+		boolean thrown = false;
+		int month = 1;
+		int day = 32;
+		int year = 2000;
+
+		try {
+			new Date(month, day, year);
+		} catch(Exception e) {
+			thrown = true;
+		}
+		assertTrue(thrown);
+	}
+
+	//Test for when year < 1970
+	@Test
+	public void Date_fieldTest6() {
+		boolean thrown = false;
+		int month = 1;
+		int day = 1;
+		int year = 1969;
+
+		try {
+			new Date(month, day, year);
+		} catch(Exception e) {
+			thrown = true;
+		}
+		assertTrue(thrown);
+	}
+
+	//Max day in month, standard dates
+	@Test
+	public void Date_maxDayInMonthTest1() {
+		int try1 = Date.maxDayInMonth(1, 2013);
+		int try2 = Date.maxDayInMonth(2, 2013);
+		int try3 = Date.maxDayInMonth(3, 2013);
+		int try4 = Date.maxDayInMonth(4, 2013);
+		int try5 = Date.maxDayInMonth(5, 2013);
+		int try6 = Date.maxDayInMonth(6, 2013);
+		int try7 = Date.maxDayInMonth(7, 2013);
+		int try8 = Date.maxDayInMonth(8, 2013);
+		int try9 = Date.maxDayInMonth(9, 2013);
+		int try10 = Date.maxDayInMonth(10, 2013);
+		int try11 = Date.maxDayInMonth(11, 2013);
+		int try12 = Date.maxDayInMonth(12, 2013);
+		int try13 = Date.maxDayInMonth(2, 2012);
+
+		assertEquals(31, try1);
+		assertEquals(28, try2);
+		assertEquals(31, try3);
+		assertEquals(30, try4);
+		assertEquals(31, try5);
+		assertEquals(30, try6);
+		assertEquals(31, try7);
+		assertEquals(31, try8);
+		assertEquals(30, try9);
+		assertEquals(31, try10);
+		assertEquals(30, try11);
+		assertEquals(31, try12);
+		assertEquals(29, try13);
+	}
+
+	//Testing for month input that isn't 1-12
+	//Month input < 1
+	@Test
+	public void Date_maxDayInMonthTest2() {
+		int try1 = Date.maxDayInMonth(0, 2013);
+		// Test
+		assertEquals(-1, try1);
+	}
+
+	//Testing for month input that isn't 1-12
+	//Month input > 12
+	@Test
+	public void Date_maxDayInMonthTest3() {
+		int try1 = Date.maxDayInMonth(13, 2013);
+		// Test
+		assertEquals(-1, try1);
+	}
+
+	//getDifferenceFrom Test 1
+	//Basic test
+	@Test
+	public void Date_getDifferenceFromTest1() {
+		Date date1 = new Date(10, 11, 1994);
+		Date date2 = new Date(10, 11, 2016);
+
+		int try1 = date1.getDifferenceFrom(date2);
+		assertEquals(8036, try1);
+	}
+
+	//getDifferenceFrom Test 2
+	//When that>this
+	@Test
+	public void Date_getDifferenceFromTest2() {
+		Date date1 = new Date(10, 11, 1994);
+		Date date2 = new Date(10, 11, 2016);
+
+		int try1 = date2.getDifferenceFrom(date1);
+		assertEquals(-8036, try1);
+	}
+
+	//getDifferenceFrom Test 3
+	//No difference
+	@Test
+	public void Date_getDifferenceFromTest3() {
+		Date date1 = new Date(10, 11, 1994);
+		Date date2 = new Date(10, 11, 1994);
+
+		int try1 = date1.getDifferenceFrom(date2);
+		assertEquals(0, try1);
+	}
+
+	//getDifferenceFrom Test 4
+	//Basic test 2, make sure a difference of 1 is actually 1
+	@Test
+	public void Date_getDifferenceFromTest4() {
+		Date date1 = new Date(10, 11, 1994);
+		Date date2 = new Date(10, 12, 1994);
+
+		int try1 = date1.getDifferenceFrom(date2);
+		assertEquals(1, try1);
+	}
+	
+	@Test
+	public void MakeReservation_Constructor1() {
 		// Set-up a User
 		User usr = new User("user", "pass", "George Mason", 0, "4400 University Dr", "", "Fairfax", "VA", 22030);
 
 		// Set-up a Room
 		Room rm = new Room(101, false, 100);
-		
+
 		// Reserved Dates
 		ArrayList<Date> dates = new ArrayList<Date>();
 		dates.add(new Date(1,12,2016));
 		dates.add(new Date(1,13,2016));
 		dates.add(new Date(1,14,2016));
-		
+
 		// Reservation Info
 		User reservedTo = usr;
 		int m = 1;
@@ -256,7 +458,7 @@ public class UnitTesting {
 
 		// Catch any Exception caused by testing the program
 		try {
-			
+
 			// Set-up a Reservation
 			Reservation rsvp = new Reservation(usr, rm, numberOfOccupants, guaranteed, m, d, y, numberOfNights, balance, roomCost);
 
@@ -275,38 +477,9 @@ public class UnitTesting {
 		}
 		catch (Exception e)
 		{
-			fail("Create an instance of Room failed. " + e.toString());
+			fail("Create an instance of Reservation failed. " + e.toString());
 		}
 	}
 
-	@Test
-	public void Calendar_CheckDate()
-	{
-		User user1 = new User("user","Jon","Smith",0,"address","home","DC","VA",22153);
-		User user2 = new User("user","Mary","Johnson",0,"somewhere","home","DC","VA",22153);
 
-		HotelSystem hs = new HotelSystem();
-		hs.addReservation(user1,new Room(111,false,0),1,true,5,12,2016,2);
-		hs.addReservation(user2,new Room(112,true,70),3,false,5,15,2016,3);
-
-		ArrayList<Date> temp = new ArrayList<Date>();
-		temp.add(new Date(5,10,2016));
-		temp.add(new Date(5,12,2016));
-		temp.add(new Date(5,13,2016));
-		temp.add(new Date(5,15,2016));
-		temp.add(new Date(5,20,2016));
-
-		ArrayList<Date> temp1 = new ArrayList<Date>();
-		temp1.add(new Date(5,10,2016));
-
-		//these should evaluate to true
-		assertTrue(hs.getCalendar().checkDate(new Room(111,false,0),temp));
-		assertTrue(hs.getCalendar().checkDate(new Room(112,true,70),temp));
-
-		//these should evaluate to false
-		assertFalse(hs.getCalendar().checkDate(new Room(113,true,0),temp));
-		assertFalse(hs.getCalendar().checkDate(new Room(111,false,0),temp1));
-		assertFalse(hs.getCalendar().checkDate(new Room(112,true,0),temp1);
-
-	}
 }

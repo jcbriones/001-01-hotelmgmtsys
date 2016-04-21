@@ -244,7 +244,7 @@ public class RSVPCoordinator {
 				System.out.printf("Amount payable: $%.2f\n", rsvp.getNumberOfNights()*rsvp.getRoomCost());
 			}
 			else
-				print(instr[1] + " was not successfully checkedout");
+				print(instr[1] + " was not successfully checked out");
 			break;
 
 		case 4:	// Print Management Report
@@ -280,7 +280,7 @@ public class RSVPCoordinator {
 				break;
 			}
 
-			if (date.getDay() == date.maxDayInMonth(date.getMonth(), date.getYear())) {
+			if (date.getDay() == Date.maxDayInMonth(date.getMonth(), date.getYear())) {
 				date.setMonth(date.getMonth()+1);
 				date.setDay(1);
 			}
@@ -289,7 +289,7 @@ public class RSVPCoordinator {
 
 			// Check all those reservations who are booked but didn't show up
 			for (int i = 0; i < hs.getDB().getListOfReservations().size(); i++)
-				if (hs.getDB().getListOfReservations().get(i).getDates().get(0).isBefore(date) && !hs.getDB().getListOfReservations().get(i).isNoShow())
+				if (hs.getDB().getListOfReservations().get(i).getDates().get(0).isBefore(date) && !hs.getDB().getListOfReservations().get(i).isNoShow() && !hs.getDB().getListOfReservations().get(i).isCheckedIn() && !hs.getDB().getListOfReservations().get(i).isStayFinished())
 				{
 					hs.getDB().getListOfReservations().get(i).setNoShow(true);
 					print(hs.getDB().getListOfReservations().get(i).getReservedTo().getFullName() + " did not show.");

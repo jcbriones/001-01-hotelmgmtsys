@@ -47,29 +47,29 @@ public class Calendar {
 
 	/**
 	 *  Given a range of dates, collect the list of Reservation during that given time.
-	 * @param day1
-	 * @param day2
+	 * @param from
+	 * @param to
 	 * @return ArrayList<Reservation>
-	 * @author Matt Edwards
+	 * @author Matt Edwards, Jc Briones
 	 */
-	public ArrayList<Reservation> ReservationByDateRange(Date day1, Date day2)
+	public ArrayList<Reservation> ReservationByDateRange(Date from, Date to)
 	{
-		// Error checking for if day2 is before day1
-		if (day2.isBefore(day1))
+		// Error checking for if to is before from
+		if (to.isBefore(from))
 			throw new RuntimeException();
 		
 		// Range of Dates
 		ArrayList<Date> dates = new ArrayList<Date>();
-		int diff = day1.getDifferenceFrom(day2);
+		int diff = from.getDifferenceFrom(to);
 		for (int i = 0; i <= diff; i++)
-			dates.add(new Date(day1.getMonth(), day1.getDay() + i, day1.getYear()));
+			dates.add(new Date(from.getMonth(), from.getDay(), from.getYear()).increase(i));
 
-		// list will be holding all the reservations within the range given
+		// List will be holding all the reservations within the range given
 		ArrayList<Reservation> list = new ArrayList<Reservation>();
 
-		
+		// Only get the Reservations within the given dates up to, but not including, the checkout date
 		for (int i = 0; i < listOfReservations.size(); i++)
-			for (int j = 0; j < listOfReservations.get(i).getDates().size(); j++)
+			for (int j = 0; j < listOfReservations.get(i).getDates().size() - 1; j++)
 				for (int k = 0; k < dates.size(); k++)
 					if (listOfReservations.get(i).getDates().get(j).equals(dates.get(k)) && !list.contains(listOfReservations.get(i)))
 						list.add(listOfReservations.get(i));
